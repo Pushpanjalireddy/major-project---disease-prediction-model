@@ -1,0 +1,272 @@
+[
+  {
+    "Index": 1,
+    "Disease": "Acne",
+    "Category": "Dermatological",
+    "Specialist": "Dermatologist",
+    "Key_Symptoms": "Blackheads, Pus Filled Pimples, Scurring, Skin Rash",
+    "Ready_Test_Prompt": "I have pus filled pimples on face, blackheads and inflamed red skin breakouts",
+    "Primary_Home_Remedy": "Wash face twice daily with a gentle, non-comedogenic foaming cleanser; avoid harsh scrubbing."
+  },
+  {
+    "Index": 2,
+    "Disease": "Allergy",
+    "Category": "Immunology",
+    "Specialist": "Allergist / Immunologist / ENT",
+    "Key_Symptoms": "Chills, Continuous Sneezing, Shivering, Watering From Eyes",
+    "Ready_Test_Prompt": "I have continuous sneezing, watering from eyes, shivering and chills",
+    "Primary_Home_Remedy": "Perform daily saline nasal irrigation (Neti pot with sterile saline water) to wash out allergen particles."
+  },
+  {
+    "Index": 3,
+    "Disease": "Arthritis",
+    "Category": "Rheumatology",
+    "Specialist": "Rheumatologist / Orthopedic Specialist",
+    "Key_Symptoms": "Movement Stiffness, Muscle Weakness, Painful Walking, Stiff Neck, Swelling Joints",
+    "Ready_Test_Prompt": "I have swelling in joints, movement stiffness, joint pain and painful walking",
+    "Primary_Home_Remedy": "Alternate warm compresses (to relax stiff joints) and cold packs (to reduce active joint swelling)."
+  },
+  {
+    "Index": 4,
+    "Disease": "Bronchial Asthma",
+    "Category": "Respiratory & Pulmonology",
+    "Specialist": "Pulmonologist / Chest Physician",
+    "Key_Symptoms": "Breathlessness, Cough, Family History, Fatigue, High Fever, Mucoid Sputum",
+    "Ready_Test_Prompt": "I have severe breathlessness, wheezing, persistent cough and fatigue",
+    "Primary_Home_Remedy": "Sit upright and practice relaxed pursed-lip breathing during mild tightness."
+  },
+  {
+    "Index": 5,
+    "Disease": "Cervical Spondylosis",
+    "Category": "Spine & Musculoskeletal",
+    "Specialist": "Orthopedic / Spine Specialist / Physiotherapist",
+    "Key_Symptoms": "Back Pain, Dizziness, Loss Of Balance, Neck Pain, Weakness In Limbs",
+    "Ready_Test_Prompt": "I have chronic neck pain, radiating back pain, dizziness and weakness in limbs",
+    "Primary_Home_Remedy": "Perform gentle isometric neck strengthening exercises 3 times daily."
+  },
+  {
+    "Index": 6,
+    "Disease": "Chickenpox",
+    "Category": "Viral & Dermatological",
+    "Specialist": "Pediatrician / Dermatologist / General Physician",
+    "Key_Symptoms": "Fatigue, Headache, High Fever, Itching, Lethargy, Loss Of Appetite, Malaise, Mild Fever, Red Spots Over Body, Skin Rash, Swelled Lymph Nodes",
+    "Ready_Test_Prompt": "I have red spots over body, blister eruptions, severe itching and high fever",
+    "Primary_Home_Remedy": "Add neem leaves to bath water or take an oatmeal bath to relieve intense itching."
+  },
+  {
+    "Index": 7,
+    "Disease": "Common Cold & Flu",
+    "Category": "Respiratory & Viral",
+    "Specialist": "General Physician / ENT Specialist",
+    "Key_Symptoms": "Chest Pain, Chills, Congestion, Continuous Sneezing, Cough, Fatigue, Headache, High Fever, Loss Of Smell, Malaise, Muscle Pain, Phlegm, Redness Of Eyes, Runny Nose, Sinus Pressure, Swelled Lymph Nodes, Throat Irritation",
+    "Ready_Test_Prompt": "I have continuous sneezing, runny nose, cough, chills and congestion",
+    "Primary_Home_Remedy": "Steam inhalation with 2 drops of eucalyptus oil or ajwain twice daily for 10 minutes."
+  },
+  {
+    "Index": 8,
+    "Disease": "Dengue",
+    "Category": "Tropical & Infectious",
+    "Specialist": "General Physician / Hematologist",
+    "Key_Symptoms": "Back Pain, Chills, Fatigue, Headache, High Fever, Joint Pain, Loss Of Appetite, Malaise, Muscle Pain, Nausea, Pain Behind The Eyes, Red Spots Over Body, Skin Rash, Vomiting",
+    "Ready_Test_Prompt": "I have sudden high fever, chills, severe headache and deep bone/back pain",
+    "Primary_Home_Remedy": "Aggressive oral hydration with 3-4 liters of fluid (tender coconut water, ORS, fresh fruit juices)."
+  },
+  {
+    "Index": 9,
+    "Disease": "Diabetes",
+    "Category": "Endocrine & Metabolic",
+    "Specialist": "Endocrinologist / Diabetologist",
+    "Key_Symptoms": "Blurred And Distorted Vision, Excessive Hunger, Fatigue, Increased Appetite, Irregular Sugar Level, Lethargy, Obesity, Polyuria, Restlessness, Weight Loss",
+    "Ready_Test_Prompt": "I have excessive hunger, increased appetite, polyuria frequent urination and blurred vision",
+    "Primary_Home_Remedy": "Drink methi (fenugreek) water in the morning: soak 1 tbsp seeds in a glass of water overnight."
+  },
+  {
+    "Index": 10,
+    "Disease": "Drug Reaction",
+    "Category": "Pharmacology & Allergy",
+    "Specialist": "Allergist / Immunologist / Dermatologist",
+    "Key_Symptoms": "Burning Micturition, Itching, Skin Rash, Spotting  Urination, Stomach Pain",
+    "Ready_Test_Prompt": "I have sudden generalized skin rash, burning micturition and intense body itching",
+    "Primary_Home_Remedy": "Immediately identify and discontinue the suspected culprit medication (after contacting your doctor)."
+  },
+  {
+    "Index": 11,
+    "Disease": "Fungal Infection",
+    "Category": "Dermatological (Mycotic)",
+    "Specialist": "Dermatologist",
+    "Key_Symptoms": "Dischromic  Patches, Itching, Nodal Skin Eruptions, Skin Rash",
+    "Ready_Test_Prompt": "I have intense skin itching, discolored patches on skin and nodal eruptions",
+    "Primary_Home_Remedy": "Keep the affected area meticulously clean, dry, and ventilated at all times."
+  },
+  {
+    "Index": 12,
+    "Disease": "GERD (Acid Reflux)",
+    "Category": "Gastrointestinal",
+    "Specialist": "Gastroenterologist",
+    "Key_Symptoms": "Acidity, Chest Pain, Cough, Stomach Pain, Ulcers On Tongue, Vomiting",
+    "Ready_Test_Prompt": "I have severe acidity, chest burn, heartburn and sour stomach pain",
+    "Primary_Home_Remedy": "Chew 1 teaspoon of fennel seeds (saunf) after every major meal to stimulate digestion."
+  },
+  {
+    "Index": 13,
+    "Disease": "Gastroenteritis (Food Poisoning / Stomach Infection)",
+    "Category": "Gastrointestinal",
+    "Specialist": "Gastroenterologist / General Physician",
+    "Key_Symptoms": "Dehydration, Diarrhoea, Sunken Eyes, Vomiting",
+    "Ready_Test_Prompt": "I have severe vomiting, dehydration, loose motion and sunken eyes",
+    "Primary_Home_Remedy": "Drink Oral Rehydration Salts (ORS) or electrolyte water after EVERY loose stool to replace lost electrolytes."
+  },
+  {
+    "Index": 14,
+    "Disease": "Hemorrhoids (Piles)",
+    "Category": "Colorectal & Gastrointestinal",
+    "Specialist": "Proctologist / General Surgeon",
+    "Key_Symptoms": "Bloody Stool, Constipation, Irritation In Anus, Pain During Bowel Movements, Pain In Anal Region",
+    "Ready_Test_Prompt": "I have severe constipation, pain during bowel movements, irritation and bloody stool",
+    "Primary_Home_Remedy": "Take a warm Sitz bath for 15-20 minutes in a tub of warm water after bowel movements."
+  },
+  {
+    "Index": 15,
+    "Disease": "Hepatitis A",
+    "Category": "Hepatic & Liver",
+    "Specialist": "Hepatologist / Gastroenterologist",
+    "Key_Symptoms": "Abdominal Pain, Dark Urine, Diarrhoea, Joint Pain, Loss Of Appetite, Mild Fever, Muscle Pain, Nausea, Vomiting, Yellowing Of Eyes, Yellowish Skin",
+    "Ready_Test_Prompt": "I have yellowish skin, dark urine, joint pain, vomiting and loss of appetite",
+    "Primary_Home_Remedy": "Strict bed rest during the acute symptomatic phase."
+  },
+  {
+    "Index": 16,
+    "Disease": "Hypertension (High Blood Pressure)",
+    "Category": "Cardiovascular",
+    "Specialist": "Cardiologist / General Physician",
+    "Key_Symptoms": "Chest Pain, Dizziness, Headache, Lack Of Concentration, Loss Of Balance",
+    "Ready_Test_Prompt": "I have dizziness, morning headache, lack of concentration and loss of balance",
+    "Primary_Home_Remedy": "Follow the DASH diet and reduce daily sodium (salt) intake below 2 grams (half teaspoon)."
+  },
+  {
+    "Index": 17,
+    "Disease": "Hyperthyroidism",
+    "Category": "Endocrine & Thyroid",
+    "Specialist": "Endocrinologist",
+    "Key_Symptoms": "Abnormal Menstruation, Diarrhoea, Excessive Hunger, Fast Heart Rate, Fatigue, Irritability, Mood Swings, Muscle Weakness, Restlessness, Sweating, Weight Loss",
+    "Ready_Test_Prompt": "I have heart palpitations, rapid weight loss, excessive sweating and irritability",
+    "Primary_Home_Remedy": "Practice cooling breathing exercises (Sheetali and Sheetkari Pranayama) to regulate body heat."
+  },
+  {
+    "Index": 18,
+    "Disease": "Hypoglycemia (Low Blood Sugar)",
+    "Category": "Endocrine & Metabolic",
+    "Specialist": "Endocrinologist / Diabetologist",
+    "Key_Symptoms": "Anxiety, Blurred And Distorted Vision, Drying And Tingling Lips, Excessive Hunger, Fatigue, Headache, Irritability, Nausea, Palpitations, Slurred Speech, Sweating, Vomiting",
+    "Ready_Test_Prompt": "I have sudden sweating, anxiety, trembling, blurred vision and tingling lips",
+    "Primary_Home_Remedy": "Follow the 15-15 Rule: Consume 15 grams of fast-acting simple carbohydrates (3-4 glucose tablets, half cup fruit juice, or 1 tbsp honey/sugar)."
+  },
+  {
+    "Index": 19,
+    "Disease": "Hypothyroidism",
+    "Category": "Endocrine & Thyroid",
+    "Specialist": "Endocrinologist",
+    "Key_Symptoms": "Abnormal Menstruation, Brittle Nails, Cold Hands And Feets, Depression, Dizziness, Enlarged Thyroid, Fatigue, Irritability, Lethargy, Mood Swings, Puffy Face And Eyes, Swollen Extremeties, Weight Gain",
+    "Ready_Test_Prompt": "I have chronic fatigue, abnormal weight gain, cold hands and feet and depression",
+    "Primary_Home_Remedy": "Consume 2 Brazil nuts daily for natural selenium which supports thyroid hormone conversion."
+  },
+  {
+    "Index": 20,
+    "Disease": "Impetigo",
+    "Category": "Dermatological (Bacterial)",
+    "Specialist": "Dermatologist / Pediatrician",
+    "Key_Symptoms": "Blister, High Fever, Red Sore Around Nose, Skin Rash, Yellow Crust Ooze",
+    "Ready_Test_Prompt": "I have yellow crust ooze on face, red sore around nose, blisters and skin rash",
+    "Primary_Home_Remedy": "Gently soak sores in warm soapy water to loosen and remove crusts before applying antibiotic ointment."
+  },
+  {
+    "Index": 21,
+    "Disease": "Jaundice",
+    "Category": "Hepatic & Liver",
+    "Specialist": "Gastroenterologist / Hepatologist",
+    "Key_Symptoms": "Abdominal Pain, Dark Urine, Fatigue, High Fever, Itching, Vomiting, Weight Loss, Yellowish Skin",
+    "Ready_Test_Prompt": "I have yellowing of eyes, yellowish skin, dark urine, fatigue and itching",
+    "Primary_Home_Remedy": "Drink fresh sugarcane juice prepared hygienically with a dash of lime to provide quick liver energy."
+  },
+  {
+    "Index": 22,
+    "Disease": "Malaria",
+    "Category": "Tropical & Parasitic",
+    "Specialist": "General Physician / Infectious Disease Specialist",
+    "Key_Symptoms": "Chills, Diarrhoea, Headache, High Fever, Muscle Pain, Nausea, Sweating, Vomiting",
+    "Ready_Test_Prompt": "I have high fever with violent shivering, chills, sweating and muscle pain",
+    "Primary_Home_Remedy": "Keep warm during the cold/shivering phase with blankets; switch to light cotton clothing during the sweat phase."
+  },
+  {
+    "Index": 23,
+    "Disease": "Migraine",
+    "Category": "Neurological",
+    "Specialist": "Neurologist",
+    "Key_Symptoms": "Acidity, Blurred And Distorted Vision, Depression, Excessive Hunger, Headache, Indigestion, Irritability, Stiff Neck, Visual Disturbances",
+    "Ready_Test_Prompt": "I have throbbing headache on one side, visual disturbances aura and nausea",
+    "Primary_Home_Remedy": "Rest in a pitch-dark, quiet room with an ice pack applied across the forehead or base of neck."
+  },
+  {
+    "Index": 24,
+    "Disease": "Osteoarthritis",
+    "Category": "Orthopedic & Joint",
+    "Specialist": "Orthopedic Surgeon / Physiotherapist",
+    "Key_Symptoms": "Hip Joint Pain, Joint Pain, Knee Pain, Neck Pain, Painful Walking, Swelling Joints",
+    "Ready_Test_Prompt": "I have severe knee joint pain, hip joint pain, joint stiffness and painful walking",
+    "Primary_Home_Remedy": "Use knee braces or walking aids during long walks to unload joint stress."
+  },
+  {
+    "Index": 25,
+    "Disease": "Peptic Ulcer Disease",
+    "Category": "Gastrointestinal",
+    "Specialist": "Gastroenterologist",
+    "Key_Symptoms": "Abdominal Pain, Indigestion, Internal Itching, Loss Of Appetite, Passage Of Gases, Vomiting",
+    "Ready_Test_Prompt": "I have burning abdominal stomach pain, severe indigestion, gas and loss of appetite",
+    "Primary_Home_Remedy": "Drink cabbage juice (freshly pressed) 100ml daily; rich in glutamine which heals gastric mucosa."
+  },
+  {
+    "Index": 26,
+    "Disease": "Psoriasis",
+    "Category": "Dermatological (Autoimmune)",
+    "Specialist": "Dermatologist / Rheumatologist",
+    "Key_Symptoms": "Inflammatory Nails, Joint Pain, Silver Like Dusting, Skin Peeling, Skin Rash, Small Dents In Nails",
+    "Ready_Test_Prompt": "I have skin peeling, silver like dusting scales, skin rash and inflammatory nails",
+    "Primary_Home_Remedy": "Keep skin constantly moisturized with virgin coconut oil, aloe vera, or thick ointment right after bathing."
+  },
+  {
+    "Index": 27,
+    "Disease": "Typhoid Fever",
+    "Category": "Bacterial & Infectious",
+    "Specialist": "General Physician / Infectious Disease Specialist",
+    "Key_Symptoms": "Abdominal Pain, Belly Pain, Chills, Constipation, Diarrhoea, Fatigue, Headache, High Fever, Nausea, Toxic Look (Typhos), Vomiting",
+    "Ready_Test_Prompt": "I have step-ladder high fever, severe abdominal belly pain, headache and fatigue",
+    "Primary_Home_Remedy": "Drink plenty of boiled and cooled water with Electrolytes / ORS throughout the day to prevent dehydration."
+  },
+  {
+    "Index": 28,
+    "Disease": "Urinary Tract Infection (UTI)",
+    "Category": "Urological",
+    "Specialist": "Urologist / Nephrologist",
+    "Key_Symptoms": "Bladder Discomfort, Burning Micturition, Continuous Feel Of Urine, Foul Smell Of Urine",
+    "Ready_Test_Prompt": "I have burning urination, foul smell of urine, bladder pain and continuous feel of urine",
+    "Primary_Home_Remedy": "Drink 3 to 4 liters of clean water daily to flush bacteria out of the urinary tract."
+  },
+  {
+    "Index": 29,
+    "Disease": "Varicose Veins",
+    "Category": "Vascular",
+    "Specialist": "Vascular Surgeon",
+    "Key_Symptoms": "Bruising, Cramps, Fatigue, Obesity, Prominent Veins On Calf, Swollen Blood Vessels, Swollen Legs",
+    "Ready_Test_Prompt": "I have prominent twisted veins on calf, heavy leg fatigue, cramps and bruising",
+    "Primary_Home_Remedy": "Wear graduated compression stockings during the day when standing or walking."
+  },
+  {
+    "Index": 30,
+    "Disease": "Vertigo (BPPV)",
+    "Category": "Neurological & ENT",
+    "Specialist": "ENT Specialist / Neurologist",
+    "Key_Symptoms": "Headache, Loss Of Balance, Nausea, Spinning Movements, Unsteadiness, Vomiting",
+    "Ready_Test_Prompt": "I have spinning sensation of room, loss of balance, unsteadiness and nausea",
+    "Primary_Home_Remedy": "Perform the Epley Maneuver or Brandt-Daroff exercises under guided medical demonstration."
+  }
+]
