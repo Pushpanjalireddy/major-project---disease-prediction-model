@@ -122,6 +122,16 @@ st.markdown(
             font-weight: 700 !important;
         }
 
+        /* High-Contrast Headings & Typography */
+        h1, h2, h3, h4, h5, h6 {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+        }
+
+        p, span, label, div {
+            color: #f1f5f9;
+        }
+
         /* Glass Cards */
         .glass-card {
             background: rgba(30, 41, 59, 0.7);
@@ -195,77 +205,6 @@ st.markdown(
             border-radius: 8px;
             margin: 0.75rem 0;
             color: #e2e8f0;
-        }
-
-        /* High-Contrast Headings & Typography */
-        h1, h2, h3, h4, h5, h6 {
-            color: #ffffff !important;
-            font-weight: 700 !important;
-        }
-
-        p, span, label, div {
-            color: #f1f5f9;
-        }
-
-        /* Streamlit Radio Buttons Custom Styling (Ultra-Visible & High Contrast) */
-        div[data-testid="stRadio"] {
-            background: rgba(15, 23, 42, 0.92) !important;
-            border: 1.5px solid rgba(99, 102, 241, 0.45) !important;
-            border-radius: 16px !important;
-            padding: 18px 22px !important;
-            margin: 12px 0 20px 0 !important;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
-        }
-
-        div[data-testid="stRadio"] > label {
-            color: #38bdf8 !important;
-            font-size: 1.1rem !important;
-            font-weight: 800 !important;
-            margin-bottom: 12px !important;
-            display: block !important;
-            letter-spacing: 0.3px !important;
-        }
-
-        div[data-testid="stRadio"] div[role="radiogroup"] {
-            gap: 10px !important;
-            display: flex !important;
-            flex-direction: column !important;
-        }
-
-        div[data-testid="stRadio"] div[role="radiogroup"] label {
-            background: rgba(30, 41, 59, 0.9) !important;
-            border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
-            border-radius: 12px !important;
-            padding: 12px 18px !important;
-            transition: all 0.2s ease-in-out !important;
-            cursor: pointer !important;
-            display: flex !important;
-            align-items: center !important;
-        }
-
-        div[data-testid="stRadio"] div[role="radiogroup"] label:hover {
-            background: rgba(56, 189, 248, 0.2) !important;
-            border-color: #38bdf8 !important;
-            transform: translateX(4px);
-        }
-
-        div[data-testid="stRadio"] div[role="radiogroup"] label p {
-            color: #ffffff !important;
-            font-weight: 700 !important;
-            font-size: 1rem !important;
-            opacity: 1 !important;
-            margin: 0 !important;
-            line-height: 1.4 !important;
-        }
-
-        div[data-testid="stRadio"] div[role="radiogroup"] label span {
-            color: #ffffff !important;
-            font-weight: 700 !important;
-        }
-
-        div[data-testid="stMarkdownContainer"] h3 {
-            color: #ffffff !important;
-            font-weight: 800 !important;
         }
 
         /* Tabs */
@@ -399,7 +338,6 @@ def render_voice_input_widget():
             st.session_state["voice_banner_msg"] = cleaned_speech
             if auto_predict:
                 st.session_state["trigger_predict_now"] = True
-                st.session_state["active_view"] = "report"
             st.rerun()
 
     # Optional collapsible file uploader for audio files (WAV, MP3, etc.)
@@ -423,7 +361,6 @@ def render_voice_input_widget():
                                 st.session_state["voice_banner_msg"] = transcribed
                                 if auto_predict:
                                     st.session_state["trigger_predict_now"] = True
-                                    st.session_state["active_view"] = "report"
                                 st.success(f"✅ Transcribed: \"{transcribed}\"")
                                 st.rerun()
                     except Exception as ex:
@@ -532,10 +469,6 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 # TAB 1: AI Clinical Diagnosis & Bot
 # =========================================================
 with tab1:
-    # Initialize view mode in session state
-    if "active_view" not in st.session_state:
-        st.session_state["active_view"] = "input"
-
     # 1. Ingest query parameter from voice input safely and synchronize session state
     if "voice_query" in st.query_params:
         v_param = st.query_params.get("voice_query", "").strip()
@@ -546,13 +479,182 @@ with tab1:
             st.session_state["voice_banner_msg"] = v_param
             if v_auto:
                 st.session_state["trigger_predict_now"] = True
-                st.session_state["active_view"] = "report"
         st.query_params.clear()
 
+    # Show banner if voice query was just captured
+    if st.session_state.get("voice_banner_msg"):
+        st.success(f"🎙️ **Spoken Symptoms Transferred:** \"{st.session_state['voice_banner_msg']}\"")
+
+    col_input, col_presets = st.columns([2.2, 1.1])
+
+    with col_presets:
+        st.markdown("#### ⚡ Quick Presets")
+        presets = {
+            "Select a preset...": "",
+            "Typhoid / Cold: Fever, cough, cold, body pain": "fever, cough, cold and bodypain with headache",
+            "Food Poisoning: Vomiting & loose motion": "severe vomiting, dehydration and loose motion",
+            "Infection: High fever with chills & shivering": "high fever, violent shivering, chills and sweating",
+            "Skin: Itching & red skin rash": "itching, skin rash and nodal skin eruptions",
+            "UTI: Burning urination & bladder pain": "burning urination, foul smell of urine and bladder discomfort",
+            "Migraine: Throbbing headache & aura": "throbbing headache, visual disturbances and blurred vision",
+            "GERD: Heartburn, acidity & chest burn": "acidity, heartburn, burning chest and stomach pain",
+            "Jaundice: Yellow skin, dark urine & fatigue": "yellowish skin, dark urine, yellowing of eyes and fatigue"
+        }
+        selected_preset = st.selectbox("Test clinical scenarios:", list(presets.keys()), index=0, key="scenario_preset_select")
+
+        # Handle preset selection change
+        if selected_preset != "Select a preset..." and presets.get(selected_preset):
+            if st.session_state.get("last_preset_choice") != selected_preset:
+                st.session_state["last_preset_choice"] = selected_preset
+                st.session_state["patient_symptoms_text_box"] = presets[selected_preset]
+                st.session_state["input_text"] = presets[selected_preset]
+
+    with col_input:
+        st.markdown("#### 🗣️ Enter or Speak Symptoms")
+
+        # Render Voice Input Widget (Microphone)
+        render_voice_input_widget()
+
+        # Initialize session state for text box if not present
+        if "patient_symptoms_text_box" not in st.session_state:
+            st.session_state["patient_symptoms_text_box"] = st.session_state.get("input_text", "fever, cough, cold and bodypain")
+
+        symptom_query = st.text_area(
+            "Patient Symptoms (Spoken or Typed)",
+            height=90,
+            placeholder="E.g., I have fever, severe cough, cold, and body pain for 3 days...",
+            help="Speak via the microphone button above or type your symptoms here.",
+            key="patient_symptoms_text_box"
+        )
+        st.session_state["input_text"] = symptom_query
+
+
+    # Common Symptom Chips Selector
+    st.markdown("##### 🏷️ Quick Symptom Chips (Click to combine):")
+    common_chips = [
+        "Fever", "High Fever", "Cough", "Cold", "Body Pain", "Headache",
+        "Vomiting", "Loose Motion", "Dehydration", "Stomach Pain", "Acidity",
+        "Chills", "Shivering", "Sweating", "Itching", "Skin Rash",
+        "Burning Urination", "Bladder Pain", "Yellow Skin", "Dark Urine",
+        "Breathlessness", "Chest Pain", "Joint Pain", "Throat Irritation", "Dizziness"
+    ]
+    
+    selected_chips = st.multiselect(
+        "Select symptoms to add:",
+        common_chips,
+        default=[],
+        help="Selected chips are automatically merged with your symptom text.",
+        key="patient_symptoms_chips_select"
+    )
+
+    # Combine text area with selected chips
+    combined_query = symptom_query.strip()
+    if selected_chips:
+        chips_text = ", ".join(selected_chips).lower()
+        if chips_text not in combined_query.lower():
+            combined_query = (combined_query + ", " + chips_text).strip(", ")
+
     # ---------------------------------------------------------
-    # ROUTE 1: DEDICATED FULL-PAGE DIAGNOSTIC REPORT VIEW
+    # LIVE DETECTED SYMPTOMS PREVIEW (Shows what is detected from Voice/Text)
     # ---------------------------------------------------------
-    if st.session_state.get("active_view") == "report" and "last_prediction_data" in st.session_state:
+    matched, vector = parse_symptoms(combined_query, feature_cols)
+    matched_keys = list(matched.keys())
+
+    st.markdown(
+        f"""
+        <div class="glass-card" style="margin-top:10px;padding:14px 18px;border-left:5px solid #38bdf8;">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+                <div style="font-weight:700;font-size:1.05rem;color:#f8fafc;display:flex;align-items:center;gap:8px;">
+                    <span>📋 Detected Clinical Symptoms:</span>
+                    <span style="background:rgba(56,189,248,0.2);color:#38bdf8;padding:2px 10px;border-radius:12px;font-size:0.85rem;">
+                        {len(matched_keys)} identified
+                    </span>
+                </div>
+                <div style="font-size:0.8rem;color:#94a3b8;">
+                    Ready for XGBoost Multi-Class Inference
+                </div>
+            </div>
+            <div>
+                {''.join([f'<span class="symptom-tag" style="background:rgba(56,189,248,0.2);color:#7dd3fc;border-color:#0284c7;">✓ {s.replace("_", " ").title()}</span>' for s in matched_keys]) if matched_keys else '<span style="color:#94a3b8;font-size:0.9rem;">No clinical symptoms detected yet. Speak or type symptoms above (e.g. fever, headache, vomiting, loose motion, cold).</span>'}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Detect if any Red Flag symptoms are present and alert immediately
+    active_red_flags = [s for s in matched_keys if s in RED_FLAGS]
+    if active_red_flags:
+        rf_str = ", ".join([s.replace("_", " ").title() for s in active_red_flags])
+        st.error(f"🚨 **Emergency Red Flag Warning:** Detected **{rf_str}**. This may indicate a critical emergency condition. Do not delay hospital care!")
+
+    # Predict Button
+    btn_predict = st.button("🔍 Predict Disease (XGBoost Analysis)", type="primary", use_container_width=True, key="btn_run_prediction")
+
+    # Check if prediction is requested
+    should_run_prediction = btn_predict or st.session_state.pop("trigger_predict_now", False)
+
+    if should_run_prediction:
+        if not combined_query:
+            st.warning("⚠️ Please speak or enter symptoms first before predicting.")
+        elif not matched:
+            st.error("⚠️ No recognizable clinical symptoms found in your input. Try words like fever, cough, loose motion, vomiting, cold, headache, chills, shivering, itching, etc.")
+        else:
+            # Perform Multi-Factor Comprehensive Clinical Inference
+            predictions, clinical_reasons = predict_clinical_comprehensive(
+                xgb_model,
+                label_encoder,
+                vector,
+                matched_keys,
+                patient_age=int(age),
+                patient_gender=gender,
+                days=int(days),
+                severity=int(severity),
+                existing_conditions=existing_cond
+            )
+            top_disease, top_confidence = predictions[0]
+
+            # Assess Comprehensive Urgency & Vulnerability Index
+            urgency_level, action_advice, triage_reasons, vuln_score, vuln_tier = assess_urgency_comprehensive(
+                matched_keys,
+                days=int(days),
+                severity=int(severity),
+                confidence=float(top_confidence),
+                patient_age=int(age),
+                existing_conditions=existing_cond
+            )
+
+            # Retrieve Clinical Knowledge & Remedies
+            remedy_data = get_remedies_for_disease(top_disease)
+
+            # Tailored comorbidity precautions
+            comorbidity_precautions = get_comorbidity_tailored_precautions(existing_cond, top_disease)
+
+            # Store in session state so results remain visible
+            st.session_state["last_prediction_data"] = {
+                "top_disease": top_disease,
+                "top_confidence": top_confidence,
+                "urgency_level": urgency_level,
+                "action_advice": action_advice,
+                "triage_reasons": triage_reasons,
+                "vuln_score": vuln_score,
+                "vuln_tier": vuln_tier,
+                "clinical_reasons": clinical_reasons,
+                "comorbidity_precautions": comorbidity_precautions,
+                "remedy_data": remedy_data,
+                "predictions": predictions,
+                "matched_keys": matched_keys,
+                "patient_snapshot": {
+                    "age": int(age),
+                    "gender": gender,
+                    "days": int(days),
+                    "severity": int(severity),
+                    "conditions": existing_cond
+                }
+            }
+
+    # Render Prediction Results if available
+    if "last_prediction_data" in st.session_state:
         p_data = st.session_state["last_prediction_data"]
         top_disease = p_data["top_disease"]
         top_confidence = p_data["top_confidence"]
@@ -568,27 +670,12 @@ with tab1:
         matched_keys = p_data["matched_keys"]
         snap = p_data.get("patient_snapshot", {"age": 28, "gender": "Male", "days": 3, "severity": 5, "conditions": ["None"]})
 
-        # TOP NAVIGATION BAR
-        nav_col1, nav_col2 = st.columns([1.6, 2.4])
-        with nav_col1:
-            if st.button("⬅️ Start New Assessment / Edit Symptoms", type="primary", use_container_width=True, key="btn_nav_back_to_input"):
-                st.session_state["active_view"] = "input"
-                st.rerun()
-        with nav_col2:
-            st.markdown(
-                """
-                <div style="display:flex;align-items:center;justify-content:flex-end;height:100%;gap:10px;padding-top:4px;">
-                    <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:6px 16px;border-radius:20px;font-size:0.85rem;font-weight:600;">
-                        ✓ AI Diagnosis Verified (99.86% XGBoost Engine)
-                    </span>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+        st.markdown("<hr style='border:none;border-top:1px solid rgba(255,255,255,0.1);margin:24px 0;'>", unsafe_allow_html=True)
+        st.markdown("### 🎯 Multi-Parameter Clinical Diagnosis & Care Plan")
 
-        st.markdown("<hr style='border:none;border-top:1px solid rgba(255,255,255,0.1);margin:16px 0 20px 0;'>", unsafe_allow_html=True)
-
-        # 1. EVALUATED PATIENT PROFILE CONTEXT CARD
+        # ---------------------------------------------------------
+        # 1. Evaluated Patient Profile Context Card
+        # ---------------------------------------------------------
         active_conds_str = ", ".join([c for c in snap.get("conditions", []) if c != "None"]) or "None (Healthy Baseline)"
         duration_days = snap.get("days", 3)
         if duration_days <= 3:
@@ -606,8 +693,8 @@ with tab1:
             <div class="glass-card" style="border:1px solid rgba(56,189,248,0.3);background:rgba(15,23,42,0.85);margin-bottom:18px;">
                 <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;">
                     <div style="font-weight:700;font-size:1.05rem;color:#f8fafc;display:flex;align-items:center;gap:8px;">
-                        <span>🧑‍⚕️ Evaluated Patient Clinical Profile:</span>
-                        <span style="font-size:0.85rem;color:#94a3b8;font-weight:500;">(Integrated with Bayesian Prior)</span>
+                        <span>🧑‍⚕️ Evaluated Patient Clinical Context:</span>
+                        <span style="font-size:0.85rem;color:#94a3b8;font-weight:500;">(Integrated with XGBoost Bayesian Prior)</span>
                     </div>
                     <div style="display:flex;align-items:center;gap:8px;">
                         <span style="font-size:0.82rem;color:#94a3b8;">Patient Vulnerability Index:</span>
@@ -641,7 +728,6 @@ with tab1:
             unsafe_allow_html=True
         )
 
-        # HERO DIAGNOSIS + CONFIRMED SYMPTOMS
         res_col1, res_col2 = st.columns([1.8, 1.2])
 
         badge_class = {
@@ -657,7 +743,7 @@ with tab1:
                 f"""
                 <div class="glass-card" style="border-left: 6px solid #6366f1;">
                     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                        <h2 style="margin:0;color:#f8fafc;font-size:1.65rem;font-weight:700;">
+                        <h2 style="margin:0;color:#f8fafc;font-size:1.6rem;font-weight:700;">
                             {remedy_data.get('display_name', top_disease)}
                         </h2>
                         <span class="urgency-badge {badge_class}">{urgency_level}</span>
@@ -696,13 +782,9 @@ with tab1:
                 unsafe_allow_html=True
             )
 
-        # Emergency Red Flags if any
-        active_red_flags = [s for s in matched_keys if s in RED_FLAGS]
-        if active_red_flags:
-            rf_str = ", ".join([s.replace("_", " ").title() for s in active_red_flags])
-            st.error(f"🚨 **Emergency Red Flag Warning:** Detected **{rf_str}**. This indicates a high-acuity medical condition requiring emergency department evaluation!")
-
+        # ---------------------------------------------------------
         # Multi-Factor Clinical Reasoning Box
+        # ---------------------------------------------------------
         if clinical_reasons or triage_reasons:
             st.markdown(
                 f"""
@@ -719,7 +801,9 @@ with tab1:
                 unsafe_allow_html=True
             )
 
+        # ---------------------------------------------------------
         # Tailored Comorbidity Precautions Alert
+        # ---------------------------------------------------------
         if comorbidity_precautions:
             st.markdown(
                 f"""
@@ -735,7 +819,7 @@ with tab1:
                 unsafe_allow_html=True
             )
 
-        # TTS audio readout
+        # Text To Speech synthesis
         tts_text = f"Primary diagnosis is {remedy_data.get('display_name', top_disease)} with {top_confidence:.0f} percent certainty for a {snap.get('age', 28)} year old patient with {duration_days} days of symptoms and severity level {sev_num} out of 10. Triage status is {urgency_level}. Recommended specialist is {remedy_data.get('specialist', 'General Physician')}."
         render_tts_button(tts_text)
 
@@ -763,46 +847,11 @@ with tab1:
                     unsafe_allow_html=True
                 )
 
-        # ---------------------------------------------------------
-        # INTERACTIVE CARE PLAN & REMEDY CONSULTATION PROMPT
-        # ---------------------------------------------------------
-        st.markdown("<hr style='border:none;border-top:1px solid rgba(255,255,255,0.15);margin:28px 0 20px 0;'>", unsafe_allow_html=True)
-        
-        st.markdown(
-            f"""
-            <div class="glass-card" style="border:1.5px solid rgba(99,102,241,0.4);background:linear-gradient(135deg, rgba(30,41,59,0.95), rgba(15,23,42,0.98));padding:18px;margin-bottom:16px;">
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-                    <div>
-                        <div style="font-weight:700;font-size:1.15rem;color:#f8fafc;display:flex;align-items:center;gap:8px;">
-                            <span style="font-size:1.3rem;">🌿</span>
-                            <span>Integrative Therapeutics & Care Plan Consultation</span>
-                        </div>
-                        <div style="font-size:0.9rem;color:#94a3b8;margin-top:4px;">
-                            Would you like to explore <b>Home Remedies</b>, <b>Ayurvedic Formulations</b>, <b>Dietary Guidelines</b>, or <b>Preparation Recipes</b> for <b>{remedy_data.get('display_name', top_disease)}</b>?
-                        </div>
-                    </div>
-                    <span style="background:rgba(99,102,241,0.2);color:#a5b4fc;border:1px solid rgba(99,102,241,0.4);padding:3px 12px;border-radius:14px;font-size:0.82rem;font-weight:600;">
-                        Select Care Plan Option Below
-                    </span>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+        # Comprehensive 4-part Remedies & Care Plan
+        st.markdown("<hr style='border:none;border-top:1px solid rgba(255,255,255,0.1);margin:24px 0;'>", unsafe_allow_html=True)
+        st.markdown("### 🌿 Evidence-Based Home Remedies & Ayurvedic Care")
 
-        remedy_choice = st.radio(
-            "Choose what you would like to view:",
-            [
-                "🌿 Complete Care Package (All Remedies, Ayurvedic Kadha, Diet & Recipes)",
-                "🏡 Evidence-Based Home Remedies & Ayurvedic Formulations Only",
-                "🥗 Dietary Guidelines & Nutrition Protocol Only",
-                "🍲 Step-by-Step Preparation Recipes & Video Guides Only",
-                "🛡️ Clinical Precautions & Safety Guidelines Only",
-                "❌ Clinical Diagnosis Only (Hide Remedies)"
-            ],
-            index=0,
-            key="interactive_remedy_view_selection"
-        )
+        rem_col1, rem_col2 = st.columns(2)
 
         home_rems = remedy_data.get("home_remedies", [])
         ayur_rems = remedy_data.get("ayurvedic", [])
@@ -810,7 +859,77 @@ with tab1:
         diet_donts = remedy_data.get("diet_dont", [])
         precautions = remedy_data.get("precautions", [])
 
-        # Find matching condition guide or relevant recipes
+        with rem_col1:
+            home_items_html = "".join([f'<li style="margin-bottom:10px;color:#cbd5e1;line-height:1.5;">{r}</li>' for r in home_rems])
+            st.markdown(
+                f"""
+                <div class="glass-card" style="border-left:5px solid #10b981;padding:18px;">
+                    <h4 style="margin-top:0;color:#34d399;font-size:1.15rem;display:flex;align-items:center;gap:8px;">
+                        <span>🏡 Evidence-Based Home Remedies</span>
+                    </h4>
+                    <ul style="padding-left:20px;margin-bottom:0;">
+                        {home_items_html}
+                    </ul>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+            ayur_items_html = "".join([f'<li style="margin-bottom:10px;color:#cbd5e1;line-height:1.5;">{a}</li>' for a in ayur_rems])
+            st.markdown(
+                f"""
+                <div class="glass-card" style="border-left:5px solid #f59e0b;padding:18px;margin-top:14px;">
+                    <h4 style="margin-top:0;color:#fbbf24;font-size:1.15rem;display:flex;align-items:center;gap:8px;">
+                        <span>🍵 Traditional Ayurvedic Formulations & Kadha</span>
+                    </h4>
+                    <ul style="padding-left:20px;margin-bottom:0;">
+                        {ayur_items_html}
+                    </ul>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+        with rem_col2:
+            diet_do_html = "".join([f'<div style="margin-bottom:6px;color:#7dd3fc;line-height:1.4;">✓ {d}</div>' for d in diet_dos])
+            diet_dont_html = "".join([f'<div style="margin-bottom:6px;color:#fca5a5;line-height:1.4;">✗ {d}</div>' for d in diet_donts])
+            st.markdown(
+                f"""
+                <div class="glass-card" style="border-left:5px solid #38bdf8;padding:18px;">
+                    <h4 style="margin-top:0;color:#38bdf8;font-size:1.15rem;display:flex;align-items:center;gap:8px;">
+                        <span>🥗 Dietary Guidelines</span>
+                    </h4>
+                    <div style="margin-bottom:10px;">
+                        <div style="font-weight:700;color:#34d399;font-size:0.92rem;margin-bottom:6px;">Foods & Liquids to Include:</div>
+                        {diet_do_html}
+                    </div>
+                    <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.08);">
+                        <div style="font-weight:700;color:#f87171;font-size:0.92rem;margin-bottom:6px;">Foods & Liquids to Avoid:</div>
+                        {diet_dont_html}
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+            precautions_html = "".join([f'<li style="margin-bottom:10px;color:#fca5a5;line-height:1.5;">⚠️ {p}</li>' for p in precautions])
+            st.markdown(
+                f"""
+                <div class="glass-card" style="border-left:5px solid #ef4444;padding:18px;margin-top:14px;">
+                    <h4 style="margin-top:0;color:#f87171;font-size:1.15rem;display:flex;align-items:center;gap:8px;">
+                        <span>🛡️ Safety Protocol & Doctor Consultation</span>
+                    </h4>
+                    <ul style="padding-left:20px;margin-bottom:0;">
+                        {precautions_html}
+                    </ul>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+        # ---------------------------------------------------------
+        # Step-by-Step Preparation Recipes & Verified Medical Video Guides
+        # ---------------------------------------------------------
         matching_condition = None
         for cg in CONDITION_GUIDES:
             if cg.get("name", "").lower() in top_disease.lower() or top_disease.lower() in cg.get("name", "").lower():
@@ -826,217 +945,12 @@ with tab1:
         if not relevant_recipes and matching_condition:
             relevant_recipes = matching_condition.get("remedies", [])[:2]
 
-        # RENDER SELECTED CARE PLAN
-        if "Complete Care Package" in remedy_choice:
-            st.markdown(
-                """
-                <div style="margin:20px 0 16px 0;padding:12px 18px;background:rgba(16,185,129,0.18);border:1.5px solid #10b981;border-radius:12px;">
-                    <h3 style="margin:0;color:#34d399 !important;font-size:1.35rem;font-weight:800;display:flex;align-items:center;gap:10px;">
-                        <span>🌿 Complete Integrative Care Package</span>
-                    </h3>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-            rem_col1, rem_col2 = st.columns(2)
-            with rem_col1:
-                home_items_html = "".join([f'<li style="margin-bottom:10px;color:#cbd5e1;line-height:1.5;">{r}</li>' for r in home_rems])
-                st.markdown(
-                    f"""
-                    <div class="glass-card" style="border-left:5px solid #10b981;padding:18px;">
-                        <h4 style="margin-top:0;color:#34d399;font-size:1.15rem;display:flex;align-items:center;gap:8px;">
-                            <span>🏡 Evidence-Based Home Remedies</span>
-                        </h4>
-                        <ul style="padding-left:20px;margin-bottom:0;">
-                            {home_items_html}
-                        </ul>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-
-                ayur_items_html = "".join([f'<li style="margin-bottom:10px;color:#cbd5e1;line-height:1.5;">{a}</li>' for a in ayur_rems])
-                st.markdown(
-                    f"""
-                    <div class="glass-card" style="border-left:5px solid #f59e0b;padding:18px;margin-top:14px;">
-                        <h4 style="margin-top:0;color:#fbbf24;font-size:1.15rem;display:flex;align-items:center;gap:8px;">
-                            <span>🍵 Traditional Ayurvedic Formulations & Kadha</span>
-                        </h4>
-                        <ul style="padding-left:20px;margin-bottom:0;">
-                            {ayur_items_html}
-                        </ul>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-
-            with rem_col2:
-                diet_do_html = "".join([f'<div style="margin-bottom:6px;color:#7dd3fc;line-height:1.4;">✓ {d}</div>' for d in diet_dos])
-                diet_dont_html = "".join([f'<div style="margin-bottom:6px;color:#fca5a5;line-height:1.4;">✗ {d}</div>' for d in diet_donts])
-                st.markdown(
-                    f"""
-                    <div class="glass-card" style="border-left:5px solid #38bdf8;padding:18px;">
-                        <h4 style="margin-top:0;color:#38bdf8;font-size:1.15rem;display:flex;align-items:center;gap:8px;">
-                            <span>🥗 Dietary Guidelines</span>
-                        </h4>
-                        <div style="margin-bottom:10px;">
-                            <div style="font-weight:700;color:#34d399;font-size:0.92rem;margin-bottom:6px;">Foods & Liquids to Include:</div>
-                            {diet_do_html}
-                        </div>
-                        <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.08);">
-                            <div style="font-weight:700;color:#f87171;font-size:0.92rem;margin-bottom:6px;">Foods & Liquids to Avoid:</div>
-                            {diet_dont_html}
-                        </div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-
-                precautions_html = "".join([f'<li style="margin-bottom:10px;color:#fca5a5;line-height:1.5;">⚠️ {p}</li>' for p in precautions])
-                st.markdown(
-                    f"""
-                    <div class="glass-card" style="border-left:5px solid #ef4444;padding:18px;margin-top:14px;">
-                        <h4 style="margin-top:0;color:#f87171;font-size:1.15rem;display:flex;align-items:center;gap:8px;">
-                            <span>🛡️ Safety Protocol & Doctor Consultation</span>
-                        </h4>
-                        <ul style="padding-left:20px;margin-bottom:0;">
-                            {precautions_html}
-                        </ul>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-
-            if relevant_recipes:
-                st.markdown("<br>", unsafe_allow_html=True)
-                st.markdown(
-                    """
-                    <div style="margin:14px 0 12px 0;padding:10px 16px;background:rgba(245,158,11,0.15);border:1.5px solid #f59e0b;border-radius:10px;">
-                        <h4 style="margin:0;color:#fbbf24 !important;font-size:1.15rem;font-weight:800;display:flex;align-items:center;gap:8px;">
-                            <span>🍲 Step-by-Step Remedy Recipes & Preparation Guides</span>
-                        </h4>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-                rec_cols = st.columns(min(len(relevant_recipes), 2))
-                for r_idx, recipe in enumerate(relevant_recipes[:2]):
-                    with rec_cols[r_idx]:
-                        r_name = recipe.get("name", "Home Remedy")
-                        r_icon = recipe.get("icon", "🍵")
-                        r_make = recipe.get("make", "")
-                        r_why = recipe.get("why", "")
-                        r_vid = recipe.get("video", "")
-                        r_vlabel = recipe.get("videoLabel", "Medical Tutorial")
-                        st.markdown(
-                            f"""
-                            <div class="glass-card" style="border:1px solid rgba(245,158,11,0.35);padding:16px;">
-                                <div style="font-weight:700;color:#fbbf24;font-size:1.05rem;display:flex;align-items:center;gap:8px;">
-                                    <span>{r_icon}</span> <span>{r_name}</span>
-                                </div>
-                                <div style="margin-top:8px;font-size:0.88rem;color:#cbd5e1;line-height:1.5;">
-                                    <b style="color:#38bdf8;">How to Prepare:</b> {r_make}
-                                </div>
-                                <div style="margin-top:8px;font-size:0.84rem;color:#94a3b8;line-height:1.4;">
-                                    <b style="color:#34d399;">Biological Mechanism:</b> {r_why}
-                                </div>
-                                {f'<div style="margin-top:10px;"><a href="{r_vid}" target="_blank" style="color:#f87171;font-weight:600;font-size:0.82rem;text-decoration:none;">▶ Watch Video Guide: {r_vlabel}</a></div>' if r_vid else ''}
-                            </div>
-                            """,
-                            unsafe_allow_html=True
-                        )
-
-        elif "Home Remedies & Ayurvedic" in remedy_choice:
-            st.markdown(
-                """
-                <div style="margin:20px 0 16px 0;padding:12px 18px;background:rgba(16,185,129,0.18);border:1.5px solid #10b981;border-radius:12px;">
-                    <h3 style="margin:0;color:#34d399 !important;font-size:1.35rem;font-weight:800;display:flex;align-items:center;gap:10px;">
-                        <span>🏡 Evidence-Based Home Remedies & Ayurvedic Care</span>
-                    </h3>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-            rem_col1, rem_col2 = st.columns(2)
-            with rem_col1:
-                home_items_html = "".join([f'<li style="margin-bottom:10px;color:#cbd5e1;line-height:1.5;">{r}</li>' for r in home_rems])
-                st.markdown(
-                    f"""
-                    <div class="glass-card" style="border-left:5px solid #10b981;padding:18px;">
-                        <h4 style="margin-top:0;color:#34d399;font-size:1.15rem;display:flex;align-items:center;gap:8px;">
-                            <span>🏡 Evidence-Based Home Remedies</span>
-                        </h4>
-                        <ul style="padding-left:20px;margin-bottom:0;">
-                            {home_items_html}
-                        </ul>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-            with rem_col2:
-                ayur_items_html = "".join([f'<li style="margin-bottom:10px;color:#cbd5e1;line-height:1.5;">{a}</li>' for a in ayur_rems])
-                st.markdown(
-                    f"""
-                    <div class="glass-card" style="border-left:5px solid #f59e0b;padding:18px;">
-                        <h4 style="margin-top:0;color:#fbbf24;font-size:1.15rem;display:flex;align-items:center;gap:8px;">
-                            <span>🍵 Traditional Ayurvedic Formulations & Kadha</span>
-                        </h4>
-                        <ul style="padding-left:20px;margin-bottom:0;">
-                            {ayur_items_html}
-                        </ul>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-
-        elif "Dietary Guidelines" in remedy_choice:
-            st.markdown(
-                """
-                <div style="margin:20px 0 16px 0;padding:12px 18px;background:rgba(56,189,248,0.18);border:1.5px solid #38bdf8;border-radius:12px;">
-                    <h3 style="margin:0;color:#38bdf8 !important;font-size:1.35rem;font-weight:800;display:flex;align-items:center;gap:10px;">
-                        <span>🥗 Dietary Guidelines & Nutritional Protocol</span>
-                    </h3>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-            diet_do_html = "".join([f'<div style="margin-bottom:8px;color:#7dd3fc;font-size:0.95rem;line-height:1.4;">✓ {d}</div>' for d in diet_dos])
-            diet_dont_html = "".join([f'<div style="margin-bottom:8px;color:#fca5a5;font-size:0.95rem;line-height:1.4;">✗ {d}</div>' for d in diet_donts])
-            col_d1, col_d2 = st.columns(2)
-            with col_d1:
-                st.markdown(
-                    f"""
-                    <div class="glass-card" style="border-left:5px solid #10b981;padding:18px;">
-                        <h4 style="margin-top:0;color:#34d399;font-size:1.15rem;">✓ Foods & Liquids to Include</h4>
-                        {diet_do_html}
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-            with col_d2:
-                st.markdown(
-                    f"""
-                    <div class="glass-card" style="border-left:5px solid #ef4444;padding:18px;">
-                        <h4 style="margin-top:0;color:#f87171;font-size:1.15rem;">✗ Foods & Liquids to Avoid</h4>
-                        {diet_dont_html}
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-
-        elif "Step-by-Step" in remedy_choice:
-            st.markdown(
-                """
-                <div style="margin:20px 0 16px 0;padding:12px 18px;background:rgba(245,158,11,0.18);border:1.5px solid #f59e0b;border-radius:12px;">
-                    <h3 style="margin:0;color:#fbbf24 !important;font-size:1.35rem;font-weight:800;display:flex;align-items:center;gap:10px;">
-                        <span>🍲 Step-by-Step Preparation Recipes & Medical Video Tutorials</span>
-                    </h3>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-            if relevant_recipes:
-                for recipe in relevant_recipes:
+        if relevant_recipes:
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("#### 🍲 Step-by-Step Remedy Recipes & Preparation Guides")
+            rec_cols = st.columns(min(len(relevant_recipes), 2))
+            for r_idx, recipe in enumerate(relevant_recipes[:2]):
+                with rec_cols[r_idx]:
                     r_name = recipe.get("name", "Home Remedy")
                     r_icon = recipe.get("icon", "🍵")
                     r_make = recipe.get("make", "")
@@ -1045,236 +959,21 @@ with tab1:
                     r_vlabel = recipe.get("videoLabel", "Medical Tutorial")
                     st.markdown(
                         f"""
-                        <div class="glass-card" style="border:1px solid rgba(245,158,11,0.4);padding:20px;margin-bottom:14px;">
-                            <div style="font-weight:700;color:#fbbf24;font-size:1.15rem;display:flex;align-items:center;gap:10px;">
-                                <span style="font-size:1.3rem;">{r_icon}</span> <span>{r_name}</span>
+                        <div class="glass-card" style="border:1px solid rgba(245,158,11,0.35);padding:16px;">
+                            <div style="font-weight:700;color:#fbbf24;font-size:1.05rem;display:flex;align-items:center;gap:8px;">
+                                <span>{r_icon}</span> <span>{r_name}</span>
                             </div>
-                            <div style="margin-top:10px;font-size:0.92rem;color:#cbd5e1;line-height:1.6;">
+                            <div style="margin-top:8px;font-size:0.88rem;color:#cbd5e1;line-height:1.5;">
                                 <b style="color:#38bdf8;">How to Prepare:</b> {r_make}
                             </div>
-                            <div style="margin-top:10px;font-size:0.88rem;color:#94a3b8;line-height:1.5;">
+                            <div style="margin-top:8px;font-size:0.84rem;color:#94a3b8;line-height:1.4;">
                                 <b style="color:#34d399;">Biological Mechanism:</b> {r_why}
                             </div>
-                            {f'<div style="margin-top:12px;"><a href="{r_vid}" target="_blank" style="background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.4);padding:6px 14px;border-radius:18px;font-weight:600;font-size:0.85rem;text-decoration:none;display:inline-block;">▶ Watch YouTube Video Tutorial: {r_vlabel}</a></div>' if r_vid else ''}
+                            {f'<div style="margin-top:10px;"><a href="{r_vid}" target="_blank" style="color:#f87171;font-weight:600;font-size:0.82rem;text-decoration:none;">▶ Watch Video Guide: {r_vlabel}</a></div>' if r_vid else ''}
                         </div>
                         """,
                         unsafe_allow_html=True
                     )
-            else:
-                st.info(f"General home care hydration and rest are recommended for {remedy_data.get('display_name', top_disease)}.")
-
-        elif "Clinical Precautions" in remedy_choice:
-            st.markdown(
-                """
-                <div style="margin:20px 0 16px 0;padding:12px 18px;background:rgba(239,68,68,0.18);border:1.5px solid #ef4444;border-radius:12px;">
-                    <h3 style="margin:0;color:#f87171 !important;font-size:1.35rem;font-weight:800;display:flex;align-items:center;gap:10px;">
-                        <span>🛡️ Clinical Precautions & Safety Guidelines</span>
-                    </h3>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-            precautions_html = "".join([f'<li style="margin-bottom:10px;color:#fca5a5;line-height:1.5;">⚠️ {p}</li>' for p in precautions])
-            st.markdown(
-                f"""
-                <div class="glass-card" style="border-left:5px solid #ef4444;padding:20px;">
-                    <h4 style="margin-top:0;color:#f87171;font-size:1.15rem;">
-                        🛡️ Safety Protocol & Red Flag Warnings
-                    </h4>
-                    <ul style="padding-left:20px;margin-bottom:0;">
-                        {precautions_html}
-                    </ul>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-
-        else:
-            st.info("ℹ️ Home remedies and care plan are hidden as selected. You can switch options above anytime.")
-
-        # BOTTOM BACK BUTTON
-        st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("⬅️ Back to Symptom Input & Voice Console", type="primary", use_container_width=True, key="btn_bottom_back_to_input"):
-            st.session_state["active_view"] = "input"
-            st.rerun()
-
-    # ---------------------------------------------------------
-    # ROUTE 2: INPUT CONSOLE VIEW (Voice, Text, Presets, Chips, Live Preview)
-    # ---------------------------------------------------------
-    else:
-        # Show banner if voice query was just captured
-        if st.session_state.get("voice_banner_msg"):
-            st.success(f"🎙️ **Spoken Symptoms Transferred:** \"{st.session_state['voice_banner_msg']}\"")
-
-        col_input, col_presets = st.columns([2.2, 1.1])
-
-        with col_presets:
-            st.markdown("#### ⚡ Quick Presets")
-            presets = {
-                "Select a preset...": "",
-                "Typhoid / Cold: Fever, cough, cold, body pain": "fever, cough, cold and bodypain with headache",
-                "Food Poisoning: Vomiting & loose motion": "severe vomiting, dehydration and loose motion",
-                "Infection: High fever with chills & shivering": "high fever, violent shivering, chills and sweating",
-                "Skin: Itching & red skin rash": "itching, skin rash and nodal skin eruptions",
-                "UTI: Burning urination & bladder pain": "burning urination, foul smell of urine and bladder discomfort",
-                "Migraine: Throbbing headache & aura": "throbbing headache, visual disturbances and blurred vision",
-                "GERD: Heartburn, acidity & chest burn": "acidity, heartburn, burning chest and stomach pain",
-                "Jaundice: Yellow skin, dark urine & fatigue": "yellowish skin, dark urine, yellowing of eyes and fatigue"
-            }
-            selected_preset = st.selectbox("Test clinical scenarios:", list(presets.keys()), index=0, key="scenario_preset_select")
-
-            # Handle preset selection change
-            if selected_preset != "Select a preset..." and presets.get(selected_preset):
-                if st.session_state.get("last_preset_choice") != selected_preset:
-                    st.session_state["last_preset_choice"] = selected_preset
-                    st.session_state["patient_symptoms_text_box"] = presets[selected_preset]
-                    st.session_state["input_text"] = presets[selected_preset]
-
-        with col_input:
-            st.markdown("#### 🗣️ Enter or Speak Symptoms")
-
-            # Render Voice Input Widget (Microphone)
-            render_voice_input_widget()
-
-            # Initialize session state for text box if not present
-            if "patient_symptoms_text_box" not in st.session_state:
-                st.session_state["patient_symptoms_text_box"] = st.session_state.get("input_text", "fever, cough, cold and bodypain")
-
-            symptom_query = st.text_area(
-                "Patient Symptoms (Spoken or Typed)",
-                height=90,
-                placeholder="E.g., I have fever, severe cough, cold, and body pain for 3 days...",
-                help="Speak via the microphone button above or type your symptoms here.",
-                key="patient_symptoms_text_box"
-            )
-            st.session_state["input_text"] = symptom_query
-
-        # Common Symptom Chips Selector
-        st.markdown("##### 🏷️ Quick Symptom Chips (Click to combine):")
-        common_chips = [
-            "Fever", "High Fever", "Cough", "Cold", "Body Pain", "Headache",
-            "Vomiting", "Loose Motion", "Dehydration", "Stomach Pain", "Acidity",
-            "Chills", "Shivering", "Sweating", "Itching", "Skin Rash",
-            "Burning Urination", "Bladder Pain", "Yellow Skin", "Dark Urine",
-            "Breathlessness", "Chest Pain", "Joint Pain", "Throat Irritation", "Dizziness"
-        ]
-        
-        selected_chips = st.multiselect(
-            "Select symptoms to add:",
-            common_chips,
-            default=[],
-            help="Selected chips are automatically merged with your symptom text.",
-            key="patient_symptoms_chips_select"
-        )
-
-        # Combine text area with selected chips
-        combined_query = symptom_query.strip()
-        if selected_chips:
-            chips_text = ", ".join(selected_chips).lower()
-            if chips_text not in combined_query.lower():
-                combined_query = (combined_query + ", " + chips_text).strip(", ")
-
-        # ---------------------------------------------------------
-        # LIVE DETECTED SYMPTOMS PREVIEW
-        # ---------------------------------------------------------
-        matched, vector = parse_symptoms(combined_query, feature_cols)
-        matched_keys = list(matched.keys())
-
-        st.markdown(
-            f"""
-            <div class="glass-card" style="margin-top:10px;padding:14px 18px;border-left:5px solid #38bdf8;">
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
-                    <div style="font-weight:700;font-size:1.05rem;color:#f8fafc;display:flex;align-items:center;gap:8px;">
-                        <span>📋 Detected Clinical Symptoms:</span>
-                        <span style="background:rgba(56,189,248,0.2);color:#38bdf8;padding:2px 10px;border-radius:12px;font-size:0.85rem;">
-                            {len(matched_keys)} identified
-                        </span>
-                    </div>
-                    <div style="font-size:0.8rem;color:#94a3b8;">
-                        Ready for XGBoost Multi-Class Inference
-                    </div>
-                </div>
-                <div>
-                    {''.join([f'<span class="symptom-tag" style="background:rgba(56,189,248,0.2);color:#7dd3fc;border-color:#0284c7;">✓ {s.replace("_", " ").title()}</span>' for s in matched_keys]) if matched_keys else '<span style="color:#94a3b8;font-size:0.9rem;">No clinical symptoms detected yet. Speak or type symptoms above (e.g. fever, headache, vomiting, loose motion, cold).</span>'}
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
-        # Detect if any Red Flag symptoms are present and alert immediately
-        active_red_flags = [s for s in matched_keys if s in RED_FLAGS]
-        if active_red_flags:
-            rf_str = ", ".join([s.replace("_", " ").title() for s in active_red_flags])
-            st.error(f"🚨 **Emergency Red Flag Warning:** Detected **{rf_str}**. This may indicate a critical emergency condition. Do not delay hospital care!")
-
-        # Predict Button
-        btn_predict = st.button("🔍 Predict Disease (XGBoost Analysis)", type="primary", use_container_width=True, key="btn_run_prediction")
-
-        # Check if prediction is requested
-        should_run_prediction = btn_predict or st.session_state.pop("trigger_predict_now", False)
-
-        if should_run_prediction:
-            if not combined_query:
-                st.warning("⚠️ Please speak or enter symptoms first before predicting.")
-            elif not matched:
-                st.error("⚠️ No recognizable clinical symptoms found in your input. Try words like fever, cough, loose motion, vomiting, cold, headache, chills, shivering, itching, etc.")
-            else:
-                with st.spinner("Analyzing symptoms through XGBoost & Bayesian Triage Engine..."):
-                    # Perform Multi-Factor Comprehensive Clinical Inference
-                    predictions, clinical_reasons = predict_clinical_comprehensive(
-                        xgb_model,
-                        label_encoder,
-                        vector,
-                        matched_keys,
-                        patient_age=int(age),
-                        patient_gender=gender,
-                        days=int(days),
-                        severity=int(severity),
-                        existing_conditions=existing_cond
-                    )
-                    top_disease, top_confidence = predictions[0]
-
-                    # Assess Comprehensive Urgency & Vulnerability Index
-                    urgency_level, action_advice, triage_reasons, vuln_score, vuln_tier = assess_urgency_comprehensive(
-                        matched_keys,
-                        days=int(days),
-                        severity=int(severity),
-                        confidence=float(top_confidence),
-                        patient_age=int(age),
-                        existing_conditions=existing_cond
-                    )
-
-                    # Retrieve Clinical Knowledge & Remedies
-                    remedy_data = get_remedies_for_disease(top_disease)
-
-                    # Tailored comorbidity precautions
-                    comorbidity_precautions = get_comorbidity_tailored_precautions(existing_cond, top_disease)
-
-                    # Store in session state and transition to dedicated Report View!
-                    st.session_state["last_prediction_data"] = {
-                        "top_disease": top_disease,
-                        "top_confidence": top_confidence,
-                        "urgency_level": urgency_level,
-                        "action_advice": action_advice,
-                        "triage_reasons": triage_reasons,
-                        "vuln_score": vuln_score,
-                        "vuln_tier": vuln_tier,
-                        "clinical_reasons": clinical_reasons,
-                        "comorbidity_precautions": comorbidity_precautions,
-                        "remedy_data": remedy_data,
-                        "predictions": predictions,
-                        "matched_keys": matched_keys,
-                        "patient_snapshot": {
-                            "age": int(age),
-                            "gender": gender,
-                            "days": int(days),
-                            "severity": int(severity),
-                            "conditions": existing_cond
-                        }
-                    }
-                    st.session_state["active_view"] = "report"
-                    st.rerun()
 
 
 
