@@ -69,17 +69,57 @@ st.markdown(
             color: #f8fafc;
         }
 
-        /* Sidebar */
-        div[data-testid="stSidebar"] {
-            background: rgba(15, 23, 42, 0.96);
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        /* Complete Sidebar Theme Fix (Force Dark & High Contrast) */
+        section[data-testid="stSidebar"],
+        div[data-testid="stSidebar"],
+        div[data-testid="stSidebarContent"],
+        div[data-testid="stSidebarUserContent"],
+        div[data-testid="stSidebarHeader"] {
+            background-color: #0b1329 !important;
+            background: linear-gradient(180deg, #0b1329 0%, #0f172a 100%) !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+            color: #ffffff !important;
         }
 
-        div[data-testid="stSidebar"] label,
-        div[data-testid="stSidebar"] p,
-        div[data-testid="stSidebar"] span {
-            color: #f8fafc !important;
-            font-weight: 600 !important;
+        /* Sidebar Headers */
+        section[data-testid="stSidebar"] h1,
+        section[data-testid="stSidebar"] h2,
+        section[data-testid="stSidebar"] h3,
+        section[data-testid="stSidebar"] h4 {
+            color: #38bdf8 !important;
+            font-weight: 800 !important;
+        }
+
+        /* Sidebar Labels (Patient Age, Gender, Severity, etc.) */
+        section[data-testid="stSidebar"] label,
+        section[data-testid="stSidebar"] label p,
+        section[data-testid="stSidebar"] div[data-testid="stWidgetLabel"] p,
+        section[data-testid="stSidebar"] div[data-testid="stWidgetLabel"] label,
+        section[data-testid="stSidebar"] div[data-testid="stMarkdownContainer"] p {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            font-size: 0.95rem !important;
+            opacity: 1 !important;
+        }
+
+        /* Sidebar Inputs & Controls */
+        section[data-testid="stSidebar"] input,
+        section[data-testid="stSidebar"] div[data-baseweb="select"] > div {
+            background-color: #1e293b !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(99, 102, 241, 0.5) !important;
+            border-radius: 8px !important;
+        }
+
+        section[data-testid="stSidebar"] div[data-baseweb="select"] * {
+            color: #ffffff !important;
+        }
+
+        /* Sidebar Sliders Text & Values */
+        section[data-testid="stSidebar"] div[data-testid="stSlider"] p,
+        section[data-testid="stSidebar"] div[data-testid="stSlider"] span {
+            color: #ffffff !important;
+            font-weight: 700 !important;
         }
 
         /* Glass Cards */
@@ -437,14 +477,16 @@ with st.sidebar:
     st.markdown("### 🤖 Model Architecture")
     st.markdown(
         """
-        <div style="background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);border-radius:10px;padding:12px;">
-            <div style="font-weight:700;color:#38bdf8;font-size:0.95rem;">⚡ XGBoost Classifier</div>
-            <div style="font-size:0.8rem;color:#cbd5e1;margin-top:4px;">
+        <div style="background:rgba(15,23,42,0.95);border:1.5px solid #6366f1;border-radius:12px;padding:14px;box-shadow:0 4px 15px rgba(0,0,0,0.4);">
+            <div style="font-weight:800;color:#38bdf8;font-size:1rem;display:flex;align-items:center;gap:6px;">
+                <span>⚡</span> <span>XGBoost Classifier</span>
+            </div>
+            <div style="font-size:0.85rem;color:#e2e8f0;margin-top:6px;line-height:1.4;">
                 Extreme Gradient Boosting with Softmax Multi-Class Probability
             </div>
-            <div style="margin-top:8px;font-size:0.8rem;color:#34d399;font-weight:600;">
+            <div style="margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.12);font-size:0.88rem;color:#34d399;font-weight:700;line-height:1.5;">
                 ✓ Test Accuracy: 99.86%<br>
-                ✓ 5-Fold CV: 99.78% ± 0.11%
+                ✓ 5-Fold CV: 99.78% (±0.11%)
             </div>
         </div>
         """,
