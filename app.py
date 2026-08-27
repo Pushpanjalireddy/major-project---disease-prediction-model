@@ -75,6 +75,13 @@ st.markdown(
             border-right: 1px solid rgba(255, 255, 255, 0.08);
         }
 
+        div[data-testid="stSidebar"] label,
+        div[data-testid="stSidebar"] p,
+        div[data-testid="stSidebar"] span {
+            color: #f8fafc !important;
+            font-weight: 600 !important;
+        }
+
         /* Glass Cards */
         .glass-card {
             background: rgba(30, 41, 59, 0.7);
@@ -148,6 +155,77 @@ st.markdown(
             border-radius: 8px;
             margin: 0.75rem 0;
             color: #e2e8f0;
+        }
+
+        /* High-Contrast Headings & Typography */
+        h1, h2, h3, h4, h5, h6 {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+        }
+
+        p, span, label, div {
+            color: #f1f5f9;
+        }
+
+        /* Streamlit Radio Buttons Custom Styling (Ultra-Visible & High Contrast) */
+        div[data-testid="stRadio"] {
+            background: rgba(15, 23, 42, 0.92) !important;
+            border: 1.5px solid rgba(99, 102, 241, 0.45) !important;
+            border-radius: 16px !important;
+            padding: 18px 22px !important;
+            margin: 12px 0 20px 0 !important;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        div[data-testid="stRadio"] > label {
+            color: #38bdf8 !important;
+            font-size: 1.1rem !important;
+            font-weight: 800 !important;
+            margin-bottom: 12px !important;
+            display: block !important;
+            letter-spacing: 0.3px !important;
+        }
+
+        div[data-testid="stRadio"] div[role="radiogroup"] {
+            gap: 10px !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        div[data-testid="stRadio"] div[role="radiogroup"] label {
+            background: rgba(30, 41, 59, 0.9) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
+            border-radius: 12px !important;
+            padding: 12px 18px !important;
+            transition: all 0.2s ease-in-out !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        div[data-testid="stRadio"] div[role="radiogroup"] label:hover {
+            background: rgba(56, 189, 248, 0.2) !important;
+            border-color: #38bdf8 !important;
+            transform: translateX(4px);
+        }
+
+        div[data-testid="stRadio"] div[role="radiogroup"] label p {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            font-size: 1rem !important;
+            opacity: 1 !important;
+            margin: 0 !important;
+            line-height: 1.4 !important;
+        }
+
+        div[data-testid="stRadio"] div[role="radiogroup"] label span {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+        }
+
+        div[data-testid="stMarkdownContainer"] h3 {
+            color: #ffffff !important;
+            font-weight: 800 !important;
         }
 
         /* Tabs */
@@ -708,7 +786,16 @@ with tab1:
 
         # RENDER SELECTED CARE PLAN
         if "Complete Care Package" in remedy_choice:
-            st.markdown("### 🌿 Complete Integrative Care Package")
+            st.markdown(
+                """
+                <div style="margin:20px 0 16px 0;padding:12px 18px;background:rgba(16,185,129,0.18);border:1.5px solid #10b981;border-radius:12px;">
+                    <h3 style="margin:0;color:#34d399 !important;font-size:1.35rem;font-weight:800;display:flex;align-items:center;gap:10px;">
+                        <span>🌿 Complete Integrative Care Package</span>
+                    </h3>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
             rem_col1, rem_col2 = st.columns(2)
             with rem_col1:
                 home_items_html = "".join([f'<li style="margin-bottom:10px;color:#cbd5e1;line-height:1.5;">{r}</li>' for r in home_rems])
@@ -780,7 +867,16 @@ with tab1:
 
             if relevant_recipes:
                 st.markdown("<br>", unsafe_allow_html=True)
-                st.markdown("#### 🍲 Step-by-Step Remedy Recipes & Preparation Guides")
+                st.markdown(
+                    """
+                    <div style="margin:14px 0 12px 0;padding:10px 16px;background:rgba(245,158,11,0.15);border:1.5px solid #f59e0b;border-radius:10px;">
+                        <h4 style="margin:0;color:#fbbf24 !important;font-size:1.15rem;font-weight:800;display:flex;align-items:center;gap:8px;">
+                            <span>🍲 Step-by-Step Remedy Recipes & Preparation Guides</span>
+                        </h4>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
                 rec_cols = st.columns(min(len(relevant_recipes), 2))
                 for r_idx, recipe in enumerate(relevant_recipes[:2]):
                     with rec_cols[r_idx]:
@@ -809,7 +905,16 @@ with tab1:
                         )
 
         elif "Home Remedies & Ayurvedic" in remedy_choice:
-            st.markdown("### 🏡 Evidence-Based Home Remedies & Ayurvedic Care")
+            st.markdown(
+                """
+                <div style="margin:20px 0 16px 0;padding:12px 18px;background:rgba(16,185,129,0.18);border:1.5px solid #10b981;border-radius:12px;">
+                    <h3 style="margin:0;color:#34d399 !important;font-size:1.35rem;font-weight:800;display:flex;align-items:center;gap:10px;">
+                        <span>🏡 Evidence-Based Home Remedies & Ayurvedic Care</span>
+                    </h3>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
             rem_col1, rem_col2 = st.columns(2)
             with rem_col1:
                 home_items_html = "".join([f'<li style="margin-bottom:10px;color:#cbd5e1;line-height:1.5;">{r}</li>' for r in home_rems])
@@ -843,7 +948,16 @@ with tab1:
                 )
 
         elif "Dietary Guidelines" in remedy_choice:
-            st.markdown("### 🥗 Dietary Guidelines & Nutritional Protocol")
+            st.markdown(
+                """
+                <div style="margin:20px 0 16px 0;padding:12px 18px;background:rgba(56,189,248,0.18);border:1.5px solid #38bdf8;border-radius:12px;">
+                    <h3 style="margin:0;color:#38bdf8 !important;font-size:1.35rem;font-weight:800;display:flex;align-items:center;gap:10px;">
+                        <span>🥗 Dietary Guidelines & Nutritional Protocol</span>
+                    </h3>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
             diet_do_html = "".join([f'<div style="margin-bottom:8px;color:#7dd3fc;font-size:0.95rem;line-height:1.4;">✓ {d}</div>' for d in diet_dos])
             diet_dont_html = "".join([f'<div style="margin-bottom:8px;color:#fca5a5;font-size:0.95rem;line-height:1.4;">✗ {d}</div>' for d in diet_donts])
             col_d1, col_d2 = st.columns(2)
@@ -869,7 +983,16 @@ with tab1:
                 )
 
         elif "Step-by-Step" in remedy_choice:
-            st.markdown("### 🍲 Step-by-Step Preparation Recipes & Medical Video Tutorials")
+            st.markdown(
+                """
+                <div style="margin:20px 0 16px 0;padding:12px 18px;background:rgba(245,158,11,0.18);border:1.5px solid #f59e0b;border-radius:12px;">
+                    <h3 style="margin:0;color:#fbbf24 !important;font-size:1.35rem;font-weight:800;display:flex;align-items:center;gap:10px;">
+                        <span>🍲 Step-by-Step Preparation Recipes & Medical Video Tutorials</span>
+                    </h3>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
             if relevant_recipes:
                 for recipe in relevant_recipes:
                     r_name = recipe.get("name", "Home Remedy")
@@ -899,7 +1022,16 @@ with tab1:
                 st.info(f"General home care hydration and rest are recommended for {remedy_data.get('display_name', top_disease)}.")
 
         elif "Clinical Precautions" in remedy_choice:
-            st.markdown("### 🛡️ Clinical Precautions & Safety Guidelines")
+            st.markdown(
+                """
+                <div style="margin:20px 0 16px 0;padding:12px 18px;background:rgba(239,68,68,0.18);border:1.5px solid #ef4444;border-radius:12px;">
+                    <h3 style="margin:0;color:#f87171 !important;font-size:1.35rem;font-weight:800;display:flex;align-items:center;gap:10px;">
+                        <span>🛡️ Clinical Precautions & Safety Guidelines</span>
+                    </h3>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
             precautions_html = "".join([f'<li style="margin-bottom:10px;color:#fca5a5;line-height:1.5;">⚠️ {p}</li>' for p in precautions])
             st.markdown(
                 f"""
