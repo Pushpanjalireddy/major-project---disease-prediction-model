@@ -2724,7 +2724,7 @@ else:
             )
             st.latex(r"\mathcal{L}^{(t)} = \sum_{i=1}^{n} l\left(y_i, \hat{y}_i^{(t-1)} + f_t(x_i)\right) + \Omega(f_t)")
             st.markdown(
-                """
+                r"""
                 where the tree complexity regularization $\Omega(f_t)$ is defined as:
                 """,
                 unsafe_allow_html=True
