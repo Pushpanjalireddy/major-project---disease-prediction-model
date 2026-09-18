@@ -7,7 +7,7 @@ An intelligent, multi-modal clinical decision support system combining **Extreme
 ## 🌟 Key Features
 
 - **⚡ High-Accuracy AI Engine**: Powered by an optimized XGBoost Classifier achieving **99.86% test accuracy**, **99.87% Macro F1-score**, and **99.78% (±0.11%) 5-fold cross-validation accuracy** across 30 primary disease classes and 132 validated clinical symptoms.
-- **🎙️ Real-Time Voice & Speech Input**: Integrated speech-to-text recognition supporting **English (US/Global)**, **English (India)**, and **Hindi (हिन्दी)** with automatic symptom box population and instant auto-prediction.
+- **🎙️ Real-Time Voice & Speech Input**: Integrated speech-to-text recognition supporting **Kannada (ಕನ್ನಡ - kn-IN)**, **English (India)**, and **English (US/Global)** with automatic symptom box population and instant auto-prediction.
 - **📁 Audio File Transcription**: Drag-and-drop support for `.wav`, `.mp3`, `.m4a`, `.ogg`, and `.flac` voice notes.
 - **🧠 Multi-Factor Bayesian Triage**: Incorporates patient demographics (Age, Gender), symptom timeline (Acute vs. Subacute vs. Chronic), discomfort severity ($1–10$), and pre-existing comorbidities (Diabetes, Hypertension, Asthma, etc.) into a dynamic **Patient Vulnerability Index ($0–100$)**.
 - **🚨 Emergency Red Flag Detection**: Automatic alerts and hospital referral triggers for critical warning symptoms (chest pain, severe breathlessness, slurred speech, balance loss).

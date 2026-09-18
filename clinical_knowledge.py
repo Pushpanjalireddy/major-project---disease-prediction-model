@@ -79,135 +79,471 @@ DISEASE_SYMPTOM_PROFILES: Dict[str, List[str]] = {
     "Vertigo (BPPV)": ["headache", "loss_of_balance", "nausea", "spinning_movements", "unsteadiness", "vomiting"]
 }
 
-# Comprehensive NLP Synonym mapping for all 130+ symptoms
+# Comprehensive NLP Synonym mapping for all 130+ symptoms (English + Native Kannada ಕನ್ನಡ + Transliterated Kannada)
 SYMPTOM_SYNONYMS: Dict[str, List[str]] = {
-    "itching": ["itching", "itch", "itchy", "scratching", "pruritus", "skin itching", "itchiness", "itchy skin", "itching all over"],
-    "skin_rash": ["skin rash", "rash", "rashes", "red marks", "breakout", "skin irritation", "erythema", "skin eruptions", "red rash", "skin rashes", "body rash"],
-    "nodal_skin_eruptions": ["nodal skin eruptions", "skin eruptions", "bumps on skin", "nodules", "lumps on skin", "skin bumps"],
-    "continuous_sneezing": ["continuous sneezing", "sneezing", "sneeze", "constant sneezing", "sneezing fits"],
-    "shivering": ["shivering", "shiver", "trembling", "body shaking", "rigors", "shivers", "violent shivering"],
-    "chills": ["chills", "feeling cold", "cold chills", "chilly", "goosebumps", "cold feeling", "shivering with cold"],
-    "joint_pain": ["joint pain", "pain in joints", "knee pain", "knees hurt", "arthralgia", "elbow pain", "finger joint pain", "wrist pain"],
-    "stomach_pain": ["stomach pain", "stomach ache", "tummy ache", "belly ache", "pain in stomach", "gastric pain", "stomach cramps", "gut pain", "burning stomach"],
-    "acidity": ["acidity", "acid reflux", "heartburn", "burning chest", "sour burps", "acid regurgitation", "hyperacidity", "burning in food pipe", "acid problem"],
-    "ulcers_on_tongue": ["ulcers on tongue", "tongue ulcers", "mouth ulcers", "canker sores", "sores in mouth", "tongue sore"],
-    "muscle_wasting": ["muscle wasting", "muscle loss", "loss of muscle mass", "shrinking muscles", "muscle atrophy"],
-    "vomiting": ["vomiting", "vomit", "throwing up", "puking", "emesis", "heaving", "food throwing", "vomitted", "barfing"],
-    "burning_micturition": ["burning micturition", "burning urination", "pain when peeing", "burning urine", "painful urination", "dysuria", "burning pee", "burning sensation when urinating", "pain in urination"],
-    "spotting_ urination": ["spotting urination", "blood in urine drops", "spotting urine", "scanty dark urine drops"],
-    "fatigue": ["fatigue", "tired", "tiredness", "exhaustion", "no energy", "feeling drained", "burnout", "extreme weakness", "lack of energy", "weariness", "feeling weak", "weakness", "weak", "body weakness", "exhausted"],
-    "weight_gain": ["weight gain", "gaining weight", "putting on weight", "unexplained weight gain", "getting fat"],
-    "anxiety": ["anxiety", "anxious", "nervous", "nervousness", "panic", "feeling uneasy", "worrying too much", "fearfulness"],
-    "cold_hands_and_feets": ["cold hands and feets", "cold hands", "cold feet", "freezing extremities", "chilled palms", "cold feet and hands"],
-    "mood_swings": ["mood swings", "moody", "sudden mood changes", "emotional instability", "irritability swings"],
-    "weight_loss": ["weight loss", "losing weight", "rapid weight loss", "unintentional weight loss", "slimming rapidly"],
-    "restlessness": ["restlessness", "restless", "unable to sit still", "agitation", "fidgeting"],
-    "lethargy": ["lethargy", "lethargic", "sluggishness", "feeling sluggish", "laziness", "lack of motivation", "drowsy feeling"],
-    "patches_in_throat": ["patches in throat", "white patches in throat", "throat spots", "throat coating", "tonsil patches"],
-    "irregular_sugar_level": ["irregular sugar level", "fluctuating blood sugar", "high sugar", "unstable glucose", "sugar spikes"],
-    "cough": ["cough", "coughing", "dry cough", "wet cough", "phlegmy cough", "hacking cough", "persistent cough", "caugh", "throat coughing"],
-    "high_fever": ["high fever", "fever", "high temperature", "temperature", "hot body", "pyrexia", "feverish", "burning with fever", "spiking fever", "having fever", "running temperature", "running fever"],
-    "sunken_eyes": ["sunken eyes", "deep hollow eyes", "hollowed eyes", "dark sunken eyes", "eyes sunken in"],
-    "breathlessness": ["breathlessness", "shortness of breath", "cant breathe", "difficulty breathing", "dyspnea", "gasping for air", "winded", "labored breathing", "trouble breathing"],
-    "sweating": ["sweating", "night sweats", "perspiring", "excessive sweat", "profuse sweating", "sweaty body", "sweat"],
-    "dehydration": ["dehydration", "dehydrated", "very thirsty", "extreme thirst", "dry mouth and throat", "lack of water in body", "water loss"],
-    "indigestion": ["indigestion", "bloating", "upset stomach", "dyspepsia", "food not digesting", "heavy stomach", "gas problem"],
-    "headache": ["headache", "head pain", "head hurts", "throbbing head", "head heavy", "migraine ache", "forehead ache", "cephalalgia", "severe headache", "pain in head"],
-    "yellowish_skin": ["yellowish skin", "yellow skin", "jaundice skin", "icterus", "skin looking yellow", "pale yellow skin"],
-    "dark_urine": ["dark urine", "brown urine", "tea colored urine", "deep yellow urine", "dark colored pee"],
-    "nausea": ["nausea", "feeling sick", "queasy", "nauseous", "feeling like vomiting", "sick to stomach", "urge to vomit"],
-    "loss_of_appetite": ["loss of appetite", "no appetite", "not hungry", "reduced eating", "anorexia", "poor appetite", "dont feel like eating"],
-    "pain_behind_the_eyes": ["pain behind the eyes", "eye socket pain", "retro orbital pain", "eye pain on moving", "behind eyes aching"],
-    "back_pain": ["back pain", "back ache", "lower back pain", "upper back pain", "spine pain", "lumbago", "back hurts"],
-    "constipation": ["constipation", "constipated", "hard stool", "difficulty passing stool", "irregular bowel"],
-    "abdominal_pain": ["abdominal pain", "belly pain", "stomach cramps", "lower abdominal pain", "cramping belly", "gut cramps", "tummy pain"],
-    "diarrhoea": ["diarrhoea", "diarrhea", "loose motion", "loose motions", "watery stool", "loose stools", "frequent motions", "running stomach", "watery motions", "dysentery", "loose stool", "stomach loose"],
-    "mild_fever": ["mild fever", "low fever", "slight fever", "low grade fever", "warm body"],
-    "yellow_urine": ["yellow urine", "bright yellow urine", "dark yellow pee"],
-    "yellowing_of_eyes": ["yellowing of eyes", "yellow eyes", "scleral icterus", "whites of eyes turned yellow"],
-    "acute_liver_failure": ["acute liver failure", "liver failure", "hepatic dysfunction"],
-    "fluid_overload": ["fluid overload", "water retention", "edema", "body swelling with fluid"],
-    "swelling_of_stomach": ["swelling of stomach", "stomach distension", "ascites", "swollen abdomen", "belly swelling"],
-    "swelled_lymph_nodes": ["swelled lymph nodes", "swollen glands", "swollen lymph nodes", "neck swelling", "gland swelling", "lymphadenopathy"],
-    "malaise": ["malaise", "general discomfort", "feeling unwell", "body unwell", "overall sickness"],
-    "blurred_and_distorted_vision": ["blurred and distorted vision", "blurred vision", "blurry vision", "distorted vision", "foggy vision", "hazy sight"],
-    "phlegm": ["phlegm", "mucus", "sputum", "coughing mucus", "thick phlegm", "catarrh"],
-    "throat_irritation": ["throat irritation", "sore throat", "throat pain", "scratchy throat", "raw throat", "pain swallowing", "itchy throat", "throat infection", "pain in throat"],
-    "redness_of_eyes": ["redness of eyes", "red eyes", "bloodshot eyes", "pink eye", "eye inflammation"],
-    "sinus_pressure": ["sinus pressure", "sinus pain", "facial pressure", "forehead pressure", "nasal sinus blockage"],
-    "runny_nose": ["runny nose", "running nose", "dripping nose", "nasal discharge", "watery nose", "rhinorrhea", "cold in nose", "sniffles"],
-    "congestion": ["congestion", "blocked nose", "stuffy nose", "nasal blockage", "clogged nose", "stuffy nasal passages", "nose block", "chest congestion"],
-    "chest_pain": ["chest pain", "pain in chest", "heart pain", "chest tightness", "chest pressure", "angina", "sternum pain"],
-    "weakness_in_limbs": ["weakness in limbs", "weak arms", "weak legs", "loss of limb strength", "limbs feel heavy"],
-    "fast_heart_rate": ["fast heart rate", "tachycardia", "racing heart", "rapid pulse", "quick heartbeat"],
-    "pain_during_bowel_movements": ["pain during bowel movements", "painful defecation", "pain passing stool", "anal pain on stool"],
-    "pain_in_anal_region": ["pain in anal region", "anal pain", "rectal pain", "pain in bottom", "pain around anus"],
-    "bloody_stool": ["bloody stool", "blood in stool", "rectal bleeding", "red blood in feces", "hematochezia"],
-    "irritation_in_anus": ["irritation in anus", "anal itching", "pruritus ani", "burning in anus"],
-    "neck_pain": ["neck pain", "neck ache", "stiff neck pain", "cervical pain", "sore neck"],
-    "dizziness": ["dizziness", "dizzy", "giddy", "head spinning", "lightheaded", "lightheadedness", "fainting sensation"],
-    "cramps": ["cramps", "muscle cramps", "leg cramps", "calf cramps", "spasms"],
-    "bruising": ["bruising", "easy bruising", "blue marks on skin", "ecchymosis", "skin bruises"],
-    "obesity": ["obesity", "overweight", "excessive body fat", "morbid obesity"],
-    "swollen_legs": ["swollen legs", "leg swelling", "swollen feet", "pedal edema", "puffy legs"],
-    "swollen_blood_vessels": ["swollen blood vessels", "enlarged veins", "visible blue veins", "bulging veins"],
-    "puffy_face_and_eyes": ["puffy face and eyes", "puffy face", "facial swelling", "swollen eyelids", "puffy eyes"],
-    "enlarged_thyroid": ["enlarged thyroid", "goiter", "swollen neck front", "thyroid swelling"],
-    "brittle_nails": ["brittle nails", "breaking nails", "fragile nails", "cracking nails"],
-    "swollen_extremeties": ["swollen extremeties", "swollen hands and feet", "extremity swelling"],
-    "excessive_hunger": ["excessive hunger", "always hungry", "polyphagia", "increased appetite", "constant hunger"],
-    "drying_and_tingling_lips": ["drying and tingling lips", "tingling lips", "dry numb lips", "lip numbness"],
-    "slurred_speech": ["slurred speech", "difficulty speaking", "garbled speech", "incoherent speech"],
-    "knee_pain": ["knee pain", "pain in knees", "knee joint ache", "knees hurting"],
-    "hip_joint_pain": ["hip joint pain", "pain in hip", "hip ache"],
-    "muscle_weakness": ["muscle weakness", "weak muscles", "loss of muscle strength", "myasthenia"],
-    "stiff_neck": ["stiff neck", "neck stiffness", "inability to bend neck", "rigid neck"],
-    "swelling_joints": ["swelling joints", "swollen joints", "joint swelling", "puffy joints"],
-    "movement_stiffness": ["movement stiffness", "stiff body", "stiffness in morning", "joint rigidity"],
-    "spinning_movements": ["spinning movements", "room spinning", "vertigo sensation", "spinning head"],
-    "loss_of_balance": ["loss of balance", "unsteadiness", "off balance", "imbalance walking", "stumbling", "poor coordination"],
-    "unsteadiness": ["unsteadiness", "wobbly walking", "shaky footing", "instability"],
-    "weakness_of_one_body_side": ["weakness of one body side", "hemiparesis", "one side weak", "paralysis of one side"],
-    "loss_of_smell": ["loss of smell", "anosmia", "cannot smell", "lost sense of smell"],
-    "bladder_discomfort": ["bladder discomfort", "pelvic discomfort", "full bladder pressure", "bladder ache", "bladder pain"],
-    "foul_smell_of urine": ["foul smell of urine", "smelly urine", "malodorous urine", "stinky pee"],
-    "continuous_feel_of_urine": ["continuous feel of urine", "frequent urge to pee", "urgency urination", "feeling like peeing continuously"],
-    "passage_of_gases": ["passage of gases", "flatulence", "excessive gas", "burping and farting", "passing wind"],
-    "internal_itching": ["internal itching", "deep itching", "internal prickling sensation"],
-    "toxic_look_(typhos)": ["toxic look (typhos)", "typhoid look", "toxic appearance", "severely sick appearance", "dull lethargic appearance"],
-    "depression": ["depression", "depressed mood", "feeling very low", "sadness", "hopelessness"],
-    "irritability": ["irritability", "irritable", "cranky", "getting angry easily", "short tempered"],
-    "muscle_pain": ["muscle pain", "body ache", "body pain", "bodypain", "myalgia", "sore muscles", "whole body hurts", "body aches", "bodyache"],
-    "altered_sensorium": ["altered sensorium", "confusion", "delirium", "disorientation", "altered consciousness"],
-    "red_spots_over_body": ["red spots over body", "petechiae", "red dots on skin", "measles rash", "purpura", "red skin spots"],
-    "belly_pain": ["belly pain", "lower stomach ache", "abdomen hurts", "gut pain"],
-    "abnormal_menstruation": ["abnormal menstruation", "irregular periods", "heavy menstrual bleeding", "missed periods"],
-    "dischromic _patches": ["dischromic  patches", "discolored patches", "skin discoloration", "tinea versicolor", "white skin patches"],
-    "watering_from_eyes": ["watering from eyes", "watery eyes", "excessive tears", "lacrimation", "eyes watering"],
-    "increased_appetite": ["increased appetite", "huge appetite", "eating frequently"],
-    "polyuria": ["polyuria", "frequent urination", "peeing a lot", "excessive urination", "urination at night"],
-    "family_history": ["family history", "hereditary", "genetics", "runs in family"],
-    "mucoid_sputum": ["mucoid sputum", "thick white phlegm", "sticky sputum", "mucus cough"],
-    "rusty_sputum": ["rusty sputum", "brownish phlegm", "blood tinged sputum"],
-    "lack_of_concentration": ["lack of concentration", "brain fog", "cannot focus", "difficulty concentrating"],
-    "visual_disturbances": ["visual disturbances", "aura", "flashing lights", "blind spots in vision"],
-    "coma": ["coma", "unconscious", "unresponsive", "passed out deeply"],
-    "stomach_bleeding": ["stomach bleeding", "vomiting blood", "black tarry stool", "hematemesis", "melena"],
-    "distention_of_abdomen": ["distention of abdomen", "swollen belly", "bloated abdomen", "abdominal swelling"],
-    "blood_in_sputum": ["blood in sputum", "coughing blood", "hemoptysis", "red blood in phlegm"],
-    "prominent_veins_on_calf": ["prominent veins on calf", "spider veins", "twisted veins on legs", "engorged calf veins"],
-    "palpitations": ["palpitations", "heart racing", "fluttering heart", "skipped heartbeats", "pounding heart"],
-    "painful_walking": ["painful walking", "limping", "hurts to walk", "difficulty walking due to pain"],
-    "pus_filled_pimples": ["pus filled pimples", "acne pustules", "pus pimples", "zits with pus", "boils on face"],
-    "blackheads": ["blackheads", "clogged pores", "comedones", "open comedones"],
-    "scurring": ["scurring", "acne scars", "scarring", "pockmarks"],
-    "skin_peeling": ["skin peeling", "flaking skin", "desquamation", "peeling epidermis"],
-    "silver_like_dusting": ["silver like dusting", "silvery scales", "psoriasis scales", "white flaky crusts"],
-    "small_dents_in_nails": ["small dents in nails", "nail pitting", "pitted fingernails"],
-    "inflammatory_nails": ["inflammatory nails", "nail inflammation", "swollen nail beds", "paronychia"],
-    "blister": ["blister", "blisters", "skin vesicles", "fluid filled blisters", "bullae"],
-    "red_sore_around_nose": ["red sore around nose", "sores near nostrils", "crusty nose sores"],
-    "yellow_crust_ooze": ["yellow crust ooze", "honey colored crust", "oozing golden crust", "impetigo crust"],
+    "itching": [
+        "ತುರಿಕೆ", "ತುರಿಸುವುದು", "ನವೆ", "ಚರ್ಮದ ತುರಿಕೆ", "ಮೈ ತುರಿಕೆ", "ತುರಿಸುತ್ತಿದೆ", "ತುರಿಕೆ ಇದೆ", "ಮೈ ನವೆ",
+        "turike", "thurike", "nave", "charmada turike", "mai turike",
+        "itching", "itch", "itchy", "scratching", "pruritus", "skin itching", "itchiness", "itchy skin", "itching all over"
+    ],
+    "skin_rash": [
+        "ದದ್ದು", "ದದ್ದುಗಳು", "ಚರ್ಮದ ದದ್ದು", "ಕೆಂಪು ದದ್ದು", "ಗುಳ್ಳೆಗಳು", "ಚರ್ಮ ಕೆಂಪಾಗುವುದು", "ಅಲರ್ಜಿ ದದ್ದು", "ಚರ್ಮದ ಗುಳ್ಳೆಗಳು",
+        "daddu", "daddugalu", "kempu daddu", "charmada daddu", "skin rash", "rash", "rashes",
+        "red marks", "breakout", "skin irritation", "erythema", "skin eruptions", "red rash", "skin rashes", "body rash"
+    ],
+    "nodal_skin_eruptions": [
+        "ಗಂಟು ಗುಳ್ಳೆಗಳು", "ಚರ್ಮದ ಗಂಟುಗಳು", "ಗಂಟುಗಳು", "nodal eruptions", "gantu gullegalu",
+        "nodal skin eruptions", "skin eruptions", "bumps on skin", "nodules", "lumps on skin", "skin bumps"
+    ],
+    "continuous_sneezing": [
+        "ಸತತ ಸೀನು", "ಸೀನುವುದು", "ಸೀನುಗಳು", "ಸೀನು", "ಸೀನು ಬರುತ್ತಿದೆ", "seenu", "seenuvudu", "satata seenu", "sneezing",
+        "continuous sneezing", "sneeze", "constant sneezing", "sneezing fits"
+    ],
+    "shivering": [
+        "ನಡುಕ", "ಮೈ ನಡುಗುವುದು", "ದೇಹ ನಡುಕ", "ನಡುಗುತ್ತಿದೆ", "naduka", "mai nadukuvudu", "deha naduka",
+        "shivering", "shiver", "trembling", "body shaking", "rigors", "shivers", "violent shivering"
+    ],
+    "chills": [
+        "ಚಳಿ", "ವಿಪರೀತ ಚಳಿ", "ಚಳಿ ಆಗುವುದು", "ಮೈ ಚಳಿ", "ಚಳಿಯಾಗುತ್ತಿದೆ", "ತೀವ್ರ ಚಳಿ", "chali", "chali aaguvudu", "mai chali", "vipareetha chali",
+        "chills", "feeling cold", "cold chills", "chilly", "goosebumps", "cold feeling", "shivering with cold"
+    ],
+    "joint_pain": [
+        "ಕೀಲು ನೋವು", "ಕೀಲುಗಳ ನೋವು", "ಸಂಧಿವಾತ ನೋವು", "ಕೀಲು ಬೇನೆ", "ಕೈಕಾಲು ಕೀಲು ನೋವು", "keelu novu", "keelugala novu", "sandhivata",
+        "joint pain", "pain in joints", "knee pain", "knees hurt", "arthralgia", "elbow pain", "finger joint pain", "wrist pain"
+    ],
+    "stomach_pain": [
+        "ಹೊಟ್ಟೆ ನೋವು", "ಹೊಟ್ಟೆ ಶೂಲೆ", "ಹೊಟ್ಟೆ ಬೇನೆ", "ಹೊಟ್ಟೆ ಬೇನೆಯಾಗುವುದು", "ಹೊಟ್ಟೆ ಸೆಳೆತ", "ಹೊಟ್ಟೆ ಚುಚ್ಚುವುದು", "ಹೊಟ್ಟೆ ಕಡಿಯುವುದು",
+        "hotte novu", "hotte shule", "hotte bene", "hotte seleta", "hottenovu",
+        "stomach pain", "stomach ache", "tummy ache", "belly ache", "pain in stomach", "gastric pain", "stomach cramps", "gut pain", "burning stomach"
+    ],
+    "acidity": [
+        "ಆಸಿಡಿಟಿ", "ಎದೆ ಉರಿ", "ಹುಳಿ ತೇಗು", "ಪಿತ್ತ", "ಹೊಟ್ಟೆ ಉರಿ", "ಗ್ಯಾಸ್ಟ್ರಿಕ್", "ಹುಳಿತೇಗು",
+        "acidity", "ede uri", "huli tegu", "pittha", "hotte uri", "gastric", "acid reflux",
+        "heartburn", "burning chest", "sour burps", "acid regurgitation", "hyperacidity", "burning in food pipe", "acid problem"
+    ],
+    "ulcers_on_tongue": [
+        "ನಾಲಿಗೆ ಹುಣ್ಣು", "ಬಾಯಿ ಹುಣ್ಣು", "ನಾಲಿಗೆಯಲ್ಲಿ ಹುಣ್ಣುಗಳು", "ಬಾಯಿಯಲ್ಲಿ ಹುಣ್ಣು", "nalige hunnu", "baayi hunnu",
+        "ulcers on tongue", "tongue ulcers", "mouth ulcers", "canker sores", "sores in mouth", "tongue sore"
+    ],
+    "muscle_wasting": [
+        "ಸ್ನಾಯು ಕ್ಷೀಣತೆ", "ಸ್ನಾಯು ನಷ್ಟ", "snayu kshinathe",
+        "muscle wasting", "muscle loss", "loss of muscle mass", "shrinking muscles", "muscle atrophy"
+    ],
+    "vomiting": [
+        "ವಾಂತಿ", "ವಾಂತಿಯಾಗುವುದು", "ವಾಂತಿ ಬರುತ್ತಿದೆ", "ಓಕರಿಕೆ", "ವಾಂತಿ ಮಾಡುವುದು", "ವಾಂತಿ ಬೇಧಿ",
+        "vaanti", "vanti", "okarke", "vaanthi", "vanti baruttide",
+        "vomiting", "vomit", "throwing up", "puking", "emesis", "heaving", "food throwing", "vomitted", "barfing"
+    ],
+    "burning_micturition": [
+        "ಉರಿ ಮೂತ್ರ", "ಮೂತ್ರದಲ್ಲಿ ಉರಿ", "ಮೂತ್ರ ವಿಸರ್ಜನೆ ವೇಳೆ ಉರಿ", "ಮೂತ್ರ ಸುಡುವುದು", "ಮೂತ್ರ ಮಾಡುವಾಗ ನೋವು", "ಉರಿಮೂತ್ರ",
+        "uri moothra", "uri mootra", "moothradalli uri", "mootra uriyuvudu", "urimoothra",
+        "burning micturition", "burning urination", "pain when peeing", "burning urine", "painful urination", "dysuria", "burning pee", "burning sensation when urinating", "pain in urination"
+    ],
+    "spotting_urination": [
+        "ಮೂತ್ರದಲ್ಲಿ ರಕ್ತದ ಕಲೆ", "ಮೂತ್ರದ ಹನಿಗಳು", "moothradalli raktha",
+        "spotting urination", "blood in urine drops", "spotting urine", "scanty dark urine drops"
+    ],
+    "fatigue": [
+        "ಸುಸ್ತು", "ದಣಿವು", "ಆಯಾಸ", "ನಿಶ್ಯಕ್ತಿ", "ದೇಹದ ಆಯಾಸ", "ಸುಸ್ತಾಗುತ್ತಿದೆ", "ಅತಿಯಾದ ದಣಿವು", "ತ್ರಾಣವಿಲ್ಲದಿರುವುದು", "ಶಕ್ತಿ ಇಲ್ಲ",
+        "susthu", "sustu", "danivu", "aayasa", "nishakthi", "traana illa",
+        "fatigue", "tired", "tiredness", "exhaustion", "no energy", "feeling drained", "burnout", "extreme weakness", "lack of energy", "weariness", "feeling weak", "weakness", "weak", "body weakness", "exhausted"
+    ],
+    "weight_gain": [
+        "ತೂಕ ಹೆಚ್ಚಾಗುವುದು", "ದೇಹದ ತೂಕ ಏರಿಕೆ", "ದಪ್ಪಗಾಗುವುದು", "tooka hechhaguvudu",
+        "weight gain", "gaining weight", "putting on weight", "unexplained weight gain", "getting fat"
+    ],
+    "anxiety": [
+        "ಆತಂಕ", "ಗಾಬರಿ", "ಭಯ", "ಚಿಂತೆ", "ನೆಮ್ಮದಿಯಿಲ್ಲ", "aatanka", "gabari", "chinte",
+        "anxiety", "anxious", "nervous", "nervousness", "panic", "feeling uneasy", "worrying too much", "fearfulness"
+    ],
+    "cold_hands_and_feets": [
+        "ಕೈ ಕಾಲು ತಣ್ಣಗಾಗುವುದು", "ತಣ್ಣನೆಯ ಕೈ ಕಾಲುಗಳು", "ಕೈಕಾಲು ತಣ್ಣಗಾಗಿದೆ", "kai kaalu tannagaguvudu",
+        "cold hands and feets", "cold hands", "cold feet", "freezing extremities", "chilled palms", "cold feet and hands"
+    ],
+    "mood_swings": [
+        "ಮನಸ್ಥಿತಿ ಬದಲಾವಣೆ", "ಕೋಪ ತಾಪ", "mood swings", "sudden mood changes", "emotional instability", "irritability swings"
+    ],
+    "weight_loss": [
+        "ತೂಕ ಇಳಿಕೆ", "ತೂಕ ಕಡಿಮೆಯಾಗುವುದು", "ಸಣ್ಣಗಾಗುವುದು", "ತೂಕ ಇಳಿಯುವುದು", "tooka ilike", "tooka kadime", "sannagaguvudu",
+        "weight loss", "losing weight", "rapid weight loss", "unintentional weight loss", "slimming rapidly"
+    ],
+    "restlessness": [
+        "ಚಡಪಡಿಕೆ", "ಅಸಮಾಧಾನ", "ನೆಮ್ಮದಿಯಿಲ್ಲದಿರುವುದು", "chadapadike", "asamaadhana",
+        "restlessness", "restless", "unable to sit still", "agitation", "fidgeting"
+    ],
+    "lethargy": [
+        "ಜಡತ್ವ", "ಆಲಸ್ಯ", "ಮಂಪರು", "jadatwa", "aalasya", "mamparu",
+        "lethargy", "lethargic", "sluggishness", "feeling sluggish", "laziness", "lack of motivation", "drowsy feeling"
+    ],
+    "patches_in_throat": [
+        "ಗಂಟಲಿನಲ್ಲಿ ಬಿಳಿ ಕಲೆಗಳು", "ಗಂಟಲು ಪ್ಯಾಚ್", "gantalinalli machhe",
+        "patches in throat", "white patches in throat", "throat spots", "throat coating", "tonsil patches"
+    ],
+    "irregular_sugar_level": [
+        "ಸಕ್ಕರೆ ಮಟ್ಟದಲ್ಲಿ ಏರಿಳಿತ", "ಅನಿಯಮಿತ ಶುಗರ್", "ಬ್ಲಡ್ ಶುಗರ್ ಏರಿಕೆ", "sugar yerilitha",
+        "irregular sugar level", "fluctuating blood sugar", "high sugar", "unstable glucose", "sugar spikes"
+    ],
+    "cough": [
+        "ಕೆಮ್ಮು", "ಒಣ ಕೆಮ್ಮು", "ಕಫದ ಕೆಮ್ಮು", "ವಿಪರೀತ ಕೆಮ್ಮು", "ಕೆಮ್ಮುವುದು", "ಕೆಮ್ಮು ಬರುತ್ತಿದೆ", "ಕೆಮ್ಮು ಇದೆ", "ತೀವ್ರ ಕೆಮ್ಮು",
+        "kemmu", "ona kemmu", "kaphada kemmu", "kemmu baruttide", "kemmu ide",
+        "cough", "coughing", "dry cough", "wet cough", "phlegmy cough", "hacking cough", "persistent cough", "caugh", "throat coughing"
+    ],
+    "high_fever": [
+        "ಜ್ವರ", "ವಿಪರೀತ ಜ್ವರ", "ಹೆಚ್ಚಿನ ಜ್ವರ", "ಬಿಸಿ ಮೈ", "ತೀವ್ರ ಜ್ವರ", "ಮೈ ಬಿಸಿ", "ಜ್ವರ ಬಂದಿದೆ", "ಜ್ವರ ಇದೆ", "ಕಾಯಿಲೆ",
+        "jwara", "jvara", "thivra jwara", "fever", "vipareetha jwara", "mai bisi", "jwara bandide", "jwara ide",
+        "high fever", "high temperature", "temperature", "hot body", "pyrexia", "feverish", "burning with fever", "spiking fever", "having fever", "running temperature", "running fever"
+    ],
+    "sunken_eyes": [
+        "ಗುಳಿಬಿದ್ದ ಕಣ್ಣುಗಳು", "ಕುಗ್ಗಿದ ಕಣ್ಣುಗಳು", "ಕಣ್ಣು ಒಳಗೆ ಹೋಗಿದೆ", "guli bidda kannugalu",
+        "sunken eyes", "deep hollow eyes", "hollowed eyes", "dark sunken eyes", "eyes sunken in"
+    ],
+    "breathlessness": [
+        "ಉಸಿರಾಟದ ತೊಂದರೆ", "ಉಬ್ಬಸ", "ಉಸಿರು ಕಟ್ಟುವುದು", "ದಮ್ಮು", "ಉಸಿರಾಡಲು ಕಷ್ಟ", "ಉಸಿರಾಟ ಕಷ್ಟ", "ಉಸಿರು ಸಿಗುತ್ತಿಲ್ಲ",
+        "usiratada thondare", "ubbaasa", "usiru kattuvudu", "dammu", "usiradalu kashta",
+        "breathlessness", "shortness of breath", "cant breathe", "difficulty breathing", "dyspnea", "gasping for air", "winded", "labored breathing", "trouble breathing"
+    ],
+    "sweating": [
+        "ಬೆವರುವುದು", "ಅತಿಯಾದ ಬೆವರು", "ರಾತ್ರಿ ಬೆವರು", "ಬೆವರು", "ಬೆವರು ಬರುತ್ತಿದೆ", "bevaruvudu", "athiyaada bevaru", "bevaru",
+        "sweating", "night sweats", "perspiring", "excessive sweat", "profuse sweating", "sweaty body", "sweat"
+    ],
+    "dehydration": [
+        "ನಿರ್ಜಲೀಕರಣ", "ಬಾಯಾರಿಕೆ", "ದೇಹದಲ್ಲಿ ನೀರಿನ ಕೊರತೆ", "ಬಾಯಿ ಒಣಗುವುದು", "ಅತಿಯಾದ ಬಾಯಾರಿಕೆ", "nirjaleekarana", "bayarike", "baayi onaguvudu",
+        "dehydration", "dehydrated", "very thirsty", "extreme thirst", "dry mouth and throat", "lack of water in body", "water loss"
+    ],
+    "indigestion": [
+        "ಅಜೀರ್ಣ", "ಹೊಟ್ಟೆ ಉಬ್ಬರ", "ಜೀರ್ಣವಾಗದಿರುವುದು", "ಅಜೀರ್ಣತೆ", "ajeerna", "hotte ubbara",
+        "indigestion", "bloating", "upset stomach", "dyspepsia", "food not digesting", "heavy stomach", "gas problem"
+    ],
+    "headache": [
+        "ತಲೆನೋವು", "ತಲೆ ನೋವು", "ತಲೆ ಭಾರ", "ವಿಪರೀತ ತಲೆನೋವು", "ತಲೆ ಸಿಡಿಯುವುದು", "ಅರೆತಲೆನೋವು", "ತಲೆ ಕೆರೆತ", "ತಲೆ ಸಿಡಿತ",
+        "talenovu", "tale novu", "tale novvu", "tale bhaara", "tale sidi", "aretalenovu",
+        "headache", "head pain", "head hurts", "throbbing head", "head heavy", "migraine ache", "forehead ache", "cephalalgia", "severe headache", "pain in head"
+    ],
+    "yellowish_skin": [
+        "ಹಳದಿ ಚರ್ಮ", "ಚರ್ಮ ಹಳದಿಯಾಗುವುದು", "ಕಾಮಾಲೆ ಚರ್ಮ", "ಕಾಮಾಲೆ", "haladi charma", "haladi mai", "kaamale", "kamale",
+        "yellowish skin", "yellow skin", "jaundice skin", "icterus", "skin looking yellow", "pale yellow skin"
+    ],
+    "dark_urine": [
+        "ಗಾಢ ಹಳದಿ ಮೂತ್ರ", "ಕಡು ಮೂತ್ರ", "ಕಪ್ಪನೆಯ ಮೂತ್ರ", "ಹಳದಿ ಮೂತ್ರ", "gaadha haladi moothra", "kadu mootra", "haladi moothra",
+        "dark urine", "brown urine", "tea colored urine", "deep yellow urine", "dark colored pee"
+    ],
+    "nausea": [
+        "ವಾಕರಿಕೆ", "ವಾಂತಿ ಬಂದಂತಾಗುವುದು", "ತಲೆ ತಿರುಗಿದಂತಾಗುವುದು", "ಹೊಟ್ಟೆ ತೊಳಸುವುದು", "vaakarike", "vakarike", "hotte tholasuvudu",
+        "nausea", "feeling sick", "queasy", "nauseous", "feeling like vomiting", "sick to stomach", "urge to vomit"
+    ],
+    "loss_of_appetite": [
+        "ಹಸಿವಿಲ್ಲದಿರುವುದು", "ಹಸಿವು ಇಲ್ಲ", "ಊಟ ಸೇರದಿರುವುದು", "ಹಸಿವಿಲ್ಲ", "hasivu illa", "hasivilladiruvudu", "ootha seradhe", "ootha seralla",
+        "loss of appetite", "no appetite", "not hungry", "reduced eating", "anorexia", "poor appetite", "dont feel like eating"
+    ],
+    "pain_behind_the_eyes": [
+        "ಕಣ್ಣಿನ ಹಿಂಭಾಗದ ನೋವು", "ಕಣ್ಣು ನೋವು", "ಕಣ್ಣಿನ ನೋವು", "kannina himbhagada novu", "kannu novu",
+        "pain behind the eyes", "eye socket pain", "retro orbital pain", "eye pain on moving", "behind eyes aching"
+    ],
+    "back_pain": [
+        "ಬೆನ್ನು ನೋವು", "ಸೊಂಟ ನೋವು", "ಕೆಳಬೆನ್ನು ನೋವು", "ಬೆನ್ನು ಮೂಳೆ ನೋವು", "bennu novu", "sonta novu", "sonta novvu",
+        "back pain", "back ache", "lower back pain", "upper back pain", "spine pain", "lumbago", "back hurts"
+    ],
+    "constipation": [
+        "ಮಲಬದ್ಧತೆ", "ಮಲ ಕಟ್ಟಿಕೊಳ್ಳುವುದು", "ಮಲ ವಿಸರ್ಜನೆ ಕಷ್ಟ", "malabaddhate", "mala kattu",
+        "constipation", "constipated", "hard stool", "difficulty passing stool", "irregular bowel"
+    ],
+    "abdominal_pain": [
+        "ಹೊಟ್ಟೆ ನೋವು", "ಹೊಟ್ಟೆ ಸೆಳೆತ", "ಕಿಬ್ಬೊಟ್ಟೆ ನೋವು", "ಹೊಟ್ಟೆ ಶೂಲೆ", "hotte novu", "kibbotte novu", "hotte seleta",
+        "abdominal pain", "belly pain", "stomach cramps", "lower abdominal pain", "cramping belly", "gut cramps", "tummy pain"
+    ],
+    "diarrhoea": [
+        "ಭೇದಿ", "ಅತಿಸಾರ", "ಬೇಧಿ", "ಹೊಟ್ಟೆ ತೊಳೆಸುವ ಭೇದಿ", "ನೀರು ಭೇದಿ", "ಲೂಸ್ ಮೋಷನ್", "ಹೊಟ್ಟೆ ಕೆಡುವುದು", "ಮಲ ತೆಳುವಾಗುವುದು",
+        "bhedi", "bedhi", "atisaara", "neeru bhedi", "loose motion", "loose motions",
+        "diarrhoea", "diarrhea", "watery stool", "loose stools", "frequent motions", "running stomach", "watery motions", "dysentery", "loose stool", "stomach loose"
+    ],
+    "mild_fever": [
+        "ಸ್ವಲ್ಪ ಜ್ವರ", "ಸಣ್ಣ ಜ್ವರ", "ಮಂದ ಜ್ವರ", "ಕಡಿಮೆ ಜ್ವರ", "sanna jwara", "swalpa jwara",
+        "mild fever", "low fever", "slight fever", "low grade fever", "warm body"
+    ],
+    "yellow_urine": [
+        "ಹಳದಿ ಮೂತ್ರ", "ಅತಿಯಾದ ಹಳದಿ ಮೂತ್ರ", "haladi moothra",
+        "yellow urine", "bright yellow urine", "dark yellow pee"
+    ],
+    "yellowing_of_eyes": [
+        "ಕಣ್ಣುಗಳು ಹಳದಿಯಾಗುವುದು", "ಹಳದಿ ಕಣ್ಣು", "ಕಾಮಾಲೆ ಕಣ್ಣುಗಳು", "ಕಣ್ಣು ಹಳದಿ", "kannugalu haladi", "haladi kannu", "kaamale kannu",
+        "yellowing of eyes", "yellow eyes", "scleral icterus", "whites of eyes turned yellow"
+    ],
+    "acute_liver_failure": [
+        "ಯಕೃತ್ ವೈಫಲ್ಯ", "ಲಿವರ್ ತೊಂದರೆ", "acute liver failure", "liver failure", "hepatic dysfunction"
+    ],
+    "fluid_overload": [
+        "ದೇಹದಲ್ಲಿ ನೀರು ತುಂಬುವುದು", "ದ್ರವ ಶೇಖರಣೆ", "fluid overload", "water retention", "edema", "body swelling with fluid"
+    ],
+    "swelling_of_stomach": [
+        "ಹೊಟ್ಟೆ ಊತ", "ಹೊಟ್ಟೆ ಊದಿಕೊಳ್ಳುವುದು", "ಹೊಟ್ಟೆ ಬಲೂನಿನಂತಾಗುವುದು", "hotte ootha",
+        "swelling of stomach", "stomach distension", "ascites", "swollen abdomen", "belly swelling"
+    ],
+    "swelled_lymph_nodes": [
+        "ಕುತ್ತಿಗೆಯಲ್ಲಿ ಗಂಟು ಊತ", "ದುಗ್ಧರಸ ಗ್ರಂಥಿ ಊತ", "swelled lymph nodes", "swollen glands", "swollen lymph nodes", "neck swelling", "gland swelling", "lymphadenopathy"
+    ],
+    "malaise": [
+        "ಮೈ ಅಸ್ವಸ್ಥತೆ", "ದೇಹ ಸೌಖ್ಯವಿಲ್ಲದಿರುವುದು", "ಅನಾರೋಗ್ಯ", "malaise", "general discomfort", "feeling unwell", "body unwell", "overall sickness"
+    ],
+    "blurred_and_distorted_vision": [
+        "ಮಸುಕಾದ ದೃಷ್ಟಿ", "ಕಣ್ಣು ಮಸುಕು", "ಕಣ್ಣು ಸರಿಯಾಗಿ ಕಾಣಿಸದಿರುವುದು", "ದೃಷ್ಟಿ ಮಂದವಾಗುವುದು", "masukaada drushti", "kannu masuku",
+        "blurred and distorted vision", "blurred vision", "blurry vision", "distorted vision", "foggy vision", "hazy sight"
+    ],
+    "phlegm": [
+        "ಕಫ", "ಲೋಳೆ", "ಗಂಟಲಿನಲ್ಲಿ ಕಫ", "ಬಿಳಿ ಕಫ", "ಕಫ ಬರುತ್ತಿದೆ", "kapha", "kapa", "lole", "gantalinalli kapha",
+        "phlegm", "mucus", "sputum", "coughing mucus", "thick phlegm", "catarrh"
+    ],
+    "throat_irritation": [
+        "ಗಂಟಲು ನೋವು", "ಗಂಟಲು ಕೆರೆತ", "ಗಂಟಲು ಕಿರಿಕಿರಿ", "ಗಂಟಲು ಊತ", "ಗಂಟಲು ಕೆರೆದುಕೊಳ್ಳುವುದು", "ನುಂಗಲು ಕಷ್ಟ", "ಗಂಟಲು ಬೇನೆ", "ಗಂಟಲು ಕಟ್ಟುವುದು",
+        "gantalu novu", "gantlu novu", "gantalu kereta", "gantalu keretha", "gantalu kirikiri", "nungalu kashta", "gantalu bene",
+        "throat irritation", "sore throat", "throat pain", "scratchy throat", "raw throat", "pain swallowing", "itchy throat", "throat infection", "pain in throat"
+    ],
+    "redness_of_eyes": [
+        "ಕಣ್ಣು ಕೆಂಪಾಗುವುದು", "ಕೆಂಪು ಕಣ್ಣುಗಳು", "ಕಣ್ಣು ಕೆಂಪು", "kannu kempaguvudu", "kempu kannu",
+        "redness of eyes", "red eyes", "bloodshot eyes", "pink eye", "eye inflammation"
+    ],
+    "sinus_pressure": [
+        "ಸೈನಸ್ ನೋವು", "ಹಣೆ ನೋವು", "ಹಣೆ ಭಾರ", "ಮೂಗಿನ ಸೈನಸ್ ಒತ್ತಡ", "sinus novu", "hane novu", "hane bhaara",
+        "sinus pressure", "sinus pain", "facial pressure", "forehead pressure", "nasal sinus blockage"
+    ],
+    "runny_nose": [
+        "ನೆಗಡಿ", "ಮೂಗು ಸೋರುವುದು", "ಮೂಗಿನಲ್ಲಿ ನೀರು", "ಶೀತ", "ನೆಗಡಿ ಇದೆ", "ಮೂಗು ಸೋರುತ್ತಿದೆ",
+        "negadi", "negedi", "sheetha", "shitha", "moogu soruvudu", "moogu neeru",
+        "runny nose", "running nose", "dripping nose", "nasal discharge", "watery nose", "rhinorrhea", "cold in nose", "sniffles"
+    ],
+    "congestion": [
+        "ಮೂಗು ಕಟ್ಟುವಿಕೆ", "ಮೂಗು ಕಟ್ಟುವುದು", "ಮೂಗು ಕಟ್ಟಿದೆ", "ಎದೆ ಕಟ್ಟುವುದು", "ಕಟ್ಟುವುದು", "moogu kattu", "moogu kattuvike", "moogu kattide", "ede kattu",
+        "congestion", "blocked nose", "stuffy nose", "nasal blockage", "clogged nose", "stuffy nasal passages", "nose block", "chest congestion"
+    ],
+    "chest_pain": [
+        "ಎದೆ ನೋವು", "ಎದೆ ಬಿಗಿತ", "ಎದೆ ಭಾರ", "ಎದೆಯಲ್ಲಿ ನೋವು", "ಎದೆ ಚುಚ್ಚುವುದು", "ede novu", "ede bigitha", "ede bhaara", "ede chuchuvudu",
+        "chest pain", "pain in chest", "heart pain", "chest tightness", "chest pressure", "angina", "sternum pain"
+    ],
+    "weakness_in_limbs": [
+        "ಕೈಕಾಲುಗಳಲ್ಲಿ ಶಕ್ತಿ ಇಲ್ಲದಿರುವುದು", "ಕೈಕಾಲು ನಿಶ್ಯಕ್ತಿ", "ಕೈ ಕಾಲು ಬಲಹೀನತೆ", "kaikaalu nishakthi",
+        "weakness in limbs", "weak arms", "weak legs", "loss of limb strength", "limbs feel heavy"
+    ],
+    "fast_heart_rate": [
+        "ಹೃದಯ ಬಡಿತ ಹೆಚ್ಚಾಗುವುದು", "ಗುಂಡಿಗೆ ಬಡಿತ", "ಹೃದಯ ವೇಗವಾಗಿ ಬಡಿಯುವುದು", "hrudaya baditha",
+        "fast heart rate", "tachycardia", "racing heart", "rapid pulse", "quick heartbeat"
+    ],
+    "pain_during_bowel_movements": [
+        "ಮಲ ವಿಸರ್ಜನೆ ವೇಳೆ ನೋವು", "ಶೌಚಕ್ಕೆ ಹೋಗುವಾಗ ನೋವು", "pain during bowel movements", "painful defecation", "pain passing stool", "anal pain on stool"
+    ],
+    "pain_in_anal_region": [
+        "ಗುದದ್ವಾರದ ನೋವು", "ಮೂಲವ್ಯಾಧಿ ನೋವು", "anal pain", "pain in anal region", "rectal pain", "pain in bottom", "pain around anus"
+    ],
+    "bloody_stool": [
+        "ಮಲದಲ್ಲಿ ರಕ್ತ", "ರಕ್ತ ಭೇದಿ", "ರಕ್ತ ಬೀಳುವುದು", "maladalli raktha", "raktha bhedi",
+        "bloody stool", "blood in stool", "rectal bleeding", "red blood in feces", "hematochezia"
+    ],
+    "irritation_in_anus": [
+        "ಗುದದ್ವಾರದಲ್ಲಿ ತುರಿಕೆ", "ಮೂಲವ್ಯಾಧಿ ಉರಿ", "irritation in anus", "anal itching", "pruritus ani", "burning in anus"
+    ],
+    "neck_pain": [
+        "ಕುತ್ತಿಗೆ ನೋವು", "ಕುತ್ತಿಗೆ ಬಿಗಿತ", "ಕುತ್ತಿಗೆ ಬೇನೆ", "kuttige novu", "kuttige bigitha",
+        "neck pain", "neck ache", "stiff neck pain", "cervical pain", "sore neck"
+    ],
+    "dizziness": [
+        "ತಲೆಸುತ್ತು", "ತಲೆ ತಿರುಗುವುದು", "ತಲೆತಿರುಗುವಿಕೆ", "ಮೈ ಮರೆವು", "talesuthu", "tale tiruguvudu", "talesuttu",
+        "dizziness", "dizzy", "giddy", "head spinning", "lightheaded", "lightheadedness", "fainting sensation"
+    ],
+    "cramps": [
+        "ಸ್ನಾಯು ಸೆಳೆತ", "ಸೆಳೆತ", "ಕಾಲು ಸೆಳೆತ", "snayu seleta", "kaalu seleta",
+        "cramps", "muscle cramps", "leg cramps", "calf cramps", "spasms"
+    ],
+    "bruising": [
+        "ಚರ್ಮದ ಮೇಲೆ ರಕ್ತಗಟ್ಟುವಿಕೆ", "ನೀಲಿ ಕಲೆ", "bruising", "easy bruising", "blue marks on skin", "ecchymosis", "skin bruises"
+    ],
+    "obesity": [
+        "ಸ್ಥೂಲಕಾಯ", "ಅತಿಯಾದ ತೂಕ", "ದಪ್ಪ ಶರೀರ", "obesity", "overweight", "excessive body fat", "morbid obesity"
+    ],
+    "swollen_legs": [
+        "ಕಾಲುಗಳಲ್ಲಿ ಊತ", "ಕಾಲು ಊತ", "ಪಾದಗಳ ಊತ", "kaalugalalli ootha", "kaalu ootha",
+        "swollen legs", "leg swelling", "swollen feet", "pedal edema", "puffy legs"
+    ],
+    "swollen_blood_vessels": [
+        "ಉಬ್ಬಿದ ರಕ್ತನಾಳಗಳು", "ಸಿರೆಗಳ ಊತ", "swollen blood vessels", "enlarged veins", "visible blue veins", "bulging veins"
+    ],
+    "puffy_face_and_eyes": [
+        "ಮುಖ ಮತ್ತು ಕಣ್ಣುಗಳ ಊತ", "ಮುಖ ಊದಿಕೊಳ್ಳುವುದು", "puffy face and eyes", "puffy face", "facial swelling", "swollen eyelids", "puffy eyes"
+    ],
+    "enlarged_thyroid": [
+        "ಥೈರಾಯ್ಡ್ ಊತ", "ಗಳಗಂಡ", "enlarged thyroid", "goiter", "swollen neck front", "thyroid swelling"
+    ],
+    "brittle_nails": [
+        "ಒಡೆಯುವ ಉಗುರುಗಳು", "ಬಲಹೀನ ಉಗುರು", "brittle nails", "breaking nails", "fragile nails", "cracking nails"
+    ],
+    "swollen_extremeties": [
+        "ಕೈ ಕಾಲುಗಳಲ್ಲಿ ಊತ", "ಅಂಗಾಂಗಗಳ ಊತ", "swollen extremeties", "swollen hands and feet", "extremity swelling"
+    ],
+    "excessive_hunger": [
+        "ಅತಿಯಾದ ಹಸಿವು", "ಸತತ ಹಸಿವು", "excessive hunger", "always hungry", "polyphagia", "increased appetite", "constant hunger"
+    ],
+    "drying_and_tingling_lips": [
+        "ತುಟಿ ಒಣಗುವುದು ಮತ್ತು ಜುಮುಗುಡುವುದು", "drying and tingling lips", "tingling lips", "dry numb lips", "lip numbness"
+    ],
+    "slurred_speech": [
+        "ಮಾತು ತೊದಲುವಿಕೆ", "ಮಾತನಾಡಲು ಕಷ್ಟ", "slurred speech", "difficulty speaking", "garbled speech", "incoherent speech"
+    ],
+    "knee_pain": [
+        "ಮೊಣಕಾಲು ನೋವು", "ಕಾಲು ನೋವು", "ಮಂಡಿ ನೋವು", "monakalu novu", "mandi novu", "kaalu novu",
+        "knee pain", "pain in knees", "knee joint ache", "knees hurting"
+    ],
+    "hip_joint_pain": [
+        "ಸೊಂಟದ ಕೀಲು ನೋವು", "ಹಿಪ್ ನೋವು", "hip joint pain", "pain in hip", "hip ache"
+    ],
+    "muscle_weakness": [
+        "ಸ್ನಾಯು ದೌರ್ಬಲ್ಯ", "ಸ್ನಾಯುಗಳಲ್ಲಿ ಶಕ್ತಿ ಇಲ್ಲ", "muscle weakness", "weak muscles", "loss of muscle strength", "myasthenia"
+    ],
+    "stiff_neck": [
+        "ಕುತ್ತಿಗೆ ಬಿಗಿತ", "ಕುತ್ತಿಗೆ ತಿರುಗಿಸಲು ಕಷ್ಟ", "stiff neck", "neck stiffness", "inability to bend neck", "rigid neck"
+    ],
+    "swelling_joints": [
+        "ಕೀಲುಗಳಲ್ಲಿ ಊತ", "ಕೀಲು ಊತ", "ಊದಿಕೊಂಡ ಕೀಲುಗಳು", "keelugalalli ootha", "keelu ootha",
+        "swelling joints", "swollen joints", "joint swelling", "puffy joints"
+    ],
+    "movement_stiffness": [
+        "ಚಲನೆಯಲ್ಲಿ ಬಿಗಿತ", "ಮೈ ಬಿಗಿತ", "movement stiffness", "stiff body", "stiffness in morning", "joint rigidity"
+    ],
+    "spinning_movements": [
+        "ತಲೆ ಗಿರ್ರನೆ ತಿರುಗುವುದು", "ಗಿರ್ರನೆ ತಿರುಗುವ ಅನುಭವ", "tale girrane tiruguvudu",
+        "spinning movements", "room spinning", "vertigo sensation", "spinning head"
+    ],
+    "loss_of_balance": [
+        "ಸಮತೋಲನ ತಪ್ಪುವುದು", "ತೂರಾಡುವುದು", "ನಡೆಯಲು ಕಷ್ಟ", "samatholana thappuvudu",
+        "loss of balance", "unsteadiness", "off balance", "imbalance walking", "stumbling", "poor coordination"
+    ],
+    "unsteadiness": [
+        "ಅಸ್ಥಿರತೆ", "ಕಾಲು ತೂರಾಡುವುದು", "unsteadiness", "wobbly walking", "shaky footing", "instability"
+    ],
+    "weakness_of_one_body_side": [
+        "ದೇಹದ ಒಂದು ಬದಿಯ ದೌರ್ಬಲ್ಯ", "ಒಂದು ಬದಿ ಪಾರ್ಶ್ವವಾಯು", "weakness of one body side", "hemiparesis", "one side weak", "paralysis of one side"
+    ],
+    "loss_of_smell": [
+        "ವಾಸನೆ ತಿಳಿಯದಿರುವುದು", "ವಾಸನೆ ಗ್ರಹಿಕೆ ನಷ್ಟ", "loss of smell", "anosmia", "cannot smell", "lost sense of smell"
+    ],
+    "bladder_discomfort": [
+        "ಮೂತ್ರಕೋಶದ ನೋವು", "ಮೂತ್ರಕೋಶದ ಅಸ್ವಸ್ಥತೆ", "ಮೂತ್ರದ ಒತ್ತಡ", "moothrakoshada novu",
+        "bladder discomfort", "pelvic discomfort", "full bladder pressure", "bladder ache", "bladder pain"
+    ],
+    "foul_smell_ofurine": [
+        "ದುರ್ವಾಸನೆಯ ಮೂತ್ರ", "ಮೂತ್ರದಲ್ಲಿ ಕೆಟ್ಟ ವಾಸನೆ", "foul smell of urine", "foul_smell_of urine", "smelly urine", "malodorous urine", "stinky pee"
+    ],
+    "continuous_feel_of_urine": [
+        "ಸತತ ಮೂತ್ರ ವಿಸರ್ಜನೆಯ ಭಾವನೆ", "ಮೂತ್ರದ ತೀವ್ರತೆ", "continuous feel of urine", "frequent urge to pee", "urgency urination", "feeling like peeing continuously"
+    ],
+    "passage_of_gases": [
+        "ವಾಯು ಪ್ರಕೋಪ", "ಗ್ಯಾಸ್ ಬಿಡುವುದು", "ತೇಗು", "passage of gases", "flatulence", "excessive gas", "burping and farting", "passing wind"
+    ],
+    "internal_itching": [
+        "ಆಂತರಿಕ ತುರಿಕೆ", "internal itching", "deep itching", "internal prickling sensation"
+    ],
+    "toxic_look_(typhos)": [
+        "ವಿಷಪೂರಿತ ನೋಟ", "ದಣಿದ ಮುಖ", "ಟೈಫಾಯ್ಡ್ ಆಲಸ್ಯ", "toxic look (typhos)", "typhoid look", "toxic appearance", "severely sick appearance", "dull lethargic appearance"
+    ],
+    "depression": [
+        "ಖಿನ್ನತೆ", "ಮನಸ್ಸಿನ ಬೇಸರ", "ತೀವ್ರ ದುಃಖ", "depression", "depressed mood", "feeling very low", "sadness", "hopelessness"
+    ],
+    "irritability": [
+        "ಕಿರಿಕಿರಿ", "ಸಿಡುಕುತನ", "ಬೇಗ ಕೋಪ ಬರುವುದು", "irritability", "irritable", "cranky", "getting angry easily", "short tempered"
+    ],
+    "muscle_pain": [
+        "ಮೈಕೈ ನೋವು", "ಮೈ ನೋವು", "ಮೈಕೈನೋವು", "ದೇಹದ ನೋವು", "ಸ್ನಾಯು ನೋವು", "ಅಂಗಾಂಗ ನೋವು", "ಮೈ ಕೈ ನೋಯುತ್ತಿದೆ",
+        "mai kai novu", "maikai novu", "mai novu", "dehada novu", "snayu novu", "anganga novu", "maikainovu",
+        "muscle pain", "body ache", "body pain", "bodypain", "myalgia", "sore muscles", "whole body hurts", "body aches", "bodyache"
+    ],
+    "altered_sensorium": [
+        "ಪ್ರಜ್ಞಾಹೀನತೆ", "ಗೊಂದಲ", "altered sensorium", "confusion", "delirium", "disorientation", "altered consciousness"
+    ],
+    "red_spots_over_body": [
+        "ದೇಹದ ಮೇಲೆ ಕೆಂಪು ಕಲೆಗಳು", "ಕೆಂಪು ಚುಕ್ಕೆಗಳು", "ದಡಾರ ಕಲೆಗಳು", "kempu chukkegalu", "kempu kale",
+        "red spots over body", "petechiae", "red dots on skin", "measles rash", "purpura", "red skin spots"
+    ],
+    "belly_pain": [
+        "ಹೊಟ್ಟೆ ನೋವು", "ಕಿಬ್ಬೊಟ್ಟೆ ನೋವು", "hotte novu", "kibbotte novu", "belly pain", "lower stomach ache", "abdomen hurts", "gut pain"
+    ],
+    "abnormal_menstruation": [
+        "ಅಸಹಜ ಮುಟ್ಟು", "ಅನಿಯಮಿತ ಮುಟ್ಟಿನ ಸಮಸ್ಯೆ", "abnormal menstruation", "irregular periods", "heavy menstrual bleeding", "missed periods"
+    ],
+    "dischromic_patches": [
+        "ಚರ್ಮದ ಬಣ್ಣ ಬದಲಾವಣೆ ಕಲೆಗಳು", "ಬಿಳಿ ಕಲೆಗಳು", "dischromic _patches", "dischromic patches", "discolored patches", "skin discoloration", "tinea versicolor", "white skin patches"
+    ],
+    "watering_from_eyes": [
+        "ಕಣ್ಣಿನಲ್ಲಿ ನೀರು ಬರುವುದು", "ಕಣ್ಣೀರು", "kanninalli neeru",
+        "watering from eyes", "watery eyes", "excessive tears", "lacrimation", "eyes watering"
+    ],
+    "increased_appetite": [
+        "ಹೆಚ್ಚಿದ ಹಸಿವು", "increased appetite", "huge appetite", "eating frequently"
+    ],
+    "polyuria": [
+        "ಅತಿಯಾದ ಮೂತ್ರ ವಿಸರ್ಜನೆ", "ಸತತ ಮೂತ್ರ", "polyuria", "frequent urination", "peeing a lot", "excessive urination", "urination at night"
+    ],
+    "family_history": [
+        "ವಂಶಪಾರಂಪರ್ಯ", "ಕುಟುಂಬದ ಇತಿಹಾಸ", "family history", "hereditary", "genetics", "runs in family"
+    ],
+    "mucoid_sputum": [
+        "ಲೋಳೆಯುಕ್ತ ಕಫ", "ಬಿಳಿ ಕಫ", "mucoid sputum", "thick white phlegm", "sticky sputum", "mucus cough"
+    ],
+    "rusty_sputum": [
+        "ಕಂದು ಬಣ್ಣದ ಕಫ", "ರಕ್ತಮಿಶ್ರಿತ ಕಫ", "rusty sputum", "brownish phlegm", "blood tinged sputum"
+    ],
+    "lack_of_concentration": [
+        "ಏಕಾಗ್ರತೆಯ ಕೊರತೆ", "ಗಮನ ಕೇಂದ್ರೀಕರಿಸಲು ಕಷ್ಟ", "lack of concentration", "brain fog", "cannot focus", "difficulty concentrating"
+    ],
+    "visual_disturbances": [
+        "ದೃಷ್ಟಿ ದೋಷ", "ಕಣ್ಣಿನ ಮಿಂಚು", "visual disturbances", "aura", "flashing lights", "blind spots in vision"
+    ],
+    "coma": [
+        "ಕೋಮಾ", "ಪ್ರಜ್ಞಾಹೀನ ಸ್ಥಿತಿ", "coma", "unconscious", "unresponsive", "passed out deeply"
+    ],
+    "stomach_bleeding": [
+        "ಹೊಟ್ಟೆಯಲ್ಲಿ ರಕ್ತಸ್ರಾವ", "ವಾಂತಿಯಲ್ಲಿ ರಕ್ತ", "stomach bleeding", "vomiting blood", "black tarry stool", "hematemesis", "melena"
+    ],
+    "distention_of_abdomen": [
+        "ಹೊಟ್ಟೆ ಉಬ್ಬರ", "ಉಬ್ಬಿದ ಹೊಟ್ಟೆ", "distention of abdomen", "swollen belly", "bloated abdomen", "abdominal swelling"
+    ],
+    "blood_in_sputum": [
+        "ಕಫದಲ್ಲಿ ರಕ್ತ", "ರಕ್ತ ಕೆಮ್ಮು", "blood in sputum", "coughing blood", "hemoptysis", "red blood in phlegm"
+    ],
+    "prominent_veins_on_calf": [
+        "ಹಿಂಗಾಲಿನಲ್ಲಿ ಉಬ್ಬಿದ ರಕ್ತನಾಳಗಳು", "ಉಬ್ಬಿದ ಸಿರೆಗಳು", "prominent veins on calf", "spider veins", "twisted veins on legs", "engorged calf veins"
+    ],
+    "palpitations": [
+        "ಎದೆ ಬಡಿತ ಹೆಚ್ಚಾಗುವುದು", "ಗುಂಡಿಗೆ ಢವಢವ", "palpitations", "heart racing", "fluttering heart", "skipped heartbeats", "pounding heart"
+    ],
+    "painful_walking": [
+        "ನಡೆಯುವಾಗ ನೋವು", "ಕುಂಟುವುದು", "painful walking", "limping", "hurts to walk", "difficulty walking due to pain"
+    ],
+    "pus_filled_pimples": [
+        "ಕೀವು ತುಂಬಿದ ಮೊಡವೆಗಳು", "ಮೊಡವೆ ಕೀವು", "pus filled pimples", "acne pustules", "pus pimples", "zits with pus", "boils on face"
+    ],
+    "blackheads": [
+        "ಕಪ್ಪು ಚುಕ್ಕೆಗಳು", "ಬ್ಲ್ಯಾಕ್‌ಹೆಡ್ಸ್", "blackheads", "clogged pores", "comedones", "open comedones"
+    ],
+    "scurring": [
+        "ಕಲೆಗಳು", "ಮೊಡವೆ ಕಲೆಗಳು", "scurring", "acne scars", "scarring", "pockmarks"
+    ],
+    "skin_peeling": [
+        "ಚರ್ಮ ಸುಲಿಯುವುದು", "ಸಿಪ್ಪೆ ಏಳುವುದು", "skin peeling", "flaking skin", "desquamation", "peeling epidermis"
+    ],
+    "silver_like_dusting": [
+        "ಬೆಳ್ಳಿಯಂತಹ ಚರ್ಮದ ಪುಡಿ", "ಚರ್ಮದ ಪದರ", "silver like dusting", "silvery scales", "psoriasis scales", "white flaky crusts"
+    ],
+    "small_dents_in_nails": [
+        "ಉಗುರುಗಳಲ್ಲಿ ಸಣ್ಣ ಗುಳಿಗಳು", "small dents in nails", "nail pitting", "pitted fingernails"
+    ],
+    "inflammatory_nails": [
+        "ಉಗುರುಗಳ ಊತ", "ಉಗುರು ಸುತ್ತು", "inflammatory nails", "nail inflammation", "swollen nail beds", "paronychia"
+    ],
+    "blister": [
+        "ಗುಳ್ಳೆ", "ನೀರು ಗುಳ್ಳೆಗಳು", "ಬೊಕ್ಕೆಗಳು", "ಬೊಕ್ಕೆ", "gulle", "neeru gulle", "bokkegalu", "blister", "blisters", "skin vesicles", "fluid filled blisters", "bullae"
+    ],
+    "red_sore_around_nose": [
+        "ಮೂಗಿನ ಸುತ್ತ ಕೆಂಪು ಹುಣ್ಣು", "red sore around nose", "sores near nostrils", "crusty nose sores"
+    ],
+    "yellow_crust_ooze": [
+        "ಹಳದಿ ಕವಚದ ದ್ರವ ಸೋರುವಿಕೆ", "yellow crust ooze", "honey colored crust", "oozing golden crust", "impetigo crust"
+    ]
 }
 
 # Red flag symptoms that require urgent / emergency medical care
@@ -924,6 +1260,7 @@ DISEASE_KNOWLEDGE: Dict[str, Dict[str, Any]] = {
 def parse_symptoms(text: str, valid_features: List[str]) -> Tuple[Dict[str, str], List[int]]:
     """
     Advanced NLP parser that matches natural language symptom text
+    (English, Native Kannada ಕನ್ನಡ, and Romanized Kannada)
     against the 132 valid model features.
     """
     if not text:
@@ -931,24 +1268,32 @@ def parse_symptoms(text: str, valid_features: List[str]) -> Tuple[Dict[str, str]
 
     # Normalize text
     cleaned = text.lower()
-    cleaned = re.sub(r"[,/;&+]", " , ", cleaned)
+    cleaned = re.sub(r"[,/;&+।]", " , ", cleaned)
     cleaned = re.sub(r"\s+", " ", cleaned).strip()
 
-    # Pre-clean punctuation
-    alphanumeric_clean = re.sub(r"[^a-z0-9\s_]", " ", cleaned)
+    # Pre-clean punctuation while strictly preserving Kannada Unicode block (\u0C80-\u0CFF)
+    alphanumeric_clean = re.sub(r"[^a-zA-Z0-9\s_\u0C80-\u0CFF]", " ", cleaned)
+    alphanumeric_clean = f" {alphanumeric_clean} "
 
     matched: Dict[str, str] = {}
 
-    # 1. Match multi-word synonyms first (ordered by phrase length descending)
+    # 1. Match multi-word and Kannada synonyms first (ordered by phrase length descending)
     for symptom, phrases in SYMPTOM_SYNONYMS.items():
         col = f"has_{symptom}"
         if col not in valid_features:
             continue
         for phrase in sorted(phrases, key=len, reverse=True):
-            pattern = r"\b" + re.escape(phrase) + r"\b"
-            if re.search(pattern, alphanumeric_clean):
-                matched[symptom] = col
-                break
+            p_clean = phrase.lower().strip()
+            # For Kannada Unicode strings or general phrases, check substring with boundary safety
+            if any('\u0c80' <= ch <= '\u0cff' for ch in p_clean):
+                if p_clean in alphanumeric_clean:
+                    matched[symptom] = col
+                    break
+            else:
+                pattern = r"\b" + re.escape(p_clean) + r"\b"
+                if re.search(pattern, alphanumeric_clean):
+                    matched[symptom] = col
+                    break
 
     # 2. Match exact feature tokens from valid_features
     for col in valid_features:
@@ -957,30 +1302,63 @@ def parse_symptoms(text: str, valid_features: List[str]) -> Tuple[Dict[str, str]
         if token_phrase in alphanumeric_clean and sym not in matched:
             matched[sym] = col
 
-    # 3. Handle special colloquial combos
-    # E.g. "cold" alone usually implies congestion / runny nose / chills
-    if "cold" in alphanumeric_clean and not any(k in matched for k in ["runny_nose", "congestion", "chills"]):
+    # 3. Handle spoken disease names and colloquial combos in English and Kannada
+    # Direct spoken disease name mappings to primary symptoms
+    disease_spoken_map = {
+        ("ಕಾಮಾಲೆ", "kaamale", "kamale", "jaundice"): ["yellowish_skin", "yellowing_of_eyes", "dark_urine", "fatigue"],
+        ("ಮಲೇರಿಯಾ", "malaria", "maleriya"): ["high_fever", "chills", "shivering", "sweating", "muscle_pain"],
+        ("ಡೆಂಗ್ಯೂ", "dengue", "dengu"): ["high_fever", "joint_pain", "headache", "pain_behind_the_eyes", "skin_rash"],
+        ("ಟೈಫಾಯ್ಡ್", "typhoid", "typhos", "taayfaayid"): ["high_fever", "headache", "abdominal_pain", "fatigue", "chills", "nausea"],
+        ("ಅಸ್ತಮಾ", "asthma", "asthama", "ದಮ್ಮು"): ["breathlessness", "cough", "mucoid_sputum", "fatigue"],
+        ("ಮೈಗ್ರೇನ್", "migraine", "migren", "ಅರೆತಲೆನೋವು"): ["headache", "visual_disturbances", "blurred_and_distorted_vision", "acidity"],
+        ("ಫುಡ್ ಪಾಯಿಸನಿಂಗ್", "food poisoning", "ಗ್ಯಾಸ್ಟ್ರೋ"): ["vomiting", "diarrhoea", "dehydration", "stomach_pain"],
+        ("ಅಲರ್ಜಿ", "allergy", "alerji"): ["continuous_sneezing", "watering_from_eyes", "shivering", "chills"],
+        ("ಮೂಲವ್ಯಾಧಿ", "piles", "hemorrhoids", "ಪೈಲ್ಸ್"): ["constipation", "pain_during_bowel_movements", "bloody_stool", "pain_in_anal_region"],
+        ("ಸಂಧಿವಾತ", "arthritis", "ಆರ್ಥ್ರೈಟಿಸ್"): ["joint_pain", "swelling_joints", "painful_walking", "movement_stiffness"],
+        ("ಚಿಕನ್‌ಪಾಕ್ಸ್", "chickenpox", "ಅಮ್ಮ"): ["skin_rash", "red_spots_over_body", "itching", "high_fever"],
+        ("ಯೂರಿನ್ ಇನ್‌ಫೆಕ್ಷನ್", "uti", "ಮೂತ್ರ ಸೋಂಕು"): ["burning_micturition", "bladder_discomfort", "continuous_feel_of_urine"],
+        ("ಡಯಾಬಿಟಿಸ್", "diabetes", "ಮಧುಮೇಹ", "ಶುಗರ್"): ["polyuria", "excessive_hunger", "fatigue", "weight_loss"],
+        ("ಹೈಪರ್ ಟೆನ್ಷನ್", "hypertension", "ಬಿಪಿ", "ರಕ್ತದೊತ್ತಡ"): ["headache", "dizziness", "loss_of_balance", "chest_pain"],
+        ("ಫಂಗಲ್", "fungal", "ಶಿಲೀಂಧ್ರ"): ["itching", "skin_rash", "nodal_skin_eruptions"]
+    }
+
+    for triggers, sym_list in disease_spoken_map.items():
+        if any(tr in alphanumeric_clean for tr in triggers):
+            for s in sym_list:
+                col_name = f"has_{s}"
+                if col_name in valid_features:
+                    matched[s] = col_name
+
+    # Cold / ನೆಗಡಿ
+    if any(w in alphanumeric_clean for w in ["cold", "ನೆಗಡಿ", "ಶೀತ", "negadi", "sheetha"]) and not any(k in matched for k in ["runny_nose", "congestion", "chills"]):
         if "has_congestion" in valid_features:
             matched["congestion"] = "has_congestion"
         if "has_chills" in valid_features:
             matched["chills"] = "has_chills"
+        if "has_runny_nose" in valid_features:
+            matched["runny_nose"] = "has_runny_nose"
 
-    # E.g. "body pain" or "body ache" or "bodypain"
-    if any(bp in alphanumeric_clean for bp in ["bodypain", "body pain", "body ache", "bodyaches", "myalgia", "body hurts"]):
+    # Body pain / ಮೈಕೈ ನೋವು
+    if any(bp in alphanumeric_clean for bp in ["bodypain", "body pain", "body ache", "bodyaches", "myalgia", "body hurts", "ಮೈಕೈ ನೋವು", "ಮೈ ನೋವು", "ಮೈಕೈನೋವು", "mai kai novu", "maikainovu", "mai novu"]):
         if "has_muscle_pain" in valid_features:
             matched["muscle_pain"] = "has_muscle_pain"
 
-    # E.g. "loose motion" or "watery motion" or "food poisoning"
-    if any(lm in alphanumeric_clean for lm in ["loose motion", "loose motions", "watery motion", "food poisoning"]):
+    # Loose motion / ವಾಂತಿ ಬೇಧಿ / ಭೇದಿ
+    if any(lm in alphanumeric_clean for lm in ["loose motion", "loose motions", "watery motion", "food poisoning", "ಭೇದಿ", "ಬೇಧಿ", "ಲೂಸ್ ಮೋಷನ್", "ವಾಂತಿ ಬೇಧಿ", "bhedi", "bedhi"]):
         if "has_diarrhoea" in valid_features:
             matched["diarrhoea"] = "has_diarrhoea"
-        if "has_vomiting" in valid_features and "vomit" in alphanumeric_clean:
+        if ("vomit" in alphanumeric_clean or "ವಾಂತಿ" in alphanumeric_clean or "vaanti" in alphanumeric_clean) and "has_vomiting" in valid_features:
             matched["vomiting"] = "has_vomiting"
 
-    # E.g. "bladder pain" or "bladder discomfort"
-    if any(bp in alphanumeric_clean for bp in ["bladder pain", "bladder ache", "bladder discomfort", "pelvic discomfort"]):
-        if "has_bladder_discomfort" in valid_features:
+    # Bladder pain / ಉರಿ ಮೂತ್ರ / ಮೂತ್ರಕೋಶದ ನೋವು
+    if any(bp in alphanumeric_clean for bp in ["bladder pain", "bladder ache", "bladder discomfort", "pelvic discomfort", "ಉರಿ ಮೂತ್ರ", "ಮೂತ್ರಕೋಶದ ನೋವು", "uri moothra"]):
+        if "has_bladder_discomfort" in valid_features and "bladder_discomfort" not in matched:
             matched["bladder_discomfort"] = "has_bladder_discomfort"
+
+    # Acidity / ಗ್ಯಾಸ್ಟ್ರಿಕ್
+    if any(ac in alphanumeric_clean for ac in ["acidity", "ಆಸಿಡಿಟಿ", "ಎದೆ ಉರಿ", "ಗ್ಯಾಸ್ಟ್ರಿಕ್", "acid reflux", "ede uri"]):
+        if "has_acidity" in valid_features:
+            matched["acidity"] = "has_acidity"
 
     vector = [1 if col in matched.values() else 0 for col in valid_features]
     return matched, vector
@@ -1323,19 +1701,20 @@ def assess_urgency_comprehensive(
                 vuln_tier
             )
 
-    if days >= 7 and severity >= 7:
+    # Clinical Threshold: If symptoms persist for 5-6+ days, escalate immediately to "See Doctor Immediately"
+    if days >= 5:
         return (
             "See Doctor Immediately",
-            "Severe symptoms persisting for over a week require professional in-person medical evaluation and diagnostic testing.",
-            [f"Persistent duration ({days} days)", f"High severity rating ({severity}/10)"],
-            vuln_score,
-            vuln_tier
+            f"Symptoms persisting for {days} days (>= 5 days threshold) require immediate professional medical evaluation and diagnostic testing. Do not rely solely on home care.",
+            [f"🚨 Persistent symptom duration ({days} days >= 5 days threshold)", f"Patient Vulnerability Index: {vuln_score}/100 ({vuln_tier})"],
+            max(vuln_score, 70),
+            "Elevated Risk" if vuln_score < 75 else "High Critical Risk"
         )
 
-    if days >= 4 or severity >= 6:
+    if severity >= 6:
         return (
             "See Doctor Soon",
-            "Consult a physician within 24-48 hours for definitive diagnosis and targeted prescription.",
+            "Consult a physician within 24-48 hours for definitive diagnosis and targeted prescription due to elevated discomfort.",
             [f"Symptoms persisting for {days} day(s)", f"Discomfort level {severity}/10"],
             vuln_score,
             vuln_tier
@@ -1436,3 +1815,821 @@ def get_remedies_for_disease(disease_name: str) -> Dict[str, Any]:
         ],
         "specialist": "General Physician"
     }
+
+
+# =========================================================================
+# KANNADA (ಕನ್ನಡ) CLINICAL KNOWLEDGE BASE & TRANSLATION ENGINE
+# =========================================================================
+
+# Clear, layman-friendly symptom names in Kannada with English subtitles
+SYMPTOM_NAMES_KN: Dict[str, str] = {
+    "itching": "ತುರಿಕೆ / ನವೆ (Itching)",
+    "skin_rash": "ಚರ್ಮದ ದದ್ದು / ಗುಳ್ಳೆ (Skin Rash)",
+    "nodal_skin_eruptions": "ಗಂಟು ಗುಳ್ಳೆಗಳು (Nodal Skin Eruptions)",
+    "continuous_sneezing": "ನಿರಂತರ ಸೀನು (Continuous Sneezing)",
+    "shivering": "ಚಳಿ ನಡುಕ (Shivering)",
+    "chills": "ವಿಪರೀತ ಚಳಿ (Chills)",
+    "joint_pain": "ಕೀಲು ನೋವು (Joint Pain)",
+    "stomach_pain": "ಹೊಟ್ಟೆ ನೋವು (Stomach Pain)",
+    "acidity": "ಅಸಿಡಿಟಿ / ಎದೆ ಉರಿ (Acidity)",
+    "ulcers_on_tongue": "ನಾಲಿಗೆ ಹುಣ್ಣು (Tongue Ulcers)",
+    "muscle_wasting": "ಮಾಂಸಖಂಡ ಕ್ಷೀಣತೆ (Muscle Wasting)",
+    "vomiting": "ವಾಂತಿ (Vomiting)",
+    "burning_micturition": "ಉರಿ ಮೂತ್ರ (Burning Urination)",
+    "spotting_urination": "ಮೂತ್ರದಲ್ಲಿ ರಕ್ತದ ಕಲೆ (Spotting Urination)",
+    "fatigue": "ಸುಸ್ತು / ಆಯಾಸ (Fatigue)",
+    "weight_gain": "ತೂಕ ಹೆಚ್ಚಳ (Weight Gain)",
+    "anxiety": "ಆತಂಕ / ಭಯ (Anxiety)",
+    "cold_hands_and_feets": "ಕೈಕಾಲು ತಣ್ಣಗಾಗುವುದು (Cold Hands & Feet)",
+    "mood_swings": "ಮನಸ್ಥಿತಿ ಬದಲಾವಣೆ (Mood Swings)",
+    "weight_loss": "ತೂಕ ಇಳಿಕೆ (Weight Loss)",
+    "restlessness": "ಚಡಪಡಿಕೆ / ಅಸಮಾಧಾನ (Restlessness)",
+    "lethargy": "ಜಡತ್ವ / ಆಲಸ್ಯ (Lethargy)",
+    "patches_in_throat": "ಗಂಟಲಿನಲ್ಲಿ ಬಿಳಿ ಕಲೆಗಳು (Patches in Throat)",
+    "irregular_sugar_level": "ಸಕ್ಕರೆ ಮಟ್ಟದಲ್ಲಿ ಏರಿಳಿತ (Irregular Sugar Level)",
+    "cough": "ಕೆಮ್ಮು (Cough)",
+    "high_fever": "ತೀವ್ರ ಜ್ವರ (High Fever)",
+    "sunken_eyes": "ಗುಳಿಬಿದ್ದ ಕಣ್ಣುಗಳು (Sunken Eyes)",
+    "breathlessness": "ಉಸಿರಾಟದ ತೊಂದರೆ / ದಮ್ಮು (Breathlessness)",
+    "sweating": "ಅತಿಯಾದ ಬೆವರು (Sweating)",
+    "dehydration": "ನಿರ್ಜಲೀಕರಣ / ಬಾಯಾರಿಕೆ (Dehydration)",
+    "indigestion": "ಅಜೀರ್ಣ / ಹೊಟ್ಟೆ ಉಬ್ಬರ (Indigestion)",
+    "headache": "ತಲೆನೋವು (Headache)",
+    "yellowish_skin": "ಹಳದಿ ಚರ್ಮ (Yellowish Skin)",
+    "dark_urine": "ಗಾಢ ಹಳದಿ ಮೂತ್ರ (Dark Urine)",
+    "nausea": "ವಾಕರಿಕೆ / ವಾಂತಿ ಬರುವ ಭಾವನೆ (Nausea)",
+    "loss_of_appetite": "ಹಸಿವಿಲ್ಲದಿರುವುದು (Loss of Appetite)",
+    "pain_behind_the_eyes": "ಕಣ್ಣಿನ ಹಿಂಭಾಗದ ನೋವು (Pain Behind Eyes)",
+    "back_pain": "ಬೆನ್ನು ನೋವು / ಸೊಂಟ ನೋವು (Back Pain)",
+    "constipation": "ಮಲಬದ್ಧತೆ (Constipation)",
+    "abdominal_pain": "ಹೊಟ್ಟೆ ನೋವು (Abdominal Pain)",
+    "diarrhoea": "ಭೇದಿ / ಲೂಸ್ ಮೋಷನ್ (Diarrhoea)",
+    "mild_fever": "ಸೌಮ್ಯ ಜ್ವರ (Mild Fever)",
+    "yellow_urine": "ಹಳದಿ ಮೂತ್ರ (Yellow Urine)",
+    "yellowing_of_eyes": "ಕಣ್ಣು ಹಳದಿಯಾಗುವುದು (Yellowing of Eyes)",
+    "acute_liver_failure": "ಯಕೃತ್ತಿನ ತೊಂದರೆ (Liver Failure Risk)",
+    "fluid_overload": "ದೇಹದಲ್ಲಿ ನೀರು ಶೇಖರಣೆ (Fluid Overload)",
+    "swelling_of_stomach": "ಹೊಟ್ಟೆ ಊತ (Swelling of Stomach)",
+    "swelled_lymph_nodes": "ಗಂಟಲಿನ ಗ್ರಂಥಿಗಳ ಊತ (Swelled Lymph Nodes)",
+    "malaise": "ಅಸ್ವಸ್ಥತೆ / ನಿಶ್ಯಕ್ತಿ (Malaise)",
+    "blurred_and_distorted_vision": "ಕಣ್ಣು ಮಸುಕಾಗುವುದು (Blurred Vision)",
+    "phlegm": "ಕಫ (Phlegm)",
+    "throat_irritation": "ಗಂಟಲು ಕೆರೆತ / ಕಿರಿಕಿರಿ (Throat Irritation)",
+    "redness_of_eyes": "ಕಣ್ಣು ಕೆಂಪಾಗುವುದು (Redness of Eyes)",
+    "sinus_pressure": "ಸೈನಸ್ ಒತ್ತಡ / ಮೂಗು ಕಟ್ಟುವುದು (Sinus Pressure)",
+    "runny_nose": "ಮೂಗು ಸೋರುವುದು (Runny Nose)",
+    "congestion": "ಎದೆ / ಮೂಗು ಕಟ್ಟುವುದು (Congestion)",
+    "chest_pain": "ಎದೆ ನೋವು (Chest Pain)",
+    "weakness_in_limbs": "ಕೈಕಾಲುಗಳ ನಿಶ್ಯಕ್ತಿ (Weakness in Limbs)",
+    "fast_heart_rate": "ವೇಗದ ಹೃದಯ ಬಡಿತ (Fast Heart Rate)",
+    "pain_during_bowel_movements": "ಮಲವಿಸರ್ಜನೆಯಲ್ಲಿ ನೋವು (Pain during Stool)",
+    "pain_in_anal_region": "ಗುದದ್ವಾರದ ನೋವು (Pain in Anal Region)",
+    "bloody_stool": "ಮಲದಲ್ಲಿ ರಕ್ತ (Bloody Stool)",
+    "irritation_in_anus": "ಗುದದ್ವಾರದಲ್ಲಿ ತುರಿಕೆ / ಉರಿ (Anal Irritation)",
+    "neck_pain": "ಕುತ್ತಿಗೆ ನೋವು (Neck Pain)",
+    "dizziness": "ತಲೆ ತಿರುಗುವುದು (Dizziness)",
+    "cramps": "ಸ್ನಾಯು ಸೆಳೆತ (Cramps)",
+    "bruising": "ರಕ್ತ ಹೆಪ್ಪುಗಟ್ಟುವಿಕೆ / ಮೂಗೇಟು (Bruising)",
+    "obesity": "ಬೊಜ್ಜು / ಅತಿಯಾದ ತೂಕ (Obesity)",
+    "swollen_legs": "ಕಾಲುಗಳ ಊತ (Swollen Legs)",
+    "swollen_blood_vessels": "ರಕ್ತನಾಳಗಳ ಊತ (Swollen Blood Vessels)",
+    "puffy_face_and_eyes": "ಮುಖ ಮತ್ತು ಕಣ್ಣುಗಳ ಊತ (Puffy Face & Eyes)",
+    "enlarged_thyroid": "ಗಂಟಲು ಗ್ರಂಥಿ ಊತ (Enlarged Thyroid)",
+    "brittle_nails": "ಉಗುರುಗಳು ಒಡೆಯುವುದು (Brittle Nails)",
+    "swollen_extremeties": "ಕೈಕಾಲುಗಳ ಊತ (Swollen Extremities)",
+    "excessive_hunger": "ಅತಿಯಾದ ಹಸಿವು (Excessive Hunger)",
+    "extra_marital_contacts": "ಲೈಂಗಿಕ ಸಂಪರ್ಕ ಇತಿಹಾಸ (Extra Contacts)",
+    "drying_and_tingling_lips": "ತುಟಿ ಒಣಗುವುದು / ಜುಮ್ಮೆನ್ನುವುದು (Drying Lips)",
+    "slurred_speech": "ಮಾತು ತೊದಲಿಸುವುದು (Slurred Speech)",
+    "knee_pain": "ಮೊಣಕಾಲು ನೋವು (Knee Pain)",
+    "hip_joint_pain": "ಸೊಂಟದ ಕೀಲು ನೋವು (Hip Joint Pain)",
+    "muscle_weakness": "ಸ್ನಾಯು ದೌರ್ಬಲ್ಯ (Muscle Weakness)",
+    "stiff_neck": "ಕುತ್ತಿಗೆ ಬಿಗಿತ (Stiff Neck)",
+    "swelling_joints": "ಕೀಲುಗಳಲ್ಲಿ ಊತ (Swelling Joints)",
+    "movement_stiffness": "ಚಲನೆಗೆ ಕಷ್ಟ / ಬಿಗಿತ (Movement Stiffness)",
+    "spinning_movements": "ತಲೆ ಸುತ್ತುವ ಅನುಭವ (Spinning Movements)",
+    "loss_of_balance": "ಸಮತೋಲನ ತಪ್ಪುವುದು (Loss of Balance)",
+    "unsteadiness": "ನಿಲ್ಲಲು ಅಸ್ಥಿರತೆ (Unsteadiness)",
+    "weakness_of_one_body_side": "ದೇಹದ ಒಂದು ಭಾಗದ ನಿಶ್ಯಕ್ತಿ (One-sided Weakness)",
+    "loss_of_smell": "ವಾಸನೆ ತಿಳಿಯದಿರುವುದು (Loss of Smell)",
+    "bladder_discomfort": "ಮೂತ್ರಕೋಶದ ಕಿರಿಕಿರಿ / ನೋವು (Bladder Discomfort)",
+    "foul_smell_of_urine": "ಮೂತ್ರದ ದುರ್ವಾಸನೆ (Foul Smell of Urine)",
+    "continuous_feel_of_urine": "ಸದಾ ಮೂತ್ರ ಬಂದಂತಾಗುವುದು (Frequent Urine Urge)",
+    "passage_of_gases": "ಹೊಟ್ಟೆಯಲ್ಲಿ ಗ್ಯಾಸ್ / ವಾಯು (Gas / Flatulence)",
+    "internal_itching": "ಒಳಗಿನ ತುರಿಕೆ (Internal Itching)",
+    "toxic_look_(typhos)": "ವಿಪರೀತ ಅಸ್ವಸ್ಥ ಮುಖಭಾವ (Toxic Appearance)",
+    "depression": "ಖಿನ್ನತೆ / ಬೇಸರ (Depression)",
+    "irritability": "ಕಿರಿಕಿರಿ / ಸಿಟ್ಟು (Irritability)",
+    "muscle_pain": "ಮೈಕೈ ನೋವು (Muscle Pain)",
+    "altered_sensorium": "ಅರೆಪ್ರಜ್ಞಾವಸ್ಥೆ (Altered Sensorium)",
+    "red_spots_over_body": "ಮೈಮೇಲೆ ಕೆಂಪು ಕಲೆಗಳು (Red Spots on Body)",
+    "belly_pain": "ಹೊಟ್ಟೆ ನೋವು (Belly Pain)",
+    "abnormal_menstruation": "ಅನಿಯಮಿತ ಮುಟ್ಟು / ಋತುಸ್ರಾವ (Abnormal Menstruation)",
+    "dischromic__patches": "ಚರ್ಮದ ಬಿಳಿ/ಕಪ್ಪು ಕಲೆಗಳು (Discolored Patches)",
+    "watering_from_eyes": "ಕಣ್ಣಿನಲ್ಲಿ ನೀರು ಬರುವುದು (Watering Eyes)",
+    "increased_appetite": "ಹೆಚ್ಚಿದ ಹಸಿವು (Increased Appetite)",
+    "polyuria": "ಅತಿಯಾದ ಮೂತ್ರ ವಿಸರ್ಜನೆ (Frequent Urination)",
+    "family_history": "ಕುಟುಂಬದ ಕಾಯಿಲೆ ಇತಿಹಾಸ (Family History)",
+    "mucoid_sputum": "ದಪ್ಪ ಕಫ (Mucoid Sputum)",
+    "rusty_sputum": "ಕಂದು/ಕೆಂಪು ಕಫ (Rusty Sputum)",
+    "lack_of_concentration": "ಏಕಾಗ್ರತೆಯ ಕೊರತೆ (Lack of Concentration)",
+    "visual_disturbances": "ದೃಷ್ಟಿ ದೋಷ / ಬೆಳಕಿನ ಕಿರಿಕಿರಿ (Visual Disturbances)",
+    "receiving_blood_transfusion": "ರಕ್ತ ವರ್ಗಾವಣೆ ಇತಿಹಾಸ (Blood Transfusion)",
+    "receiving_unsterile_injections": "ಅಸುರಕ್ಷಿತ ಸೂಜಿ ಬಳಕೆ (Unsterile Injections)",
+    "coma": "ಪ್ರಜ್ಞಾಹೀನತೆ (Coma)",
+    "stomach_bleeding": "ಹೊಟ್ಟೆಯಲ್ಲಿ ರಕ್ತಸ್ರಾವ (Stomach Bleeding)",
+    "distention_of_abdomen": "ಹೊಟ್ಟೆ ಉಬ್ಬರ (Abdominal Distention)",
+    "history_of_alcohol_consumption": "ಮದ್ಯಪಾನದ ಇತಿಹಾಸ (Alcohol History)",
+    "blood_in_sputum": "ಕಫದಲ್ಲಿ ರಕ್ತ (Blood in Sputum)",
+    "prominent_veins_on_calf": "ಕಾಲಿನಲ್ಲಿ ಉಬ್ಬಿದ ರಕ್ತನಾಳಗಳು (Prominent Calf Veins)",
+    "palpitations": "ಎದೆಬಡಿತ ಹೆಚ್ಚಾಗುವುದು (Palpitations)",
+    "painful_walking": "ನಡೆಯುವಾಗ ನೋವು (Painful Walking)",
+    "pus_filled_pimples": "ಕೀವು ತುಂಬಿದ ಮೊಡವೆ (Pus Filled Pimples)",
+    "blackheads": "ಕಪ್ಪು ಕಲೆಗಳು / ಬ್ಲ್ಯಾಕ್‌ಹೆಡ್ಸ್ (Blackheads)",
+    "scurring": "ಮೊಡವೆಯ ಕಲೆಗಳು (Scars)",
+    "skin_peeling": "ಚರ್ಮ ಸುಲಿಯುವುದು (Skin Peeling)",
+    "silver_like_dusting": "ಬೆಳ್ಳಿಯಂತಹ ಹುರುಪೆ (Silver Dusting)",
+    "small_dents_in_nails": "ಉಗುರಿನಲ್ಲಿ ಸಣ್ಣ ಗುಳಿಗಳು (Dents in Nails)",
+    "inflammatory_nails": "ಉಗುರುಗಳ ಊತ (Inflammatory Nails)",
+    "blister": "ನೀರಿನ ಗುಳ್ಳೆ (Blister)",
+    "red_sore_around_nose": "ಮೂಗಿನ ಸುತ್ತ ಕೆಂಪು ಹುಣ್ಣು (Red Sore Around Nose)",
+    "yellow_crust_ooze": "ಹಳದಿ ಕೀವು ಸ್ರವಿಸುವಿಕೆ (Yellow Crust Ooze)"
+}
+
+# Comprehensive Kannada Medical Data for all 30 diseases
+DISEASE_KNOWLEDGE_KN: Dict[str, Dict[str, Any]] = {
+    "Common Cold & Flu": {
+        "display_name_kn": "ಸಾಮಾನ್ಯ ಶೀತ ಮತ್ತು ಜ್ವರ (Common Cold & Flu)",
+        "description_kn": "ಇದು ವೈರಲ್ ಸೋಂಕಿನಿಂದ ಉಂಟಾಗುವ ಸಾಮಾನ್ಯ ಕಾಯಿಲೆಯಾಗಿದ್ದು, ಮೂಗು ಸೋರುವುದು, ಸೀನು, ಗಂಟಲು ಕೆರೆತ, ಸೌಮ್ಯ ಜ್ವರ ಮತ್ತು ಮೈಕೈ ನೋವು ಉಂಟುಮಾಡುತ್ತದೆ. ಇದು ಸಾಮಾನ್ಯವಾಗಿ 3 ರಿಂದ 5 ದಿನಗಳಲ್ಲಿ ಸರಿಯಾದ ವಿಶ್ರಾಂತಿ ಮತ್ತು ಮನೆಮದ್ದಿನಿಂದ ಗುಣವಾಗುತ್ತದೆ.",
+        "specialist_kn": "ಸಾಮಾನ್ಯ ವೈದ್ಯರು (General Physician)",
+        "verdict_doctor_kn": "ಜ್ವರ ಅಥವಾ ಕೆಮ್ಮು 5 ದಿನಗಳಿಗಿಂತ ಹೆಚ್ಚು ಮುಂದುವರಿದರೆ ಅಥವಾ ಉಸಿರಾಟ ಕಷ್ಟವಾದರೆ ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "verdict_rest_kn": "ಸಾಕಷ್ಟು ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ, ಬೆಚ್ಚಗಿನ ನೀರು, ತುಳಸಿ-ಶುಂಠಿ ಕಷಾಯ ಕುಡಿಯಿರಿ ಮತ್ತು ಹಬೆ (ಸ್ಟೀಮ್) ತೆಗೆದುಕೊಳ್ಳಿ.",
+        "home_remedies_kn": [
+            "ದಿನಕ್ಕೆ 2-3 ಬಾರಿ ಬಿಸಿ ನೀರಿನ ಹಬೆ (ಸ್ಟೀಮ್) ತೆಗೆದುಕೊಳ್ಳಿ.",
+            "ಬೆಚ್ಚಗಿನ ಶುಂಠಿ, ತುಳಸಿ ಮತ್ತು ಮೆಣಸಿನ ಕಷಾಯ ಕುಡಿಯಿರಿ.",
+            "ಉಗುರುಬೆಚ್ಚಗಿನ ಉಪ್ಪು ನೀರಿನಿಂದ ಗಂಟಲು ಮುಕ್ಕಳಿಸಿ (ಗಾರ್ಗಲ್ ಮಾಡಿ).",
+            "ಚೆನ್ನಾಗಿ ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ ಮತ್ತು ಕನಿಷ್ಠ 8 ಗಂಟೆ ನಿದ್ರೆ ಮಾಡಿ."
+        ],
+        "diet_kn": "ಬಿಸಿ ಗಂಜಿ, ರಸಂ ಅನ್ನ, ಬಿಸಿ ಸೂಪ್, ಎಳನೀರು ಸೇವಿಸಿ. ತಣ್ಣನೆಯ ಪಾನೀಯಗಳು ಮತ್ತು ಐಸ್ ಕ್ರೀಮ್ ಸಂಪೂರ್ಣವಾಗಿ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ಧೂಳು, ತಂಪು ಗಾಳಿ ತಪ್ಪಿಸಿ. ಕೆಮ್ಮುವಾಗ ಕರವಸ್ತ್ರ ಬಳಸಿ."
+    },
+    "Jaundice": {
+        "display_name_kn": "ಕಾಮಾಲೆ / ಜಾಂಡೀಸ್ (Jaundice)",
+        "description_kn": "ಯಕೃತ್ತಿನಲ್ಲಿ (ಲಿವರ್) ಬಿಲಿರುಬಿನ್ ಎಂಬ ಪಿಗ್ಮೆಂಟ್ ಹೆಚ್ಚಾಗುವುದರಿಂದ ಕಣ್ಣುಗಳು ಮತ್ತು ಚರ್ಮ ಹಳದಿಯಾಗುತ್ತವೆ. ಗಾಢ ಹಳದಿ ಮೂತ್ರ, ವಾಂತಿ, ಹಸಿವಿಲ್ಲದಿರುವುದು ಮತ್ತು ವಿಪರೀತ ಸುಸ್ತು ಇದರ ಪ್ರಮುಖ ಲಕ್ಷಣಗಳು.",
+        "specialist_kn": "ಯಕೃತ್ತು ಮತ್ತು ಜಠರ ತಜ್ಞರು (Gastroenterologist / Hepatologist)",
+        "verdict_doctor_kn": "ಕಾಮಾಲೆ ಲಿವರ್ ಸಮಸ್ಯೆಯಾಗಿರುವುದರಿಂದ ರಕ್ತ ಪರೀಕ್ಷೆ (LFT) ಹಾಗೂ ವೈದ್ಯರ ತಪಾಸಣೆ ಅತ್ಯಗತ್ಯ. ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "verdict_rest_kn": "ಸಂಪೂರ್ಣ ದೈಹಿಕ ವಿಶ್ರಾಂತಿ ಅತ್ಯಗತ್ಯ. ಕರಿದ ಮತ್ತು ಜಿಡ್ಡಿನ ಪದಾರ್ಥಗಳನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ತ್ಯಜಿಸಿ.",
+        "home_remedies_kn": [
+            "ಕಬ್ಬಿನ ಹಾಲು (ಶುದ್ಧವಾದ ಸ್ಥಳದಿಂದ) ಅಥವಾ ಎಳನೀರು ಪ್ರತಿದಿನ ಕುಡಿಯಿರಿ.",
+            "ನೆಲ್ಲಿಕಾಯಿ ರಸ ಅಥವಾ ಮೂಲಂಗಿ ರಸ ಸೇವನೆ ಯಕೃತ್ತಿಗೆ ಹಿತಕಾರಿ.",
+            "ಸಂಪೂರ್ಣ ಬೆಡ್ ರೆಸ್ಟ್ (ದೈಹಿಕ ವಿಶ್ರಾಂತಿ) ಪಡೆಯಿರಿ.",
+            "ಕರಿದ, ಎಣ್ಣೆಯುಕ್ತ ಮತ್ತು ಮಸಾಲೆಯುಕ್ತ ಆಹಾರ ಸಂಪೂರ್ಣವಾಗಿ ನಿಲ್ಲಿಸಿ."
+        ],
+        "diet_kn": "ಲಘು ಆಹಾರ, ಬಾರ್ಲಿ ನೀರು, ಹಣ್ಣಿನ ರಸಗಳು, ಬೇಯಿಸಿದ ತರಕಾರಿ ಸೇವಿಸಿ.",
+        "precautions_kn": "ಯಾವುದೇ ಕಾರಣಕ್ಕೂ ಮದ್ಯಪಾನ ಮಾಡಬೇಡಿ. ವೈದ್ಯರ ಅನುಮತಿಯಿಲ್ಲದೆ ನೋವು ನಿವಾರಕ ಮಾತ್ರೆಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳಬೇಡಿ."
+    },
+    "Malaria": {
+        "display_name_kn": "ಮಲೇರಿಯಾ ಜ್ವರ (Malaria)",
+        "description_kn": "ಹೆಣ್ಣು ಅನಾಫಿಲಿಸ್ ಸೊಳ್ಳೆಯ ಕಡಿತದಿಂದ ಹರಡುವ ಪರಾವಲಂಬಿ ಸೋಂಕು. ನಡುಕ ಹುಟ್ಟಿಸುವ ತೀವ್ರ ಚಳಿ, ಹಠಾತ್ ಜ್ವರ, ಬೆವರುವುದು, ತಲೆನೋವು ಮತ್ತು ವಾಂತಿ ಇದರ ಪ್ರಮುಖ ಲಕ್ಷಣಗಳು.",
+        "specialist_kn": "ಸಾಮಾನ್ಯ ವೈದ್ಯರು / ಸಾಂಕ್ರಾಮಿಕ ರೋಗ ತಜ್ಞರು (General Physician)",
+        "verdict_doctor_kn": "ಮಲೇರಿಯಾ ರಕ್ತ ಪರೀಕ್ಷೆ (Malaria Smear/Rapid Test) ಮಾಡಿಸಿ ನಿರ್ದಿಷ್ಟ ಮಲೇರಿಯಾ ವಿರೋಧಿ ಔಷಧಿಗಳನ್ನು ಪಡೆಯಲು ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "verdict_rest_kn": "ಮನೆಯಲ್ಲಿ ಸೊಳ್ಳೆ ಪರದೆ ಬಳಸಿ, ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ ಮತ್ತು ನಿರ್ಜಲೀಕರಣ ತಪ್ಪಿಸಲು ಸಾಕಷ್ಟು ನೀರು ಕುಡಿಯಿರಿ.",
+        "home_remedies_kn": [
+            "ದೇಹದ ಉಷ್ಣತೆ ನಿಯಂತ್ರಿಸಲು ಹಣೆಯ ಮೇಲೆ ತಣ್ಣೀರಿನ ಪಟ್ಟಿ ಹಾಕಿ.",
+            "ಓಆರ್‌ಎಸ್ (ORS) ಅಥವಾ ಎಳನೀರು ಕುಡಿದು ದೇಹವನ್ನು ಹೈಡ್ರೇಟ್ ಆಗಿ ಇಟ್ಟುಕೊಳ್ಳಿ.",
+            "ತುಳಸಿ ಎಲೆಗಳ ಕಷಾಯಕ್ಕೆ ಮೆಣಸು ಪುಡಿ ಸೇರಿಸಿ ಕುಡಿಯಿರಿ."
+        ],
+        "diet_kn": "ಬೇಯಿಸಿದ ಲಘು ಆಹಾರ, ಅನ್ನ-ಮಜ್ಜಿಗೆ, ಕಿಚಡಿ ಸೇವಿಸಿ.",
+        "precautions_kn": "ಮನೆಯ ಸುತ್ತ ನೀರು ನಿಲ್ಲದಂತೆ ನೋಡಿಕೊಳ್ಳಿ, ಸೊಳ್ಳೆ ಕಡಿತದಿಂದ ರಕ್ಷಣೆ ಪಡೆಯಿರಿ."
+    },
+    "Dengue": {
+        "display_name_kn": "ಡೆಂಗ್ಯೂ ಜ್ವರ (Dengue Fever)",
+        "description_kn": "ಈಡಿಸ್ ಸೊಳ್ಳೆಯಿಂದ ಹರಡುವ ವೈರಲ್ ಸೋಂಕು. ಹಠಾತ್ ವಿಪರೀತ ಜ್ವರ, ಕಣ್ಣಿನ ಹಿಂಭಾಗದ ನೋವು, ಕೀಲು ಮತ್ತು ಸ್ನಾಯು ನೋವು, ಹಾಗೂ ಪ್ಲೇಟ್‌ಲೆಟ್ ಸಂಖ್ಯೆ ಕುಸಿಯುವುದು ಇದರ ಪ್ರಮುಖ ಲಕ್ಷಣಗಳು.",
+        "specialist_kn": "ಸಾಮಾನ್ಯ ವೈದ್ಯರು (General Physician)",
+        "verdict_doctor_kn": "ಪ್ಲೇಟ್‌ಲೆಟ್ ಮಟ್ಟ ಮತ್ತು ರಕ್ತಸ್ರಾವದ ಅಪಾಯವನ್ನು ಪರೀಕ್ಷಿಸಲು ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ ಸಿಬಿಸಿ (CBC) ರಕ್ತ ಪರೀಕ್ಷೆ ಮಾಡಿಸಿಕೊಳ್ಳಿ.",
+        "verdict_rest_kn": "ಸಂಪೂರ್ಣ ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ, ನಿರಂತರವಾಗಿ ದ್ರವಾಹಾರ ಸೇವಿಸಿ.",
+        "home_remedies_kn": [
+            "ಪಪ್ಪಾಯಿ ಎಲೆಯ ರಸ (1-2 ಚಮಚ) ಪ್ಲೇಟ್‌ಲೆಟ್ ಹೆಚ್ಚಿಸಲು ಸಹಕಾರಿ.",
+            "ಎಳನೀರು, ದಾಳಿಂಬೆ ಜ್ಯೂಸ್ ಮತ್ತು ಓಆರ್‌ಎಸ್ (ORS) ಧಾರಾಳವಾಗಿ ಕುಡಿಯಿರಿ.",
+            "ವಿಪರೀತ ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ."
+        ],
+        "diet_kn": "ಲಘು ಪಚನವಾಗುವ ಆಹಾರ, ಕಿವಿ ಹಣ್ಣು, ದಾಳಿಂಬೆ, ಬಿಸಿ ತರಕಾರಿ ಸೂಪ್ ಸೇವಿಸಿ.",
+        "precautions_kn": "ಆಸ್ಪಿರಿನ್ ಅಥವಾ ಐಬುಪ್ರೊಫೇನ್ ಮಾತ್ರೆ ತೆಗೆದುಕೊಳ್ಳಬೇಡಿ (ಇದು ರಕ್ತಸ್ರಾವ ಉಂಟುಮಾಡಬಹುದು)."
+    },
+    "Typhoid Fever": {
+        "display_name_kn": "ಟೈಫಾಯ್ಡ್ ಜ್ವರ (Typhoid Fever)",
+        "description_kn": "ಕಲುಷಿತ ನೀರು ಅಥವಾ ಆಹಾರದ ಮೂಲಕ ಸಾಲ್ಮೊನೆಲ್ಲಾ ಬ್ಯಾಕ್ಟೀರಿಯಾದಿಂದ ಹರಡುವ ಜ್ವರ. ನಿರಂತರ ತೀವ್ರ ಜ್ವರ, ಹೊಟ್ಟೆ ನೋವು, ಸುಸ್ತು, ತಲೆನೋವು ಮತ್ತು ಮಲಬದ್ಧತೆ ಅಥವಾ ಭೇದಿ ಉಂಟಾಗುತ್ತದೆ.",
+        "specialist_kn": "ಸಾಮಾನ್ಯ ವೈದ್ಯರು / ಸಾಂಕ್ರಾಮಿಕ ರೋಗ ತಜ್ಞರು (Physician)",
+        "verdict_doctor_kn": "ಟೈಫಾಯ್ಡ್‌ಗೆ ಸೂಕ್ತ ಆ್ಯಂಟಿಬಯೋಟಿಕ್ ಚಿಕಿತ್ಸೆ ಅಗತ್ಯ. ವಿಡಾಲ್ (Widal) ಪರೀಕ್ಷೆಗಾಗಿ ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "verdict_rest_kn": "ಸಂಪೂರ್ಣ ವಿಶ್ರಾಂತಿ ಮತ್ತು ಕಾಯಿಸಿ ಆರಿಸಿದ ನೀರನ್ನು ಮಾತ್ರ ಕುಡಿಯಿರಿ.",
+        "home_remedies_kn": [
+            "ಕಾಯಿಸಿ ಆರಿಸಿದ ನೀರನ್ನು ಮಾತ್ರ ಧಾರಾಳವಾಗಿ ಕುಡಿಯಿರಿ.",
+            "ಲವಂಗ ಮತ್ತು ತುಳಸಿ ಕಷಾಯ ಕುಡಿಯುವುದು ಹೊಟ್ಟೆಯ ಸೋಂಕಿಗೆ ಒಳ್ಳೆಯದು.",
+            "ದೇಹದ ಉಷ್ಣತೆಯನ್ನು ನಿಯಮಿತವಾಗಿ ಪರಿಶೀಲಿಸಿ."
+        ],
+        "diet_kn": "ನುಣ್ಣಗೆ ಬೇಯಿಸಿದ ಅನ್ನ, ಹೆಸರುಬೇಳೆ ಕಿಚಡಿ, ಹಣ್ಣಿನ ಜ್ಯೂಸ್ ಸೇವಿಸಿ. ಹೊರಗಿನ ಕಚ್ಚಾ ಆಹಾರ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ಹೊರಗಿನ ಅಥವಾ ಅಶುದ್ಧ ಆಹಾರ ಸೇವಿಸಬೇಡಿ."
+    },
+    "GERD (Acid Reflux)": {
+        "display_name_kn": "ಅಸಿಡಿಟಿ / ಎದೆ ಉರಿ / ಗ್ಯಾಸ್ಟ್ರಿಕ್ (GERD)",
+        "description_kn": "ಜಠರದ ಆಮ್ಲವು ಅನ್ನನಾಳಕ್ಕೆ ಹಿಮ್ಮುಖವಾಗಿ ಹರಿಯುವುದರಿಂದ ಎದೆಯಲ್ಲಿ ಉರಿ, ಹುಳಿ ತೇಗು, ಹೊಟ್ಟೆ ನೋವು ಮತ್ತು ಗಂಟಲಿನಲ್ಲಿ ಕಹಿ ರುಚಿ ಉಂಟಾಗುತ್ತದೆ.",
+        "specialist_kn": "ಜಠರ ಮತ್ತು ಕರುಳು ರೋಗ ತಜ್ಞರು (Gastroenterologist)",
+        "verdict_doctor_kn": "ಎದೆ ನೋವು ತೀವ್ರವಾಗಿದ್ದರೆ ಅಥವಾ ನಿರಂತರ ಹುಣ್ಣು ಇದ್ದರೆ ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ.",
+        "verdict_rest_kn": "ಖಾರ, ಎಣ್ಣೆಯುಕ್ತ ಆಹಾರ ತ್ಯಜಿಸಿ, ಊಟದ ನಂತರ ತಕ್ಷಣ ಮಲಗಬೇಡಿ.",
+        "home_remedies_kn": [
+            "ತಣ್ಣನೆಯ ಹಾಲು ಅಥವಾ ಮಜ್ಜಿಗೆಗೆ ಜೀರಿಗೆ ಪುಡಿ ಬೆರೆಸಿ ಕುಡಿಯಿರಿ.",
+            "ಊಟದ ನಂತರ ಸ್ವಲ್ಪ ಸೋಂಪು (ಬಡೆಸೋಪ್) ಅಥವಾ ಬಾಳೆಹಣ್ಣು ಸೇವಿಸಿ.",
+            "ರಾತ್ರಿ ಊಟ ಮಲಗುವ 2-3 ಗಂಟೆ ಮುಂಚಿತವಾಗಿ ಮುಗಿಸಿ.",
+            "ತಲೆದಿಂಬನ್ನು ಸ್ವಲ್ಪ ಎತ್ತರದಲ್ಲಿಟ್ಟುಕೊಂಡು ಮಲಗಿ."
+        ],
+        "diet_kn": "ಮಜ್ಜಿಗೆ, ಸೌತೆಕಾಯಿ, ಕಲ್ಲಂಗಡಿ, ಎಳನೀರು ಸೇವಿಸಿ. ಚಹಾ, ಕಾಫಿ, ಮದ್ಯಪಾನ ಮತ್ತು ತಂಬಾಕು ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ಒಮ್ಮೆಲೇ ಹೊಟ್ಟೆ ತುಂಬಾ ಊಟ ಮಾಡಬೇಡಿ, ಸಣ್ಣ ಪ್ರಮಾಣದಲ್ಲಿ ಆಗಾಗ ಊಟ ಮಾಡಿ."
+    },
+    "Gastroenteritis (Food Poisoning / Stomach Infection)": {
+        "display_name_kn": "ಫುಡ್ ಪಾಯಿಸನಿಂಗ್ / ವಾಂತಿ-ಭೇದಿ (Gastroenteritis)",
+        "description_kn": "ಹಳಸಿದ ಅಥವಾ ಕಲುಷಿತ ಆಹಾರ ಸೇವನೆಯಿಂದ ಹೊಟ್ಟೆ ಮತ್ತು ಕರುಳಿನಲ್ಲಿ ಉಂಟಾಗುವ ಸೋಂಕು. ತೀವ್ರ ವಾಂತಿ, ಪದೇ ಪದೇ ನೀರಿನಂತಹ ಭೇದಿ, ಹೊಟ್ಟೆ ಸೆಳೆತ ಮತ್ತು ನಿರ್ಜಲೀಕರಣ ಉಂಟಾಗುತ್ತದೆ.",
+        "specialist_kn": "ಸಾಮಾನ್ಯ ವೈದ್ಯರು / ಜಠರ ರೋಗ ತಜ್ಞರು (Gastroenterologist)",
+        "verdict_doctor_kn": "ವಾಂತಿ ನಿಲ್ಲದಿದ್ದರೆ ಅಥವಾ ಅತಿಯಾದ ನಿರ್ಜಲೀಕರಣ (ಕಣ್ಣು ಗುಳಿಬೀಳುವುದು, ಮೂತ್ರ ನಿಲ್ಲುವುದು) ಕಂಡುಬಂದರೆ ತಕ್ಷಣ ಆಸ್ಪತ್ರೆಗೆ ಭೇಟಿ ನೀಡಿ.",
+        "verdict_rest_kn": "ಪ್ರತಿ ಬಾರಿ ಭೇದಿಯಾದಾಗಲೂ ಓಆರ್‌ಎಸ್ (ORS) ಅಥವಾ ಎಳನೀರು ಕುಡಿದು ದೇಹದಲ್ಲಿ ನೀರಿನಾಂಶ ಕಾಪಾಡಿಕೊಳ್ಳಿ.",
+        "home_remedies_kn": [
+            "ಪ್ರತಿ ಗಂಟೆಗೊಮ್ಮೆ ಓಆರ್‌ಎಸ್ (ORS) ದ್ರಾವಣ ಅಥವಾ ಉಪ್ಪು-ಸಕ್ಕರೆ ನೀರು ಕುಡಿಯಿರಿ.",
+            "ದಾಳಿಂಬೆ ಸಿಪ್ಪೆಯ ಕಷಾಯ ಅಥವಾ ಜೀರಿಗೆ ಕಷಾಯ ಭೇದಿ ನಿಯಂತ್ರಿಸಲು ಸಹಕಾರಿ.",
+            "ಅನ್ನದ ತಿಳಿ ಗಂಜಿ ಮತ್ತು ಮೊಸರನ್ನ ಸೇವಿಸಿ."
+        ],
+        "diet_kn": "BRAT ಆಹಾರ (ಬಾಳೆಹಣ್ಣು, ಅನ್ನ, ಸೇಬು, ಟೋಸ್ಟ್), ಮಜ್ಜಿಗೆ. ಹಾಲು, ಚೀಸ್, ಜಿಡ್ಡಿನ ಆಹಾರ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ಸ್ವಚ್ಛವಾದ ಕುದಿಸಿದ ನೀರನ್ನು ಮಾತ್ರ ಕುಡಿಯಿರಿ."
+    },
+    "Diabetes": {
+        "display_name_kn": "ಮಧುಮೇಹ / ಸಕ್ಕರೆ ಕಾಯಿಲೆ (Diabetes Mellitus)",
+        "description_kn": "ರಕ್ತದಲ್ಲಿ ಗ್ಲೂಕೋಸ್ (ಸಕ್ಕರೆ) ಪ್ರಮಾಣ ಹೆಚ್ಚಾಗುವ ಸ್ಥಿತಿ. ಪದೇ ಪದೇ ಮೂತ್ರ ವಿಸರ್ಜನೆ, ಅತಿಯಾದ ಬಾಯಾರಿಕೆ, ಅತಿಯಾದ ಹಸಿವು, ತೂಕ ಇಳಿಕೆ ಮತ್ತು ನಿಶ್ಯಕ್ತಿ ಇದರ ಲಕ್ಷಣಗಳು.",
+        "specialist_kn": "ಮಧುಮೇಹ ಮತ್ತು ಹಾರ್ಮೋನ್ ತಜ್ಞರು (Diabetologist / Endocrinologist)",
+        "verdict_doctor_kn": "ರಕ್ತದ ಸಕ್ಕರೆ ಮಟ್ಟವನ್ನು (HbA1c, FBS, PPBS) ನಿಯಮಿತವಾಗಿ ತಪಾಸಣೆ ಮಾಡಿಸಿ ವೈದ್ಯರ ಸಲಹೆಯಂತೆ ಔಷಧಿ ಪಡೆಯಿರಿ.",
+        "verdict_rest_kn": "ದೈನಂದಿನ 30 ನಿಮಿಷ ನಡಿಗೆ, ಆಹಾರ ನಿಯಂತ್ರಣ ಮತ್ತು ಸಕ್ಕರೆ ಪದಾರ್ಥಗಳ ತ್ಯಜಿಸುವಿಕೆ ಅಗತ್ಯ.",
+        "home_remedies_kn": [
+            "ರಾತ್ರಿ 1 ಚಮಚ ಮೆಂತ್ಯ ಕಾಳುಗಳನ್ನು ನೆನೆಸಿಟ್ಟು ಮುಂಜಾನೆ ಆ ನೀರನ್ನು ಕುಡಿಯಿರಿ.",
+            "ಪ್ರತಿದಿನ ಬೆಳಿಗ್ಗೆ ಹಾಗಲಕಾಯಿ ರಸ ಅಥವಾ ನೆಲ್ಲಿಕಾಯಿ ರಸ ಸೇವಿಸಿ.",
+            "ದಾಲ್ಚಿನ್ನಿ (ಚಕ್ಕೆ) ಪುಡಿಯನ್ನು ಬೆಚ್ಚಗಿನ ನೀರಿನಲ್ಲಿ ಸೇವಿಸಿ."
+        ],
+        "diet_kn": "ಸಿರಿಧಾನ್ಯಗಳು (ರಾಗಿ, ನವಣೆ), ಹಸಿರು ತರಕಾರಿಗಳು, ಮೊಳಕೆ ಕಾಳುಗಳು. ಸಕ್ಕರೆ, ಸಿಹಿತಿಂಡಿ, ಮೈದಾ, ತಂಪು ಪಾನೀಯ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ಪಾದಗಳ ಆರೈಕೆ ಮಾಡಿ, ಗಾಯಗಳಾಗದಂತೆ ಎಚ್ಚರವಹಿಸಿ."
+    },
+    "Hypertension (High Blood Pressure)": {
+        "display_name_kn": "ಅಧಿಕ ರಕ್ತದೊತ್ತಡ / ಬಿಪಿ (Hypertension)",
+        "description_kn": "ರಕ್ತನಾಳಗಳಲ್ಲಿ ರಕ್ತದ ಒತ್ತಡ ನಿರಂತರವಾಗಿ ಹೆಚ್ಚಾಗಿರುವ ಸ್ಥಿತಿ. ತಲೆನೋವು, ತಲೆತಿರುಗುವಿಕೆ, ಎದೆಬಡಿತ ಹೆಚ್ಚುವುದು ಮತ್ತು ಉಸಿರಾಟದ ತೊಂದರೆ ಉಂಟಾಗಬಹುದು.",
+        "specialist_kn": "ಹೃದ್ರೋಗ ತಜ್ಞರು / ಸಾಮಾನ್ಯ ವೈದ್ಯರು (Cardiologist)",
+        "verdict_doctor_kn": "ಬಿಪಿ 140/90 ಕ್ಕಿಂತ ಹೆಚ್ಚಿದ್ದರೆ ಅಥವಾ ಎದೆ ನೋವು ಇದ್ದರೆ ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ.",
+        "verdict_rest_kn": "ಉಪ್ಪು ಸೇವನೆ ತಗ್ಗಿಸಿ, ಒತ್ತಡ ಕಡಿಮೆ ಮಾಡಿಕೊಳ್ಳಿ ಮತ್ತು ಪ್ರತಿದಿನ ಪ್ರಾಣಾಯಾಮ ಮಾಡಿ.",
+        "home_remedies_kn": [
+            "ಆಹಾರದಲ್ಲಿ ಉಪ್ಪಿನ (ಸೋಡಿಯಂ) ಪ್ರಮಾಣವನ್ನು ಗಣನೀಯವಾಗಿ ಕಡಿಮೆ ಮಾಡಿ.",
+            "ಪ್ರತಿದಿನ ಮುಂಜಾನೆ ಬೆಳ್ಳುಳ್ಳಿಯ 1 ಎಸಳನ್ನು ಹಸಿಯಾಗಿ ಅಥವಾ ಬೆಚ್ಚಗಿನ ನೀರಿನೊಂದಿಗೆ ಸೇವಿಸಿ.",
+            "ದಿನಕ್ಕೆ 15-20 ನಿಮಿಷ ಪ್ರಾಣಾಯಾಮ (ಅನುಲೋಮ-ವಿಲೋಮ) ಮಾಡಿ."
+        ],
+        "diet_kn": "ಬಾಳೆಹಣ್ಣು, ಎಳನೀರು, ಬೀಟ್‌ರೂಟ್ ಜ್ಯೂಸ್, ಸೊಪ್ಪುಗಳು. ಉಪ್ಪಿನಕಾಯಿ, ಹಪ್ಪಳ, ಬೇಕರಿ ತಿನಿಸುಗಳನ್ನು ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ಧೂಮಪಾನ, ಮದ್ಯಪಾನ ಮತ್ತು ಮಾನಸಿಕ ಒತ್ತಡವನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ನಿವಾರಿಸಿ."
+    },
+    "Migraine": {
+        "display_name_kn": "ಅರೆತಲೆನೋವು / ಮೈಗ್ರೇನ್ (Migraine)",
+        "description_kn": "ತಲೆಯ ಒಂದು ಭಾಗದಲ್ಲಿ ತೀವ್ರವಾದ ಸಿಡಿಯುವಂತಹ ನೋವು, ಕಣ್ಣು ಮಸುಕಾಗುವುದು, ವಾಕರಿಕೆ, ಹಾಗೂ ಬೆಳಕು ಮತ್ತು ಶಬ್ದವನ್ನು ಸಹಿಸಲಾಗದಿರುವುದು ಇದರ ಲಕ್ಷಣಗಳು.",
+        "specialist_kn": "ನರರೋಗ ತಜ್ಞರು (Neurologist)",
+        "verdict_doctor_kn": "ತಲೆನೋವು ವಾರಕ್ಕೆ 2 ಕ್ಕಿಂತ ಹೆಚ್ಚು ಬಾರಿ ಬಂದರೆ ಅಥವಾ ತೀವ್ರವಾಗಿದ್ದರೆ ನರರೋಗ ತಜ್ಞರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "verdict_rest_kn": "ಕತ್ತಲೆಯಾದ, ಶಾಂತವಾದ ಕೋಣೆಯಲ್ಲಿ ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ ಮತ್ತು ಹಣೆಯ ಮೇಲೆ ಐಸ್ ಪ್ಯಾಕ್ ಇಡಿ.",
+        "home_remedies_kn": [
+            "ಕತ್ತಲೆಯಾದ, ನಿಶ್ಯಬ್ದ ಕೋಣೆಯಲ್ಲಿ ತಲೆಯಿಟ್ಟು ಕಣ್ಣು ಮುಚ್ಚಿ ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ.",
+            "ಹಣೆ ಅಥವಾ ಕುತ್ತಿಗೆಯ ಹಿಂಭಾಗಕ್ಕೆ ಐಸ್ ಪ್ಯಾಕ್ (ತಣ್ಣನೆಯ ಪಟ್ಟಿ) ಇಡಿ.",
+            "ಶುಂಠಿ ಚಹಾ ಕುಡಿಯುವುದು ವಾಕರಿಕೆ ಮತ್ತು ನೋವು ಕಡಿಮೆ ಮಾಡಲು ಸಹಕಾರಿ."
+        ],
+        "diet_kn": "ಸಾಕಷ್ಟು ನೀರು ಕುಡಿಯಿರಿ, ಊಟದ ಸಮಯ ತಪ್ಪಿಸಬೇಡಿ. ಚಾಕೊಲೇಟ್, ಚೀಸ್, ಅಜಿನೊಮೊಟೊ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ಮೊಬೈಲ್/ಕಂಪ್ಯೂಟರ್ ಸ್ಕ್ರೀನ್ ಹೆಚ್ಚು ನೋಡುವುದನ್ನು ತಪ್ಪಿಸಿ, ನಿಯಮಿತ ನಿದ್ರೆ ಮಾಡಿ."
+    },
+    "Bronchial Asthma": {
+        "display_name_kn": "ಉಬ್ಬಸ / ದಮ್ಮು / ಅಸ್ತಮಾ (Bronchial Asthma)",
+        "description_kn": "ಶ್ವಾಸನಾಳಗಳ ಉರಿಯೂತದಿಂದಾಗಿ ಉಸಿರಾಟದ ತೊಂದರೆ, ಎದೆಯಲ್ಲಿ ಸಿಳ್ಳೆ ಹಾಕಿದಂತಹ ಶಬ್ದ (ವೀಸಿಂಗ್), ಎದೆ ಬಿಗಿತ ಮತ್ತು ನಿರಂತರ ಕೆಮ್ಮು ಉಂಟಾಗುವ ಸ್ಥಿತಿ.",
+        "specialist_kn": "ಶ್ವಾಸಕೋಶ ತಜ್ಞರು (Pulmonologist)",
+        "verdict_doctor_kn": "ಉಸಿರಾಟ ತೀವ್ರ ಕಷ್ಟವಾದರೆ ಅಥವಾ ಇನ್‌ಹೇಲರ್ ಕೆಲಸ ಮಾಡದಿದ್ದರೆ ತಕ್ಷಣ ತುರ್ತು ಚಿಕಿತ್ಸೆಗೆ ಭೇಟಿ ನೀಡಿ.",
+        "verdict_rest_kn": "ಧೂಳು, ಹೊಗೆಯಿಂದ ದೂರವಿರಿ ಮತ್ತು ಇನ್‌ಹೇಲರ್ ಸದಾ ಜೊತೆಯಲ್ಲಿಟ್ಟುಕೊಳ್ಳಿ.",
+        "home_remedies_kn": [
+            "ಬೆಚ್ಚಗಿನ ನೀರಿಗೆ ತುಳಸಿ, ಶುಂಠಿ ಮತ್ತು ಜೇನುತುಪ್ಪ ಬೆರೆಸಿ ಕುಡಿಯಿರಿ.",
+            "ಉಸಿರಾಟ ಕಷ್ಟವಾದಾಗ ನೇರವಾಗಿ ಕುಳಿತು ನಿಧಾನವಾಗಿ ಉಸಿರಾಡಿ.",
+            "ಅಗತ್ಯವಿದ್ದಾಗ ವೈದ್ಯರು ಸೂಚಿಸಿದ ಇನ್‌ಹೇಲರ್ ಬಳಸಿ."
+        ],
+        "diet_kn": "ಬಿಸಿ ಸೂಪ್, ಲಘು ಆಹಾರ. ಫ್ರಿಡ್ಜ್ ನೀರು, ತಣ್ಣನೆಯ ಐಸ್ ಕ್ರೀಮ್, ಬಾಳೆಹಣ್ಣು ರಾತ್ರಿ ವೇಳೆ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ಹೊಗೆ, ಧೂಳು, ಸೊಳ್ಳೆ ಕಾಯಿಲ್ ಹೊಗೆಯಿಂದ ದೂರವಿರಿ."
+    },
+    "Urinary Tract Infection (UTI)": {
+        "display_name_kn": "ಮೂತ್ರ ಸೋಂಕು / ಉರಿ ಮೂತ್ರ (Urinary Tract Infection - UTI)",
+        "description_kn": "ಮೂತ್ರನಾಳದಲ್ಲಿ ಬ್ಯಾಕ್ಟೀರಿಯಾದ ಸೋಂಕು ಉಂಟಾಗುವುದು. ಮೂತ್ರ ವಿಸರ್ಜಿಸುವಾಗ ವಿಪರೀತ ಉರಿ, ಪದೇ ಪದೇ ಮೂತ್ರ ಬರುವುದು ಮತ್ತು ಕೆಳಹೊಟ್ಟೆ ನೋವು ಇದರ ಲಕ್ಷಣಗಳು.",
+        "specialist_kn": "ಮೂತ್ರಪಿಂಡ / ಯುರಾಲಜಿ ತಜ್ಞರು (Urologist / General Physician)",
+        "verdict_doctor_kn": "ಮೂತ್ರ ಪರೀಕ್ಷೆ (Urine Routine & Culture) ಮಾಡಿಸಿ ಸೂಕ್ತ ಆ್ಯಂಟಿಬಯೋಟಿಕ್ ಪಡೆಯಲು ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "verdict_rest_kn": "ದಿನಕ್ಕೆ ಕನಿಷ್ಠ 3-4 ಲೀಟರ್ ನೀರು, ಎಳನೀರು ಅಥವಾ ಬಾರ್ಲಿ ನೀರು ಕುಡಿಯಿರಿ.",
+        "home_remedies_kn": [
+            "ದಿನಕ್ಕೆ 3-4 ಲೀಟರ್ ನೀರು ಕುಡಿದು ಮೂತ್ರನಾಳವನ್ನು ಸ್ವಚ್ಛಗೊಳಿಸಿ.",
+            "ಬಾರ್ಲಿ ನೀರು ಅಥವಾ ಎಳನೀರು ಕುಡಿಯುವುದು ಮೂತ್ರದ ಉರಿ ಶಮನ ಮಾಡುತ್ತದೆ.",
+            "ಕ್ರ್ಯಾನ್‌ಬೆರಿ ಜ್ಯೂಸ್ (ಸಕ್ಕರೆಯಿಲ್ಲದ) ಕುಡಿಯುವುದು ಸೋಂಕು ತಡೆಯಲು ಸಹಕಾರಿ."
+        ],
+        "diet_kn": "ಎಳನೀರು, ಮಜ್ಜಿಗೆ, ಸೌತೆಕಾಯಿ. ಮಸಾಲೆಯುಕ್ತ, ಖಾರವಾದ ಆಹಾರ ಮತ್ತು ಮದ್ಯಪಾನ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ಮೂತ್ರವನ್ನು ಹೆಚ್ಚು ಹೊತ್ತು ಹಿಡಿದಿಟ್ಟುಕೊಳ್ಳಬೇಡಿ, ಸ್ವಚ್ಛತೆ ಕಾಪಾಡಿ."
+    },
+    "Allergy": {
+        "display_name_kn": "ಅಲರ್ಜಿ / ಶೀತ ಅಲರ್ಜಿ (Allergic Rhinitis)",
+        "description_kn": "ಧೂಳು, ಹೂವಿನ ಪರಾಗ ಅಥವಾ ತಂಪು ಗಾಳಿಗೆ ದೇಹದ ರೋಗನಿರೋಧಕ ವ್ಯವಸ್ಥೆಯ ಪ್ರತಿಕ್ರಿಯೆ. ನಿರಂತರ ಸೀನು, ಕಣ್ಣಿನಲ್ಲಿ ನೀರು, ಮೂಗು ಸೋರುವುದು ಮತ್ತು ತುರಿಕೆ ಉಂಟಾಗುತ್ತದೆ.",
+        "specialist_kn": "ಅಲರ್ಜಿ ತಜ್ಞರು / ಸಾಮಾನ್ಯ ವೈದ್ಯರು (Allergist)",
+        "verdict_doctor_kn": "ಉಸಿರಾಟ ಕಷ್ಟವಾದರೆ ಅಥವಾ ಮುಖ ಊದಿಕೊಂಡರೆ ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ.",
+        "verdict_rest_kn": "ಅಲರ್ಜಿ ಉಂಟುಮಾಡುವ ಧೂಳು ಮತ್ತು ಸಾಕುಪ್ರಾಣಿಗಳ ಸಂಪರ್ಕ ತಪ್ಪಿಸಿ.",
+        "home_remedies_kn": [
+            "ಹಾಲಿಗೆ ಅರಿಶಿನ ಮತ್ತು ಕರಿಮೆಣಸು ಪುಡಿ ಬೆರೆಸಿ ಕುಡಿಯಿರಿ.",
+            "ಉಗುರುಬೆಚ್ಚಗಿನ ಉಪ್ಪು ನೀರಿನಿಂದ ಮೂಗು ತೊಳೆಯಿರಿ (ಜಲನೇತಿ).",
+            "ಬಿಸಿ ಹಬೆ ತೆಗೆದುಕೊಳ್ಳಿ."
+        ],
+        "diet_kn": "ಬೆಚ್ಚಗಿನ ತಾಜಾ ಆಹಾರ, ಜೇನುತುಪ್ಪ, ನೆಲ್ಲಿಕಾಯಿ. ಕೃತಕ ಬಣ್ಣಗಳಿರುವ ಆಹಾರ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ಹೊರಗೆ ಹೋಗುವಾಗ ಮಾಸ್ಕ್ ಧರಿಸಿ, ಧೂಳಿನಿಂದ ರಕ್ಷಣೆ ಪಡೆಯಿರಿ."
+    },
+    "Fungal Infection": {
+        "display_name_kn": "ಶಿಲೀಂಧ್ರ ಸೋಂಕು / ದದ್ದು (Fungal Infection / Ringworm)",
+        "description_kn": "ಚರ್ಮದ ಮಡಿಕೆಗಳಲ್ಲಿ ತೇವಾಂಶದಿಂದ ಉಂಟಾಗುವ ಶಿಲೀಂಧ್ರ ಸೋಂಕು. ತೀವ್ರ ತುರಿಕೆ, ಕೆಂಪು ವೃತ್ತಾಕಾರದ ದದ್ದು ಮತ್ತು ಚರ್ಮ ಸುಲಿಯುವುದು ಇದರ ಲಕ್ಷಣಗಳು.",
+        "specialist_kn": "ಚರ್ಮ ರೋಗ ತಜ್ಞರು (Dermatologist)",
+        "verdict_doctor_kn": "ಸೋಂಕು ಹರಡದಂತೆ ತಡೆಯಲು ಚರ್ಮ ತಜ್ಞರಿಂದ ಸೂಕ್ತ ಆ್ಯಂಟಿಫಂಗಲ್ ಕ್ರೀಮ್ ಅಥವಾ ಮಾತ್ರೆ ಪಡೆಯಿರಿ.",
+        "verdict_rest_kn": "ಚರ್ಮವನ್ನು ಸದಾ ಒಣಗಿಸಿ ಮತ್ತು ಸ್ವಚ್ಛವಾಗಿಟ್ಟುಕೊಳ್ಳಿ.",
+        "home_remedies_kn": [
+            "ಬೇವಿನ ಎಲೆಗಳ ಕಷಾಯದಿಂದ ಸೋಂಕಿತ ಜಾಗವನ್ನು ತೊಳೆಯಿರಿ.",
+            "ತೆಂಗಿನ ಎಣ್ಣೆಗೆ ಸ್ವಲ್ಪ ಕರ್ಪೂರ ಬೆರೆಸಿ ಹಚ್ಚಿ (ತುರಿಕೆ ಶಮನಕ್ಕೆ).",
+            "ಹತ್ತಿಯ (ಕಾಟನ್) ಸಡಿಲವಾದ ಉಡುಪುಗಳನ್ನು ಧರಿಸಿ."
+        ],
+        "diet_kn": "ಸಕ್ಕರೆ ಪದಾರ್ಥಗಳನ್ನು ಕಡಿಮೆ ಮಾಡಿ, ರೋಗನಿರೋಧಕ ಶಕ್ತಿ ಹೆಚ್ಚಿಸುವ ಆಹಾರ ಸೇವಿಸಿ.",
+        "precautions_kn": "ಇತರರ ಬಟ್ಟೆ ಅಥವಾ ಟವೆಲ್ ಹಂಚಿಕೊಳ್ಳಬೇಡಿ, ಬಟ್ಟೆಗಳನ್ನು ಬಿಸಿಲಿನಲ್ಲಿ ಚೆನ್ನಾಗಿ ಒಣಗಿಸಿ."
+    },
+    "Hemorrhoids (Piles)": {
+        "display_name_kn": "ಮೂಲವ್ಯಾಧಿ / ಪೈಲ್ಸ್ (Piles / Hemorrhoids)",
+        "description_kn": "ಗುದದ್ವಾರದ ರಕ್ತನಾಳಗಳು ಊದಿಕೊಳ್ಳುವುದು. ಮಲವಿಸರ್ಜನೆಯಲ್ಲಿ ನೋವು, ರಕ್ತಸ್ರಾವ, ತುರಿಕೆ ಮತ್ತು ಮಲಬದ್ಧತೆ ಇದರ ಪ್ರಮುಖ ಲಕ್ಷಣಗಳು.",
+        "specialist_kn": "ಶಸ್ತ್ರಚಿಕಿತ್ಸಕರು / ಪೈಲ್ಸ್ ತಜ್ಞರು (Proctologist / General Surgeon)",
+        "verdict_doctor_kn": "ಹೆಚ್ಚು ರಕ್ತಸ್ರಾವ ಅಥವಾ ತೀವ್ರ ನೋವಿದ್ದರೆ ಶೀಘ್ರದಲ್ಲೇ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "verdict_rest_kn": "ನಾರಿನಂಶವಿರುವ ಆಹಾರ ಸೇವಿಸಿ, ಮಲಬದ್ಧತೆ ನಿವಾರಿಸಿಕೊಳ್ಳಿ.",
+        "home_remedies_kn": [
+            "ಉಗುರುಬೆಚ್ಚಗಿನ ನೀರಿನಲ್ಲಿ 15 ನಿಮಿಷ ಕುಳಿತುಕೊಳ್ಳಿ (ಸಿಟ್ಜ್ ಬಾತ್).",
+            "ರಾತ್ರಿ ಮಲಗುವ ಮುನ್ನ 1 ಚಮಚ ಇಸಾಬ್ಗೋಲ್ (ಹಸ್ಕ್) ಅಥವಾ ಬೆಚ್ಚಗಿನ ಹಾಲು ಕುಡಿಯಿರಿ.",
+            "ಧಾರಾಳವಾಗಿ ನೀರು ಕುಡಿಯಿರಿ."
+        ],
+        "diet_kn": "ಹೆಚ್ಚು ನಾರಿನಂಶವಿರುವ (ಫೈಬರ್) ತರಕಾರಿಗಳು, ಹಣ್ಣುಗಳು, ಓಟ್ಸ್, ಬಾರ್ಲಿ. ಖಾರ, ಮಸಾಲೆಯುಕ್ತ ಆಹಾರ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ಮಲವಿಸರ್ಜನೆ ವೇಳೆ ಹೆಚ್ಚು ಒತ್ತಡ ಹಾಕಬೇಡಿ."
+    },
+    "Arthritis": {
+        "display_name_kn": "ಸಂಧಿವಾತ / ಕೀಲು ನೋವು (Arthritis)",
+        "description_kn": "ಕೀಲುಗಳಲ್ಲಿ ಉರಿಯೂತ, ಬಿಗಿತ, ಊತ ಮತ್ತು ನಡೆಯಲು ಅಥವಾ ಕೈಕಾಲು ಚಲಿಸಲು ನೋವು ಉಂಟಾಗುವ ಸ್ಥಿತಿ.",
+        "specialist_kn": "ಮೂಳೆ ಮತ್ತು ಕೀಲು ರೋಗ ತಜ್ಞರು (Rheumatologist / Orthopedic)",
+        "verdict_doctor_kn": "ಕೀಲುಗಳಲ್ಲಿ ತೀವ್ರ ಊತ ಅಥವಾ ವಿರೂಪತೆ ಇದ್ದರೆ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "verdict_rest_kn": "ಮೃದುವಾದ ವ್ಯಾಯಾಮ ಮಾಡಿ ಮತ್ತು ನೋವಿರುವ ಕೀಲುಗಳಿಗೆ ಬಿಸಿ ಶಾಖ ಕೊಡಿ.",
+        "home_remedies_kn": [
+            "ಸಾಸಿವೆ ಎಣ್ಣೆಗೆ ಬೆಳ್ಳುಳ್ಳಿ ಹಾಕಿ ಕಾಯಿಸಿ ನೋವಿರುವ ಜಾಗಕ್ಕೆ ಮಸಾಜ್ ಮಾಡಿ.",
+            "ಅರಿಶಿನ ಮತ್ತು ಶುಂಠಿ ಬೆರೆಸಿದ ಬೆಚ್ಚಗಿನ ಹಾಲು ಕುಡಿಯಿರಿ.",
+            "ದಿನವೂ ಲಘು ವಾಕಿಂಗ್ ಮತ್ತು ಯೋಗಾಭ್ಯಾಸ ಮಾಡಿ."
+        ],
+        "diet_kn": "ಒಮೆಗಾ-3 ಸಮೃದ್ಧ ವಾಲ್ನಟ್ಸ್, ಫ್ಲಾಕ್ಸ್ ಸೀಡ್ಸ್, ಹಸಿರು ಸೊಪ್ಪು. ಜಂಕ್ ಫುಡ್ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ತೂಕ ನಿಯಂತ್ರಣದಲ್ಲಿಟ್ಟುಕೊಳ್ಳಿ, ಹೆಚ್ಚು ಹೊತ್ತು ಒಂದೇ ಭಂಗಿಯಲ್ಲಿ ಕುಳಿತುಕೊಳ್ಳಬೇಡಿ."
+    },
+    "Osteoarthritis": {
+        "display_name_kn": "ಅಸ್ಥಿಸಂಧಿವಾತ / ಮೊಣಕಾಲು ಸವೆತ (Osteoarthritis)",
+        "description_kn": "ಕೀಲುಗಳ ರಕ್ಷಣಾತ್ಮಕ ಕಾರ್ಟಿಲೇಜ್ ಸವೆಯುವುದರಿಂದ ಮೂಳೆಗಳು ಉಜ್ಜಿಕೊಂಡು ತೀವ್ರ ನೋವು, ಶಬ್ದ (ಕ್ಲಿಕ್) ಮತ್ತು ನಡೆಯಲು ಕಷ್ಟವಾಗುತ್ತದೆ.",
+        "specialist_kn": "ಮೂಳೆ ತಜ್ಞರು (Orthopedic Specialist)",
+        "verdict_doctor_kn": "ನಡೆಯಲು ಅಸಾಧ್ಯವಾದರೆ ಅಥವಾ ಕೀಲು ಊದಿಕೊಂಡಿದ್ದರೆ ಮೂಳೆ ತಜ್ಞರನ್ನು ಭೇಟಿ ಮಾಡಿ ಎಕ್ಸ್-ರೇ ಮಾಡಿಸಿಕೊಳ್ಳಿ.",
+        "verdict_rest_kn": "ಮೊಣಕಾಲಿಗೆ ಹೆಚ್ಚು ಒತ್ತಡ ನೀಡಬೇಡಿ, ವಿಶ್ರಾಂತಿ ಮತ್ತು ಫಿಸಿಯೋಥೆರಪಿ ಮಾಡಿ.",
+        "home_remedies_kn": [
+            "ಬೆಚ್ಚಗಿನ ನೀರಿನ ಶಾಖ ಅಥವಾ ಐಸ್ ಪ್ಯಾಕ್ ಹಚ್ಚಿ.",
+            "ಕ್ಯಾಲ್ಸಿಯಂ ಮತ್ತು ವಿಟಮಿನ್ ಡಿ ಸಮೃದ್ಧ ಆಹಾರ ಸೇವಿಸಿ.",
+            "ಫಿಸಿಯೋಥೆರಪಿಸ್ಟ್ ಸೂಚಿಸಿದ ವ್ಯಾಯಾಮಗಳನ್ನು ತಪ್ಪದೇ ಮಾಡಿ."
+        ],
+        "diet_kn": "ಹಾಲು, ಮೊಸರು, ರಾಗಿ, ಹಸಿರು ತರಕಾರಿಗಳು. ತೂಕ ಹೆಚ್ಚಿಸುವ ಆಹಾರ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ನೆಲದ ಮೇಲೆ ಚಕ್ಕಳಬಕ್ಕಳ ಹಾಕಿ ಕುಳಿತುಕೊಳ್ಳುವುದನ್ನು ಮತ್ತು ಭಾರವಾದ ವಸ್ತು ಎತ್ತುವುದನ್ನು ತಪ್ಪಿಸಿ."
+    },
+    "Cervical Spondylosis": {
+        "display_name_kn": "ಕುತ್ತಿಗೆ ಮತ್ತು ಬೆನ್ನು ಮೂಳೆ ಸವೆತ (Cervical Spondylosis)",
+        "description_kn": "ಕುತ್ತಿಗೆಯ ಬೆನ್ನುಹುರಿಯ ಮೂಳೆ ಮತ್ತು ಡಿಸ್ಕ್ ಸವೆತ. ಕುತ್ತಿಗೆ ನೋವು, ಭುಜ ಮತ್ತು ಕೈಗಳಲ್ಲಿ ಜುಮ್ಮೆನ್ನುವುದು, ತಲೆತಿರುಗುವಿಕೆ ಉಂಟಾಗುತ್ತದೆ.",
+        "specialist_kn": "ಮೂಳೆ ತಜ್ಞರು / ನರರೋಗ ತಜ್ಞರು (Orthopedist / Neurologist)",
+        "verdict_doctor_kn": "ಕೈಗಳಲ್ಲಿ ಶಕ್ತಿ ಕುಂದುವುದು ಅಥವಾ ನಿರಂತರ ತಲೆತಿರುಗುವಿಕೆ ಇದ್ದರೆ ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ.",
+        "verdict_rest_kn": "ಕುತ್ತಿಗೆ ಕಾಲರ್ ಬಳಸಿ, ಭಂಗಿ (Posture) ಸುಧಾರಿಸಿಕೊಳ್ಳಿ ಮತ್ತು ಕುತ್ತಿಗೆಗೆ ಮೃದುವಾದ ಸ್ಟ್ರೆಚಿಂಗ್ ಮಾಡಿ.",
+        "home_remedies_kn": [
+            "ಕುತ್ತಿಗೆಗೆ ಬಿಸಿ ನೀರಿನ ಶಾಖ ಕೊಡಿ.",
+            "ದಪ್ಪ ದಿಂಬು ಬಳಸುವುದನ್ನು ನಿಲ್ಲಿಸಿ, ನಯವಾದ ತೆಳು ದಿಂಬು ಬಳಸಿ.",
+            "ಕುತ್ತಿಗೆಯ ಸರಳ ವ್ಯಾಯಾಮಗಳನ್ನು (Isometric Neck Exercises) ಮಾಡಿ."
+        ],
+        "diet_kn": "ಹಾಲು, ರಾಗಿ, ನಟ್ಸ್, ಕ್ಯಾಲ್ಸಿಯಂ ಸಮೃದ್ಧ ಆಹಾರ.",
+        "precautions_kn": "ಮೊಬೈಲ್ ಬಳಸುವಾಗ ಕುತ್ತಿಗೆಯನ್ನು ಹೆಚ್ಚು ಹೊತ್ತು ಕೆಳಗೆ ಬಗ್ಗಿಸಬೇಡಿ."
+    },
+    "Chickenpox": {
+        "display_name_kn": "ಅಮ್ಮ / ಚಿಕನ್‌ಪಾಕ್ಸ್ (Chickenpox)",
+        "description_kn": "ವಾರಿಸೆಲ್ಲಾ ಜೋಸ್ಟರ್ ವೈರಸ್‌ನಿಂದ ಉಂಟಾಗುವ ಅತ್ಯಂತ ಸಾಂಕ್ರಾಮಿಕ ಕಾಯಿಲೆ. ಜ್ವರ, ತಲೆನೋವು, ಆಯಾಸ ಮತ್ತು ಮೈತುಂಬಾ ನೀರಿನಂತಹ ತುರಿಕೆ ಗುಳ್ಳೆಗಳು ಏಳುತ್ತವೆ.",
+        "specialist_kn": "ಸಾಮಾನ್ಯ ವೈದ್ಯರು / ಮಕ್ಕಳ ವೈದ್ಯರು (Pediatrician / Physician)",
+        "verdict_doctor_kn": "ಗುಳ್ಳೆಗಳು ಸೋಂಕಿಗೆ ಒಳಗಾದರೆ ಅಥವಾ ಜ್ವರ ತೀವ್ರವಾದರೆ ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "verdict_rest_kn": "ಗುಳ್ಳೆಗಳು ಒಣಗುವವರೆಗೆ ಮನೆಯಲ್ಲೇ ಪ್ರತ್ಯೇಕವಾಗಿ ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ.",
+        "home_remedies_kn": [
+            "ತುರಿಕೆ ಶಮನಕ್ಕೆ ಕ್ಯಾಲಮೈನ್ ಲೋಷನ್ ಹಚ್ಚಿ.",
+            "ಬೇವಿನ ಎಲೆಗಳನ್ನು ಹಾಸಿಗೆಯ ಮೇಲೆ ಹರಡಿ ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ.",
+            "ಗುಳ್ಳೆಗಳನ್ನು ಕೈಯಿಂದ ಕೆರೆಯಬೇಡಿ ಅಥವಾ ಒಡೆಯಬೇಡಿ."
+        ],
+        "diet_kn": "ತಂಪು ಆಹಾರ, ಎಳನೀರು, ಹಣ್ಣುಗಳು, ಮಜ್ಜಿಗೆ. ಖಾರ, ಎಣ್ಣೆಯುಕ್ತ ಆಹಾರ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ಗುಳ್ಳೆ ಕೆರೆದರೆ ಕಲೆಗಳು ಉಳಿಯುತ್ತವೆ, ಆದ್ದರಿಂದ ಉಗುರುಗಳನ್ನು ಸಣ್ಣದಾಗಿ ಕತ್ತರಿಸಿ."
+    },
+    "Acne": {
+        "display_name_kn": "ಮೊಡವೆ (Acne / Pimples)",
+        "description_kn": "ಚರ್ಮದ ಎಣ್ಣೆ ಗ್ರಂಥಿಗಳು ಮತ್ತು ರಂಧ್ರಗಳು ಮುಚ್ಚಿಹೋಗುವುದರಿಂದ ಮುಖ, ಬೆನ್ನು ಮತ್ತು ಭುಜದ ಮೇಲೆ ಕೀವು ಗುಳ್ಳೆಗಳು ಮತ್ತು ಕಪ್ಪು ಕಲೆಗಳು ಉಂಟಾಗುತ್ತವೆ.",
+        "specialist_kn": "ಚರ್ಮ ರೋಗ ತಜ್ಞರು (Dermatologist)",
+        "verdict_doctor_kn": "ಮೊಡವೆಗಳು ತೀವ್ರ ಗಂಟುಗಳಾಗಿದ್ದರೆ ಚರ್ಮ ತಜ್ಞರಿಂದ ಚಿಕಿತ್ಸೆ ಪಡೆಯಿರಿ.",
+        "verdict_rest_kn": "ಮುಖವನ್ನು ಸ್ವಚ್ಛವಾಗಿಡಿ ಮತ್ತು ಮೊಡವೆಗಳನ್ನು ಕೈಯಿಂದ ಚಿವುಟಬೇಡಿ.",
+        "home_remedies_kn": [
+            "ದಿನಕ್ಕೆ 2-3 ಬಾರಿ ಮೃದುವಾದ ಫೇಸ್ ವಾಶ್‌ನಿಂದ ಮುಖ ತೊಳೆಯಿರಿ.",
+            "ಬೇವಿನ ಪುಡಿ ಅಥವಾ ಮುಲ್ತಾನಿ ಮಿಟ್ಟಿ ಲೇಪನ ಹಚ್ಚಿ.",
+            "ಮೊಡವೆಗಳನ್ನು ಕೈಯಿಂದ ಮುಟ್ಟಬೇಡಿ ಅಥವಾ ಚಿವುಟಬೇಡಿ."
+        ],
+        "diet_kn": "ധാರಾಳವಾಗಿ ನೀರು ಕುಡಿಯಿರಿ, ಹಣ್ಣು-ತರಕಾರಿ ಸೇವಿಸಿ. ಚಾಕೊಲೇಟ್, ಎಣ್ಣೆಯುಕ್ತ ಆಹಾರ ಕಡಿಮೆ ಮಾಡಿ.",
+        "precautions_kn": "ಹೆಚ್ಚು ಕೆಮಿಕಲ್ ಇರುವ ಕಾಸ್ಮೆಟಿಕ್ಸ್ ಬಳಸಬೇಡಿ."
+    },
+    "Psoriasis": {
+        "display_name_kn": "ಸೋರಿಯಾಸಿಸ್ ಚರ್ಮ ರೋಗ (Psoriasis)",
+        "description_kn": "ಸ್ವಯಂ ನಿರೋಧಕ (ಆಟೋಇಮ್ಯೂನ್) ಚರ್ಮ ರೋಗ. ಚರ್ಮದ ಕೋಶಗಳು ವೇಗವಾಗಿ ಬೆಳೆದು ಬೆಳ್ಳಿಯಂತಹ ಹುರುಪೆ, ಕೆಂಪು ದದ್ದು ಮತ್ತು ತುರಿಕೆ ಉಂಟುಮಾಡುತ್ತವೆ.",
+        "specialist_kn": "ಚರ್ಮ ರೋಗ ತಜ್ಞರು (Dermatologist)",
+        "verdict_doctor_kn": "ದೀರ್ಘಕಾಲೀನ ನಿಯಂತ್ರಣಕ್ಕಾಗಿ ಚರ್ಮ ತಜ್ಞರನ್ನು ಭೇಟಿ ಮಾಡಿ ಸೂಕ್ತ ಮುಲಾಮು ಪಡೆಯಿರಿ.",
+        "verdict_rest_kn": "ಚರ್ಮವನ್ನು ಮಾಯಿಶ್ಚರೈಸ್ ಆಗಿಡಿ ಮತ್ತು ಮಾನಸಿಕ ಒತ್ತಡ ಕಡಿಮೆ ಮಾಡಿಕೊಳ್ಳಿ.",
+        "home_remedies_kn": [
+            "ಶುದ್ಧ ತೆಂಗಿನ ಎಣ್ಣೆ ಅಥವಾ ಅಲೋವೆರಾ ಜೆಲ್ ಹಚ್ಚಿ ಚರ್ಮ ತೇವವಾಗಿಡಿ.",
+            "ಬೆಳಗಿನ ಎಳೆಯ ಬಿಸಿಲಿನಲ್ಲಿ 10-15 ನಿಮಿಷ ಕುಳಿತುಕೊಳ್ಳಿ.",
+            "ಮಾನಸಿಕ ಒತ್ತಡ ಕಡಿಮೆ ಮಾಡಲು ಧ್ಯಾನ ಮಾಡಿ."
+        ],
+        "diet_kn": "ಉರಿಯೂತ ನಿವಾರಕ ಹಣ್ಣುಗಳು, ತರಕಾರಿಗಳು, ಅರಿಶಿನ. ಮದ್ಯಪಾನ ಮತ್ತು ತಂಬಾಕು ಸಂಪೂರ್ಣ ನಿಲ್ಲಿಸಿ.",
+        "precautions_kn": "ಚರ್ಮ ಕೆರೆಯಬೇಡಿ ಮತ್ತು ಕಠಿಣ ಸಾಬೂನು ಬಳಸಬೇಡಿ."
+    },
+    "Impetigo": {
+        "display_name_kn": "ಚರ್ಮದ ಕೀವು ಗುಳ್ಳೆಗಳು (Impetigo)",
+        "description_kn": "ಬ್ಯಾಕ್ಟೀರಿಯಾದಿಂದ ಉಂಟಾಗುವ ಸಾಂಕ್ರಾಮಿಕ ಚರ್ಮದ ಸೋಂಕು. ಮೂಗು ಮತ್ತು ಬಾಯಿಯ ಸುತ್ತ ಕೆಂಪು ಹುಣ್ಣುಗಳು ಹಾಗೂ ಹಳದಿ ಬಣ್ಣದ ಜೇನುತುಪ್ಪದಂತಹ ಕೀವು ಹೊರಬರುತ್ತದೆ.",
+        "specialist_kn": "ಚರ್ಮ ರೋಗ ತಜ್ಞರು / ಮಕ್ಕಳ ವೈದ್ಯರು (Dermatologist)",
+        "verdict_doctor_kn": "ಇದು ಸಾಂಕ್ರಾಮಿಕವಾಗಿರುವುದರಿಂದ ಆ್ಯಂಟಿಬಯೋಟಿಕ್ ಕ್ರೀಮ್ ಮತ್ತು ಮಾತ್ರೆಗಳಿಗಾಗಿ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "verdict_rest_kn": "ಹುಣ್ಣುಗಳನ್ನು ಮುಟ್ಟಬೇಡಿ ಮತ್ತು ಬಟ್ಟೆಗಳನ್ನು ಪ್ರತ್ಯೇಕವಾಗಿ ಬಿಸಿ ನೀರಿನಲ್ಲಿ ತೊಳೆಯಿರಿ.",
+        "home_remedies_kn": [
+            "ಬೇವಿನ ನೀರಿನಿಂದ ಹುಣ್ಣುಗಳ ಜಾಗವನ್ನು ನಿಧಾನವಾಗಿ ಸ್ವಚ್ಛಗೊಳಿಸಿ.",
+            "ವೈದ್ಯರು ನೀಡಿದ ಆ್ಯಂಟಿಬಯೋಟಿಕ್ ಕ್ರೀಮ್ ಲೇಪಿಸಿ.",
+            "ಮಕ್ಕಳ ಉಗುರುಗಳನ್ನು ಸಣ್ಣದಾಗಿ ಕತ್ತರಿಸಿ."
+        ],
+        "diet_kn": "ಪೌಷ್ಟಿಕ ಆಹಾರ ಮತ್ತು ಹಣ್ಣಿನ ರಸಗಳು.",
+        "precautions_kn": "ಟವೆಲ್ ಮತ್ತು ಬಟ್ಟೆಗಳನ್ನು ಇತರರೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಬೇಡಿ."
+    },
+    "Peptic Ulcer Disease": {
+        "display_name_kn": "ಹೊಟ್ಟೆಯ ಹುಣ್ಣು / ಪೆಪ್ಟಿಕ್ ಅಲ್ಸರ್ (Peptic Ulcer Disease)",
+        "description_kn": "ಹೊಟ್ಟೆ ಅಥವಾ ಡ್ಯುಯೊಡಿನಮ್‌ನ ಒಳಪದರದಲ್ಲಿ ಉಂಟಾಗುವ ಹುಣ್ಣು. ಹೊಟ್ಟೆಯ ಮೇಲ್ಭಾಗದಲ್ಲಿ ಸುಡುವಂತಹ ನೋವು, ಅಜೀರ್ಣ, ವಾಕರಿಕೆ ಮತ್ತು ಹಸಿವಿನ ವ್ಯತ್ಯಾಸ ಉಂಟಾಗುತ್ತದೆ.",
+        "specialist_kn": "ಜಠರ ಮತ್ತು ಕರುಳು ರೋಗ ತಜ್ಞರು (Gastroenterologist)",
+        "verdict_doctor_kn": "ತೀವ್ರ ಹೊಟ್ಟೆ ನೋವು ಅಥವಾ ಮಲದಲ್ಲಿ ರಕ್ತ ಕಂಡುಬಂದರೆ ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "verdict_rest_kn": "ಸಮಯಕ್ಕೆ ಸರಿಯಾಗಿ ಲಘು ಊಟ ಮಾಡಿ ಮತ್ತು ಖಾಲಿ ಹೊಟ್ಟೆಯಲ್ಲಿ ಇರಬೇಡಿ.",
+        "home_remedies_kn": [
+            "ಎಲೆಕೋಸು (ಕ್ಯಾಬೇಜ್) ರಸ ಕುಡಿಯುವುದು ಹುಣ್ಣು ಶಮನಕ್ಕೆ ಸಹಕಾರಿ.",
+            "ತಣ್ಣನೆಯ ಹಾಲು ಅಥವಾ ಎಳನೀರು ಕುಡಿಯಿರಿ.",
+            "ಖಾಲಿ ಹೊಟ್ಟೆಯಲ್ಲಿ ದೀರ್ಘಕಾಲ ಇರಬೇಡಿ."
+        ],
+        "diet_kn": "ಓಟ್ಸ್, ಬಾಳೆಹಣ್ಣು, ಮಜ್ಜಿಗೆ. ಅತಿಯಾದ ಖಾರ, ಉಪ್ಪಿನಕಾಯಿ, ಆಲ್ಕೋಹಾಲ್ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ವೈದ್ಯರ ಸಲಹೆಯಿಲ್ಲದೆ ನೋವು ನಿವಾರಕ ಮಾತ್ರೆಗಳನ್ನು (Painkillers) ತೆಗೆದುಕೊಳ್ಳಬೇಡಿ."
+    },
+    "Varicose Veins": {
+        "display_name_kn": "ಉಬ್ಬಿದ ರಕ್ತನಾಳಗಳು (Varicose Veins)",
+        "description_kn": "ಕಾಲುಗಳಲ್ಲಿ ರಕ್ತನಾಳಗಳ ಕವಾಟಗಳು ದುರ್ಬಲಗೊಂಡು ರಕ್ತ ನಿಲ್ಲುವುದರಿಂದ ನರಗಳು ಉಬ್ಬುವುದು, ಕಾಲು ನೋವು, ಊತ ಮತ್ತು ಭಾರವಾದ ಭಾವನೆ ಉಂಟಾಗುತ್ತದೆ.",
+        "specialist_kn": "ರಕ್ತನಾಳ ಶಸ್ತ್ರಚಿಕಿತ್ಸಕರು (Vascular Surgeon)",
+        "verdict_doctor_kn": "ಕಾಲುಗಳಲ್ಲಿ ಹುಣ್ಣು ಅಥವಾ ವಿಪರೀತ ಊತವಿದ್ದರೆ ನಾಳ ತಜ್ಞರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "verdict_rest_kn": "ಮಲಗುವಾಗ ಕಾಲುಗಳ ಕೆಳಗೆ ದಿಂಬಿಟ್ಟು ಎತ್ತರಿಸಿ ಮತ್ತು ಸಂಕೋಚನ ಸಾಕ್ಸ್ (Compression Stockings) ಬಳಸಿ.",
+        "home_remedies_kn": [
+            "ಮಲಗುವಾಗ ಕಾಲಿನ ಕೆಳಗೆ ದಿಂಬು ಇಟ್ಟು ಕಾಲನ್ನು ಎತ್ತರದಲ್ಲಿಡಿ.",
+            "ದೀರ್ಘಕಾಲ ಒಂದೇ ಕಡೆ ನಿಲ್ಲುವುದನ್ನು ಅಥವಾ ಕುಳಿತುಕೊಳ್ಳುವುದನ್ನು ತಪ್ಪಿಸಿ.",
+            "ದಿನವೂ ವಾಕಿಂಗ್ ಮತ್ತು ಕಾಲುಗಳ ವ್ಯಾಯಾಮ ಮಾಡಿ."
+        ],
+        "diet_kn": "ನಾರಿನಂಶವಿರುವ ಆಹಾರ, ನೀರು. ಮಲಬದ್ಧತೆ ಉಂಟುಮಾಡುವ ಆಹಾರ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ಬಿಗಿಯಾದ ಉಡುಪುಗಳನ್ನು ಧರಿಸಬೇಡಿ."
+    },
+    "Hypoglycemia (Low Blood Sugar)": {
+        "display_name_kn": "ಸಕ್ಕರೆ ಕೊರತೆ / ಲೋ ಶುಗರ್ (Hypoglycemia)",
+        "description_kn": "ರಕ್ತದಲ್ಲಿ ಗ್ಲೂಕೋಸ್ ಮಟ್ಟ ತೀವ್ರವಾಗಿ ಕುಸಿಯುವುದು. ನಡುಕ, ವಿಪರೀತ ಬೆವರು, ತಲೆತಿರುಗುವಿಕೆ, ಆತಂಕ, ಗೊಂದಲ ಮತ್ತು ಹಸಿವು ಇದರ ತುರ್ತು ಲಕ್ಷಣಗಳು.",
+        "specialist_kn": "ಮಧುಮೇಹ ತಜ್ಞರು (Endocrinologist)",
+        "verdict_doctor_kn": "ಇದು ವೈದ್ಯಕೀಯ ತುರ್ತು ಪರಿಸ್ಥಿತಿಯಾಗಿದ್ದು, ತಕ್ಷಣ ಸಕ್ಕರೆ ಸೇವಿಸಿ ನಂತರ ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ.",
+        "verdict_rest_kn": "ತಕ್ಷಣ 3 ಚಮಚ ಸಕ್ಕರೆ, ಜೇನುತುಪ್ಪ ಅಥವಾ ಗ್ಲೂಕೋಸ್ ನೀರು ಕುಡಿಯಿರಿ.",
+        "home_remedies_kn": [
+            "ತಕ್ಷಣ 15 ಗ್ರಾಂ ವೇಗವಾಗಿ ಕರಗುವ ಸಕ್ಕರೆ (ಗ್ಲೂಕೋಸ್, ಜೇನುತುಪ್ಪ, ಹಣ್ಣಿನ ಜ್ಯೂಸ್) ಸೇವಿಸಿ.",
+            "15 ನಿಮಿಷಗಳ ನಂತರ ರಕ್ತದ ಸಕ್ಕರೆ ಮಟ್ಟವನ್ನು ಪರೀಕ್ಷಿಸಿ.",
+            "ಪ್ರಜ್ಞೆ ತಪ್ಪುವಂತಿದ್ದರೆ ತಕ್ಷಣ ಆಸ್ಪತ್ರೆಗೆ ಕರೆದೊಯ್ಯಿರಿ."
+        ],
+        "diet_kn": "ಸಮಯಕ್ಕೆ ಸರಿಯಾಗಿ ಊಟ-ಉಪಾಹಾರ ಸೇವಿಸಿ.",
+        "precautions_kn": "ಮಧುಮೇಹ ರೋಗಿಗಳು ಊಟ ಬಿಡಬೇಡಿ ಮತ್ತು ಸದಾ ಜೊತೆಯಲ್ಲಿ ಸಕ್ಕರೆ ಚಾಕೊಲೇಟ್ ಇಟ್ಟುಕೊಳ್ಳಿ."
+    },
+    "Hypothyroidism": {
+        "display_name_kn": "ಹೈಪೋಥೈರಾಯ್ಡ್ / ಥೈರಾಯ್ಡ್ ಕೊರತೆ (Hypothyroidism)",
+        "description_kn": "ಥೈರಾಯ್ಡ್ ಗ್ರಂಥಿಯು ಸಾಕಷ್ಟು ಹಾರ್ಮೋನ್ ಉತ್ಪಾದಿಸದಿರುವ ಸ್ಥಿತಿ. ಅತಿಯಾದ ತೂಕ ಹೆಚ್ಚಳ, ಆಲಸ್ಯ, ಚಳಿ ಸಹಿಸಲಾಗದಿರುವುದು, ಮಲಬದ್ಧತೆ ಮತ್ತು ಮುಖ ಊದುವುದು ಇದರ ಲಕ್ಷಣಗಳು.",
+        "specialist_kn": "ಹಾರ್ಮೋನ್ ತಜ್ಞರು (Endocrinologist)",
+        "verdict_doctor_kn": "ರಕ್ತದಲ್ಲಿ ಥೈರಾಯ್ಡ್ ಪರೀಕ್ಷೆ (TSH, T3, T4) ಮಾಡಿಸಿ ಸರಿಯಾದ ಪ್ರಮಾಣದ ಮಾತ್ರೆ ಪಡೆಯಲು ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "verdict_rest_kn": "ಪ್ರತಿದಿನ ಮುಂಜಾನೆ ಖಾಲಿ ಹೊಟ್ಟೆಯಲ್ಲಿ ವೈದ್ಯರು ನೀಡಿದ ಥೈರಾಯ್ಡ್ ಮಾತ್ರೆ ತೆಗೆದುಕೊಳ್ಳಿ.",
+        "home_remedies_kn": [
+            "ಮುಂಜಾನೆ ಖಾಲಿ ಹೊಟ್ಟೆಯಲ್ಲಿ ವೈದ್ಯರು ನೀಡಿದ ಮಾತ್ರೆಯನ್ನು ನಿಯಮಿತವಾಗಿ ಸೇವಿಸಿ.",
+            "ದಿನವೂ 30-40 ನಿಮಿಷ ನಡಿಗೆ ಅಥವಾ ಯೋಗ ಮಾಡಿ.",
+            "ಒತ್ತಡ ನಿರ್ವಹಣೆಗೆ ಪ್ರಾಣಾಯಾಮ ಮಾಡಿ."
+        ],
+        "diet_kn": "ಅಯೋಡಿನ್‌ಯುಕ್ತ ಉಪ್ಪು, ಬ್ರೆಜಿಲ್ ನಟ್ಸ್, ಮೊಟ್ಟೆ, ಹಸಿರು ತರಕಾರಿಗಳು. ಹಸಿ ಎಲೆಕೋಸು, ಹೂಕೋಸು ಸೇವನೆ ಮಿತಿಗೊಳಿಸಿ.",
+        "precautions_kn": "ಮಾತ್ರೆ ಸೇವನೆಯ ನಂತರ ಕನಿಷ್ಠ 1 ಗಂಟೆ ಕಾಫಿ/ಚಹಾ ಕುಡಿಯಬೇಡಿ."
+    },
+    "Hyperthyroidism": {
+        "display_name_kn": "ಹೈಪರ್‌ಥೈರಾಯ್ಡ್ / ಅತಿಯಾದ ಥೈರಾಯ್ಡ್ (Hyperthyroidism)",
+        "description_kn": "ಥೈರಾಯ್ಡ್ ಗ್ರಂಥಿಯು ಅತಿಯಾಗಿ ಹಾರ್ಮೋನ್ ಸ್ರವಿಸುವ ಸ್ಥಿತಿ. ವೇಗವಾದ ತೂಕ ಇಳಿಕೆ, ತ್ವರಿತ ಹೃದಯ ಬಡಿತ, ಅತಿಯಾದ ಬೆವರು, ನಡುಕ ಮತ್ತು ಕಿರಿಕಿರಿ ಉಂಟಾಗುತ್ತದೆ.",
+        "specialist_kn": "ಹಾರ್ಮೋನ್ ತಜ್ಞರು (Endocrinologist)",
+        "verdict_doctor_kn": "ಹೃದಯದ ಮೇಲಿನ ಒತ್ತಡ ತಪ್ಪಿಸಲು ತಕ್ಷಣ ಹಾರ್ಮೋನ್ ತಜ್ಞರನ್ನು ಭೇಟಿ ಮಾಡಿ ಚಿಕಿತ್ಸೆ ಪಡೆಯಿರಿ.",
+        "verdict_rest_kn": "ಶಾಂತವಾಗಿ ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ ಮತ್ತು ಕೆಫೀನ್ ಪದಾರ್ಥಗಳಿಂದ ದೂರವಿರಿ.",
+        "home_remedies_kn": [
+            "ಶಾಂತ ವಾತಾವರಣದಲ್ಲಿ ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ.",
+            "ಮಾನಸಿಕ ಒತ್ತಡ ನಿವಾರಣೆಗೆ ಧ್ಯಾನ ಮಾಡಿ.",
+            "ಸಾಕಷ್ಟು ನೀರು ಕುಡಿಯಿರಿ."
+        ],
+        "diet_kn": "ಕ್ಯಾಲ್ಸಿಯಂ ಮತ್ತು ಮೆಗ್ನೀಸಿಯಮ್ ಸಮೃದ್ಧ ಆಹಾರ. ಕಾಫಿ, ಚಹಾ, ಎನರ್ಜಿ ಡ್ರಿಂಕ್ಸ್ ಸಂಪೂರ್ಣ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ಅತಿಯಾದ ಬಿಸಿಲು ಮತ್ತು ಕಠಿಣ ದೈಹಿಕ ವ್ಯಾಯಾಮ ತಪ್ಪಿಸಿ."
+    },
+    "Vertigo (BPPV)": {
+        "display_name_kn": "ತಲೆ ತಿರುಗುವಿಕೆ / ವರ್ಟಿಗೋ (Vertigo - BPPV)",
+        "description_kn": "ಒಳಕಿವಿಯ ಸಮತೋಲನ ವ್ಯವಸ್ಥೆಯ ತೊಂದರೆಯಿಂದಾಗಿ ತಲೆ ಅಥವಾ ಸುತ್ತಲಿನ ಜಗತ್ತು ಗಿರಗಿರನೆ ಸುತ್ತುವಂತೆ ಭಾಸವಾಗುವುದು, ಸಮತೋಲನ ತಪ್ಪುವುದು ಮತ್ತು ವಾಕರಿಕೆ ಉಂಟಾಗುತ್ತದೆ.",
+        "specialist_kn": "ಕಿವಿ-ಮೂಗು-ಗಂಟಲು (ENT) ತಜ್ಞರು / ನರರೋಗ ತಜ್ಞರು (ENT / Neurologist)",
+        "verdict_doctor_kn": "ತಲೆತಿರುಗುವಿಕೆ ನಿರಂತರವಾಗಿದ್ದರೆ ಅಥವಾ ವಾಂತಿ ತೀವ್ರವಾಗಿದ್ದರೆ ಇಎನ್‌ಟಿ ತಜ್ಞರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "verdict_rest_kn": "ಹಠಾತ್ ತಲೆ ತಿರುಗಿಸಬೇಡಿ, ನಿಧಾನವಾಗಿ ಎದ್ದು ಕುಳಿತುಕೊಳ್ಳಿ ಮತ್ತು ಸಮತೋಲನ ಕಾಪಾಡಿ.",
+        "home_remedies_kn": [
+            "ತಲೆತಿರುಗಿದಾಗ ತಕ್ಷಣ ಶಾಂತವಾಗಿ ಒಂದೇ ಕಡೆ ಕುಳಿತುಕೊಳ್ಳಿ ಅಥವಾ ಮಲಗಿ.",
+            "ಇಎನ್‌ಟಿ ತಜ್ಞರು ಸೂಚಿಸಿದ ಎಪ್ಲೆ ವ್ಯಾಯಾಮ (Epley Maneuver) ಮಾಡಿ.",
+            "ಸಾಕಷ್ಟು ನೀರು ಕುಡಿಯಿರಿ ಮತ್ತು ನಿರ್ಜಲೀಕರಣ ತಪ್ಪಿಸಿ."
+        ],
+        "diet_kn": "ಶುಂಠಿ ಚಹಾ, ಲಘು ಆಹಾರ. ಅತಿಯಾದ ಉಪ್ಪು ಮತ್ತು ಕೆಫೀನ್ ತ್ಯಜಿಸಿ.",
+        "precautions_kn": "ತಲೆತಿರುಗುವಾಗ ವಾಹನ ಚಾಲನೆ ಮಾಡಬೇಡಿ ಅಥವಾ ಎತ್ತರದ ಸ್ಥಳಗಳಿಗೆ ಹೋಗಬೇಡಿ."
+    },
+    "Hepatitis A": {
+        "display_name_kn": "ಹೆಪಟೈಟಿಸ್ ಎ / ಯಕೃತ್ತಿನ ಸೋಂಕು (Hepatitis A)",
+        "description_kn": "ಕಲುಷಿತ ಆಹಾರ ಅಥವಾ ನೀರಿನಿಂದ ಹರಡುವ ಯಕೃತ್ತಿನ ವೈರಲ್ ಸೋಂಕು. ತೀವ್ರ ಕಾಮಾಲೆ, ಹಳದಿ ಕಣ್ಣುಗಳು, ಗಾಢ ಮೂತ್ರ, ವಾಂತಿ, ಜ್ವರ ಮತ್ತು ಹೊಟ್ಟೆ ನೋವು ಉಂಟಾಗುತ್ತದೆ.",
+        "specialist_kn": "ಯಕೃತ್ತು ಮತ್ತು ಜಠರ ತಜ್ಞರು (Hepatologist / Gastroenterologist)",
+        "verdict_doctor_kn": "ಯಕೃತ್ತಿನ ಆರೋಗ್ಯ ತಪಾಸಣೆಗೆ ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ ಲಿವರ್ ಫಂಕ್ಷನ್ ಟೆಸ್ಟ್ ಮಾಡಿಸಿಕೊಳ್ಳಿ.",
+        "verdict_rest_kn": "ಸಂಪೂರ್ಣ ಬೆಡ್ ರೆಸ್ಟ್ ಮತ್ತು ಶುದ್ಧ ಕಾಯಿಸಿದ ನೀರು ಮಾತ್ರ ಕುಡಿಯಿರಿ.",
+        "home_remedies_kn": [
+            "ಸಂಪೂರ್ಣ ದೈಹಿಕ ವಿಶ್ರಾಂತಿ (ಬೆಡ್ ರೆಸ್ಟ್) ಪಡೆಯಿರಿ.",
+            "ಕಬ್ಬಿನ ಹಾಲು, ಎಳನೀರು ಮತ್ತು ಗ್ಲೂಕೋಸ್ ನೀರು ಸೇವಿಸಿ.",
+            "ಎಣ್ಣೆ ಮತ್ತು ಜಿಡ್ಡಿನ ಪದಾರ್ಥಗಳನ್ನು ಸಂಪೂರ್ಣ ನಿಲ್ಲಿಸಿ."
+        ],
+        "diet_kn": "ಕಾಯಿಸಿ ಆರಿಸಿದ ನೀರು, ಗಂಜಿ, ಹಣ್ಣಿನ ಜ್ಯೂಸ್, ಬೇಯಿಸಿದ ತರಕಾರಿ.",
+        "precautions_kn": "ಮದ್ಯಪಾನ ಸಂಪೂರ್ಣವಾಗಿ ನಿಷೇಧ. ಅಶುದ್ಧ ಆಹಾರ ಸೇವಿಸಬೇಡಿ."
+    },
+    "Drug Reaction": {
+        "display_name_kn": "ಔಷಧದ ಅಡ್ಡಪರಿಣಾಮ / ಅಲರ್ಜಿ (Drug Reaction)",
+        "description_kn": "ಯಾವುದಾದರೂ ಮಾತ್ರೆ ಅಥವಾ ಚುಚ್ಚುಮದ್ದಿಗೆ ದೇಹದ ಅನಿರೀಕ್ಷಿತ ಪ್ರತಿಕ್ರಿಯೆ. ಚರ್ಮದ ಮೇಲೆ ತೀವ್ರ ತುರಿಕೆ, ಕೆಂಪು ದದ್ದು, ಗುಳ್ಳೆಗಳು ಮತ್ತು ಮೂತ್ರದಲ್ಲಿ ಉರಿ ಉಂಟಾಗಬಹುದು.",
+        "specialist_kn": "ಚರ್ಮ ರೋಗ ತಜ್ಞರು / ಸಾಮಾನ್ಯ ವೈದ್ಯರು (Dermatologist / Physician)",
+        "verdict_doctor_kn": "ಅನುಮಾನಾಸ್ಪದ ಔಷಧಿಯನ್ನು ತಕ್ಷಣ ನಿಲ್ಲಿಸಿ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "verdict_rest_kn": "ಔಷಧಿಯ ರಶೀದಿಯನ್ನು ವೈದ್ಯರಿಗೆ ತೋರಿಸಿ ಮತ್ತು ಹೆಚ್ಚಿನ ನೀರು ಕುಡಿಯಿರಿ.",
+        "home_remedies_kn": [
+            "ಹೊಸದಾಗಿ ಪ್ರಾರಂಭಿಸಿದ ಅನುಮಾನಾಸ್ಪದ ಔಷಧಿಯನ್ನು ತಕ್ಷಣವೇ ನಿಲ್ಲಿಸಿ.",
+            "ತುರಿಕೆ ನಿವಾರಣೆಗೆ ತಣ್ಣೀರಿನ ಬಟ್ಟೆಯಿಂದ ಮೃದುವಾಗಿ ಒರೆಸಿ.",
+            "ವೈದ್ಯರಿಗೆ ನೀವು ತೆಗೆದುಕೊಂಡ ಎಲ್ಲಾ ಔಷಧಿಗಳ ವಿವರ ನೀಡಿ."
+        ],
+        "diet_kn": "ಧಾರಾಳವಾಗಿ ನೀರು, ಎಳನೀರು ಕುಡಿಯಿರಿ.",
+        "precautions_kn": "ಉಸಿರಾಟ ಕಷ್ಟವಾದರೆ ಅಥವಾ ತುಟಿ ಊದಿಕೊಂಡರೆ ತಕ್ಷಣ ಆಸ್ಪತ್ರೆ ತುರ್ತು ವಿಭಾಗಕ್ಕೆ ಹೋಗಿ."
+    }
+}
+
+
+def detect_kannada_input(text: str) -> bool:
+    """
+    Detects if the input text is in native Kannada script (Unicode \u0C80-\u0CFF)
+    or contains common transliterated Kannada symptom terms.
+    """
+    if not text:
+        return False
+
+    # 1. Native Kannada Unicode block check
+    if any('\u0c80' <= ch <= '\u0cff' for ch in text):
+        return True
+
+    # 2. Transliterated Kannada symptom keywords
+    cleaned_lower = text.lower()
+    kannada_keywords = [
+        "jwara", "jvara", "kemmu", "talenovu", "tale novu", "tale novvu",
+        "hotte novu", "hotte novvu", "bhedi", "bedhi", "kaamale", "kamale",
+        "dammu", "ubbaasa", "kannu novu", "mai novu", "maikainovu", "mai kai novu",
+        "uri moothra", "uri mootra", "ede novu", "ede uri", "gantalu novu",
+        "gantlu novu", "vaanti", "vakarike", "susthu", "aayasa", "malabaddhate",
+        "nanage", "ide", "baruttide", "aagide", "illave"
+    ]
+    for kw in kannada_keywords:
+        if kw in cleaned_lower:
+            return True
+
+    return False
+
+
+def get_kannada_symptom_display(symptom_key: str) -> str:
+    """
+    Returns clean Kannada representation of a symptom with English subtitle.
+    """
+    clean_k = symptom_key.replace("has_", "").strip()
+    return SYMPTOM_NAMES_KN.get(clean_k, f"{clean_k.replace('_', ' ').title()}")
+
+
+def get_kannada_report_data(
+    top_disease: str,
+    matched_keys: List[str],
+    urgency_level: str,
+    days: int = 3,
+    severity: int = 5,
+    vuln_score: int = 20
+) -> Dict[str, Any]:
+    """
+    Compiles a crystal-clear, concise Kannada Quick Medical Summary Report dataset.
+    """
+    standard_name = DISEASE_NAME_MAP.get(top_disease, top_disease)
+    kn_data = DISEASE_KNOWLEDGE_KN.get(standard_name, {})
+
+    display_name_kn = kn_data.get("display_name_kn", f"{standard_name}")
+    description_kn = kn_data.get("description_kn", "ರೋಗಲಕ್ಷಣಗಳ ಆಧಾರದ ಮೇಲೆ ಎಐ ಮಾದರಿಯಿಂದ ಈ ಕಾಯಿಲೆ ಗುರುತಿಸಲಾಗಿದೆ.")
+    specialist_kn = kn_data.get("specialist_kn", "ಸಾಮಾನ್ಯ ವೈದ್ಯರು (General Physician)")
+    home_remedies_kn = kn_data.get("home_remedies_kn", [
+        "ಸಾಕಷ್ಟು ಕುದಿಸಿ ಆರಿಸಿದ ನೀರು ಕುಡಿಯಿರಿ.",
+        "ಉತ್ತಮ ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ ಮತ್ತು ಲಘು ಆಹಾರ ಸೇವಿಸಿ.",
+        "ರೋಗಲಕ್ಷಣಗಳು ಹೆಚ್ಚಾದರೆ ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ."
+    ])
+    diet_kn = kn_data.get("diet_kn", "ಬೆಚ್ಚಗಿನ ನೀರು, ಲಘು ಆಹಾರ ಸೇವಿಸಿ. ಜಂಕ್ ಫುಡ್ ತ್ಯಜಿಸಿ.")
+    precautions_kn = kn_data.get("precautions_kn", "ವೈದ್ಯರ ಸಲಹೆಯಿಲ್ಲದೆ ಸ್ವಯಂ ಔಷಧಿ ತೆಗೆದುಕೊಳ್ಳಬೇಡಿ.")
+
+    # Determine doctor vs rest verdict in Kannada
+    requires_doctor = (days >= 5) or ("EMERGENCY" in urgency_level.upper()) or ("SEE DOCTOR" in urgency_level.upper()) or ("CONSULT DOCTOR" in urgency_level.upper())
+
+    if requires_doctor:
+        if days >= 5:
+            verdict_headline_kn = "🚨 ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡುವುದು ಸೂಕ್ತ (ವೈದ್ಯರ ಭೇಟಿ ಅಗತ್ಯ)"
+            verdict_reason_kn = f"ರೋಗಲಕ್ಷಣಗಳು <b>{days} ದಿನಗಳಿಂದ</b> ಮುಂದುವರಿದಿದ್ದು (5 ದಿನಗಳ ಮಿತಿ ಮೀರಿದೆ), ಆಸ್ಪತ್ರೆಗೆ ಭೇಟಿ ನೀಡಿ ಪರೀಕ್ಷಿಸಿಕೊಳ್ಳುವುದು ಅತ್ಯಗತ್ಯವಾಗಿದೆ."
+        else:
+            verdict_headline_kn = "🚨 ವೈದ್ಯರ ಸಲಹೆ ಪಡೆಯುವುದು ಅಗತ್ಯ (ವೈದ್ಯರ ಭೇಟಿ)"
+            verdict_reason_kn = f"ರೋಗಲಕ್ಷಣಗಳ ತೀವ್ರತೆ (ಮಟ್ಟ {severity}/10) ಮತ್ತು {display_name_kn} ಕಾಯಿಲೆಯ ಸೂಚನೆಗಳಿರುವುದರಿಂದ ವೈದ್ಯರ ತಪಾಸಣೆ ಅಗತ್ಯ."
+        verdict_badge_kn = "ವೈದ್ಯರ ಭೇಟಿ ಅಗತ್ಯ"
+        immediate_action_kn = "ಹತ್ತಿರದ ಕ್ಲಿನಿಕ್ ಅಥವಾ ಆಸ್ಪತ್ರೆಗೆ ತೆರಳಿ ತಪಾಸಣೆ ಮಾಡಿಸಿಕೊಳ್ಳಿ."
+    else:
+        verdict_headline_kn = "🏡 ಮನೆಯಲ್ಲೇ ವಿಶ್ರಾಂತಿ ಮತ್ತು ಆರೈಕೆ ಸಾಕು (ವಿಶ್ರಾಂತಿ ತೆಗೆದುಕೊಳ್ಳಿ)"
+        verdict_reason_kn = f"ರೋಗಲಕ್ಷಣಗಳು ಸೌಮ್ಯವಾಗಿದ್ದು ({days} ದಿನಗಳು), ಯಾವುದೇ ತುರ್ತು ಅಪಾಯವಿಲ್ಲ. ಮನೆಯಲ್ಲೇ ಸೂಕ್ತ ಆರೈಕೆ ಮತ್ತು ವಿಶ್ರಾಂತಿಯಿಂದ ಗುಣಮುಖರಾಗಬಹುದು."
+        verdict_badge_kn = "ಮನೆ ವಿಶ್ರಾಂತಿ ಸಾಕು"
+        immediate_action_kn = "ಸಾಕಷ್ಟು ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ, ಬೆಚ್ಚಗಿನ ದ್ರವಾಹಾರ ಸೇವಿಸಿ ಮತ್ತು 48 ಗಂಟೆಗಳ ಕಾಲ ಗಮನಿಸಿ."
+
+    # Urgency Level in Kannada
+    urgency_map_kn = {
+        "EMERGENCY": "🚨 ತಕ್ಷಣ ತುರ್ತು ಆಸ್ಪತ್ರೆಗೆ ದಾಖಲಾಗಿ",
+        "See Doctor Immediately": "🚨 ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ",
+        "SEE DOCTOR IMMEDIATELY": "🚨 ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ",
+        "See Doctor Soon": "⚠️ ಶೀಘ್ರದಲ್ಲೇ ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ",
+        "CONSULT DOCTOR SOON": "⚠️ ಶೀಘ್ರದಲ್ಲೇ ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ",
+        "Monitor 2-3 Days": "📋 2-3 ದಿನ ಗಮನಿಸಿ & ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ",
+        "MONITOR 2-3 DAYS": "📋 2-3 ದಿನ ಗಮನಿಸಿ & ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ",
+        "Self-Care": "🏡 ಮನೆ ಮದ್ದು & ವಿಶ್ರಾಂತಿ",
+        "SELF-CARE & HOME REMEDIES": "🏡 ಮನೆ ಮದ್ದು & ವಿಶ್ರಾಂತಿ"
+    }
+    urgency_kn = urgency_map_kn.get(urgency_level, urgency_level)
+
+    # Symptom list in Kannada
+    translated_symptoms = [get_kannada_symptom_display(s) for s in matched_keys]
+
+    # Ayurvedic Formulations in Kannada
+    ayurvedic_kn = kn_data.get("ayurvedic_kn", [
+        "ಶುಂಠಿ, ತುಳಸಿ ಮತ್ತು ಕರಿಮೆಣಸು ಬೆರೆಸಿದ ಬೆಚ್ಚಗಿನ ಕಷಾಯ ಸೇವಿಸಿ.",
+        "ರಾತ್ರಿ ಮಲಗುವ ಮುನ್ನ ಬೆಚ್ಚಗಿನ ಹಾಲಿಗೆ ಚಿಟಿಕೆ ಅರಿಶಿನ ಬೆರೆಸಿ ಕುಡಿಯಿರಿ.",
+        "ನಿಮ್ಮ ದೇಹ ಪ್ರಕೃತಿಗೆ ಅನುಗುಣವಾಗಿ ಆಯುರ್ವೇದ ವೈದ್ಯರ ಸಲಹೆ ಪಡೆಯಿರಿ."
+    ])
+
+    # Diet Do's & Don'ts in Kannada
+    diet_dos_kn = kn_data.get("diet_dos_kn", [
+        "ಕಾಯಿಸಿ ಆರಿಸಿದ ಬೆಚ್ಚಗಿನ ನೀರು ಮತ್ತು ಗಿಡಮೂಲಿಕೆ ಚಹಾ",
+        "ಲಘುವಾಗಿ ಬೇಯಿಸಿದ ಗಂಜಿ, ರಸಂ ಅನ್ನ, ಹೆಸರುಬೇಳೆ ಕಿಚಡಿ",
+        "ತಾಜಾ ಹಣ್ಣುಗಳು ಮತ್ತು ಎಳನೀರು"
+    ])
+    diet_donts_kn = kn_data.get("diet_donts_kn", [
+        "ಅತಿಯಾದ ಎಣ್ಣೆ, ಮಸಾಲೆ ಮತ್ತು ಕರಿದ ಜಂಕ್ ಫುಡ್",
+        "ತಣ್ಣನೆಯ ಐಸ್ ಕ್ರೀಮ್ ಮತ್ತು ಕಾರ್ಬೊನೇಟೆಡ್ ತಂಪು ಪಾನೀಯಗಳು",
+        "ಹೊರಗಿನ ಅಶುದ್ಧ ಅಥವಾ ಹಳಸಿದ ಆಹಾರ ಪದಾರ್ಥಗಳು"
+    ])
+
+    # Detailed Clinical Precautions in Kannada
+    precautions_list_kn = kn_data.get("precautions_list_kn", [
+        "ರೋಗಲಕ್ಷಣಗಳು 5 ದಿನ ಮೀರಿದರೆ ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+        "ವೈದ್ಯರ ಸಲಹೆಯಿಲ್ಲದೆ ಯಾವುದೇ ಆ್ಯಂಟಿಬಯೋಟಿಕ್ ಅಥವಾ ನೋವು ನಿವಾರಕ ಮಾತ್ರೆಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳಬೇಡಿ.",
+        "ದೇಹದ ಉಷ್ಣತೆ ಮತ್ತು ರಕ್ತದೊತ್ತಡವನ್ನು ನಿಯಮಿತವಾಗಿ ಗಮನಿಸಿ."
+    ])
+
+    # Clean text for Kannada TTS speech synthesis
+    tts_text_kn = f"ವೈದ್ಯಕೀಯ ವರದಿ: ಗುರುತಿಸಲಾದ ಕಾಯಿಲೆ {display_name_kn}. ತುರ್ತು ಮಟ್ಟ {urgency_kn}. {'ನೀವು ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಬೇಕು' if requires_doctor else 'ಮನೆಯಲ್ಲೇ ಉತ್ತಮ ವಿಶ್ರಾಂತಿ ಮತ್ತು ಬಿಸಿ ನೀರು ಕುಡಿಯುವುದು ಸೂಕ್ತ'}."
+
+    return {
+        "display_name_kn": display_name_kn,
+        "description_kn": description_kn,
+        "specialist_kn": specialist_kn,
+        "urgency_kn": urgency_kn,
+        "requires_doctor": requires_doctor,
+        "verdict_headline_kn": verdict_headline_kn,
+        "verdict_reason_kn": verdict_reason_kn,
+        "verdict_badge_kn": verdict_badge_kn,
+        "immediate_action_kn": immediate_action_kn,
+        "translated_symptoms": translated_symptoms,
+        "home_remedies_kn": home_remedies_kn,
+        "ayurvedic_kn": ayurvedic_kn,
+        "diet_kn": diet_kn,
+        "diet_dos_kn": diet_dos_kn,
+        "diet_donts_kn": diet_donts_kn,
+        "precautions_kn": precautions_kn,
+        "precautions_list_kn": precautions_list_kn,
+        "tts_text_kn": tts_text_kn
+    }
+
+
+def get_comorbidity_tailored_precautions_kn(existing_conditions: List[str], disease_name: str) -> List[str]:
+    """
+    Returns specific, actionable safety guidelines customized for the patient's pre-existing conditions in Kannada.
+    """
+    if not existing_conditions or "None" in existing_conditions:
+        return []
+
+    tailored = []
+    active = [c for c in existing_conditions if c and c != "None"]
+
+    if "Diabetes" in active:
+        tailored.append("🩺 **ಮಧುಮೇಹ ಸುರಕ್ಷತಾ ಎಚ್ಚರಿಕೆ:** ಜ್ವರ ಮತ್ತು ಸೋಂಕು ಇನ್ಸುಲಿನ್ ಪ್ರತಿರೋಧವನ್ನು ಹೆಚ್ಚಿಸುತ್ತದೆ. ಪ್ರತಿ 4-6 ಗಂಟೆಗೊಮ್ಮೆ ರಕ್ತದ ಸಕ್ಕರೆ ಮಟ್ಟ ತಪಾಸಿಸಿ. ಜೇನುತುಪ್ಪ, ಬೆಲ್ಲ ಅಥವಾ ಸಕ್ಕರೆ ಸಿರಪ್ ಹೊಂದಿರುವ ಮನೆಮದ್ದುಗಳನ್ನು ತಪ್ಪಿಸಿ.")
+    if "Hypertension" in active:
+        tailored.append("💓 **ಅಧಿಕ ರಕ್ತದೊತ್ತಡ ಎಚ್ಚರಿಕೆ:** ಅತಿಯಾದ ಉಪ್ಪು ಅಥವಾ ಸೋಡಿಯಂ ಸೇವನೆ ತಪ್ಪಿಸಿ. ಬಿಪಿ ಹೆಚ್ಚಿಸುವ ಗಿಡಮೂಲಿಕೆಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳಬೇಡಿ.")
+    if "Asthma" in active:
+        tailored.append("🫁 **ಉಬ್ಬಸ / ಅಸ್ತಮಾ ಎಚ್ಚರಿಕೆ:** ಇನ್‌ಹೇಲರ್ (ಸಾಲ್ಬುಟಮಾಲ್) ಸದಾ ಜೊತೆಯಲ್ಲಿಡಿ. ತಂಪು ಗಾಳಿ, ಧೂಳು, ತೀವ್ರ ಪರಿಮಳದ ಹೊಗೆಯಿಂದ ದೂರವಿರಿ.")
+    if "Heart Disease" in active:
+        tailored.append("❤️ **ಹೃದ್ರೋಗ ಎಚ್ಚರಿಕೆ:** ನಾಡಿಬಡಿತ ಗಮನಿಸಿ. ಒಮ್ಮೆಗೆ ಅತಿಯಾದ ದ್ರವ ಸೇವಿಸಬೇಡಿ. ಎದೆಭಾರ ಕಂಡುಬಂದರೆ ತಕ್ಷಣ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಿ.")
+    if "Kidney Disease" in active:
+        tailored.append("🧪 **ಮೂತ್ರಪಿಂಡ / ಕಿಡ್ನಿ ಎಚ್ಚರಿಕೆ:** ನೋವು ನಿವಾರಕ ಮಾತ್ರೆಗಳನ್ನು (Painkillers) ಸ್ವಯಂ ತೆಗೆದುಕೊಳ್ಳಬೇಡಿ. ವೈದ್ಯರು ಸೂಚಿಸಿದ ನೀರಿನ ಮಿತಿ ಪಾಲಿಸಿ.")
+
+# =========================================================================
+# PATIENT INFORMATION BILINGUAL TRANSLATIONS & NORMALIZATION
+# =========================================================================
+GENDER_MAP_KN = {
+    "Male": "ಪುರುಷ (Male)",
+    "Female": "ಮಹಿಳೆ (Female)",
+    "Other": "ಇತರ (Other)",
+    "Prefer not to say": "ಹೇಳಲು ಇಷ್ಟವಿಲ್ಲ (Prefer not to say)"
+}
+
+REVERSE_GENDER_MAP_KN = {
+    "ಪುರುಷ (Male)": "Male",
+    "ಮಹಿಳೆ (Female)": "Female",
+    "ಇತರ (Other)": "Other",
+    "ಹೇಳಲು ಇಷ್ಟವಿಲ್ಲ (Prefer not to say)": "Prefer not to say",
+    "Male": "Male",
+    "Female": "Female",
+    "Other": "Other",
+    "Prefer not to say": "Prefer not to say"
+}
+
+CONDITIONS_MAP_KN = {
+    "None": "ಯಾವುದೂ ಇಲ್ಲ (None)",
+    "Diabetes": "ಮಧುಮೇಹ / ಶುಗರ್ (Diabetes)",
+    "Hypertension": "ರಕ್ತದೊತ್ತಡ / ಬಿಪಿ (Hypertension)",
+    "Asthma": "ಉಬ್ಬಸ / ಅಸ್ತಮಾ (Asthma)",
+    "Heart Disease": "ಹೃದ್ರೋಗ (Heart Disease)",
+    "Kidney Disease": "ಮೂತ್ರಪಿಂಡ ಕಾಯಿಲೆ (Kidney Disease)",
+    "Thyroid Disorder": "ಥೈರಾಯ್ಡ್ ಸಮಸ್ಯೆ (Thyroid Disorder)"
+}
+
+REVERSE_CONDITIONS_MAP_KN = {
+    "ಯಾವುದೂ ಇಲ್ಲ (None)": "None",
+    "ಮಧುಮೇಹ / ಶುಗರ್ (Diabetes)": "Diabetes",
+    "ರಕ್ತದೊತ್ತಡ / ಬಿಪಿ (Hypertension)": "Hypertension",
+    "ಉಬ್ಬಸ / ಅಸ್ತಮಾ (Asthma)": "Asthma",
+    "ಹೃದ್ರೋಗ (Heart Disease)": "Heart Disease",
+    "ಮೂತ್ರಪಿಂಡ ಕಾಯಿಲೆ (Kidney Disease)": "Kidney Disease",
+    "ಥೈರಾಯ್ಡ್ ಸಮಸ್ಯೆ (Thyroid Disorder)": "Thyroid Disorder",
+    "None": "None",
+    "Diabetes": "Diabetes",
+    "Hypertension": "Hypertension",
+    "Asthma": "Asthma",
+    "Heart Disease": "Heart Disease",
+    "Kidney Disease": "Kidney Disease",
+    "Thyroid Disorder": "Thyroid Disorder"
+}
+
+
+def normalize_patient_gender(gender_val: str) -> str:
+    """Normalizes any English or Kannada gender string to standard internal English token."""
+    return REVERSE_GENDER_MAP_KN.get(gender_val, "Male")
+
+
+def normalize_patient_conditions(cond_list: List[str]) -> List[str]:
+    """Normalizes any English or Kannada conditions list to standard internal English tokens."""
+    if not cond_list:
+        return ["None"]
+    normalized = [REVERSE_CONDITIONS_MAP_KN.get(c, c) for c in cond_list]
+    # If 'None' is selected alongside other conditions, prioritize actual conditions
+    if len(normalized) > 1 and "None" in normalized:
+        normalized = [c for c in normalized if c != "None"]
+    return normalized if normalized else ["None"]
+
+
+def get_kannada_gender_display(gender_val: str) -> str:
+    """Returns clean display name for gender in Kannada."""
+    norm = normalize_patient_gender(gender_val)
+    return GENDER_MAP_KN.get(norm, norm)
+
+
+def get_kannada_conditions_display(cond_list: List[str]) -> str:
+    """Returns formatted display string for patient pre-existing conditions in Kannada."""
+    norm_list = normalize_patient_conditions(cond_list)
+    active = [c for c in norm_list if c != "None"]
+    if not active:
+        return "ಯಾವುದೂ ಇಲ್ಲ (ಆರೋಗ್ಯಕರ ಸ್ಥಿತಿ)"
+    kn_active = [CONDITIONS_MAP_KN.get(c, c) for c in active]
+    return ", ".join(kn_active)
+

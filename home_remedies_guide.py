@@ -221,6 +221,61 @@ REMEDY_RECIPES: List[Dict[str, Any]] = [
         "video": yt_search("diluted tea tree oil for acne application dermatologist"),
         "videoLabel": "Proper Tea Tree Oil Dilution & Application",
         "usedFor": ["Acne", "Fungal Infection", "Skin Eruptions"]
+    },
+    {
+        "id": "ajwain-warm-water",
+        "name": "Warm Ajwain (Carom Seeds) Digestive Infusion",
+        "icon": "🫖",
+        "category": "Digestive Teas",
+        "make": "Boil 1 tsp of ajwain (carom seeds) in 2 cups of water with a pinch of black salt for 5 minutes. Strain and sip warm after heavy meals.",
+        "why": "Thymol in ajwain stimulates gastric enzymes, promotes intestinal peristalsis, and rapidly relieves flatulence, abdominal spasms, and acid reflux.",
+        "video": yt_search("ajwain water for gas acidity bloating recipe"),
+        "videoLabel": "Ajwain Water for Digestion & Gas",
+        "usedFor": ["Indigestion / Acid Reflux", "Bloating", "GERD", "Peptic Ulcer Disease", "Gastroenteritis"]
+    },
+    {
+        "id": "ccf-detox-tea",
+        "name": "CCF Tea (Cumin, Coriander & Fennel)",
+        "icon": "🌱",
+        "category": "Ayurvedic Kadha",
+        "make": "Simmer 1/2 tsp each of whole cumin seeds, coriander seeds, and fennel seeds in 3 cups of water for 8 minutes. Strain and sip throughout the day.",
+        "why": "Acts as a gentle natural diuretic and cooling anti-inflammatory, soothing the urinary tract and balancing gastrointestinal heat (Pitta).",
+        "video": yt_search("cumin coriander fennel CCF tea recipe benefits"),
+        "videoLabel": "CCF Cleansing Tea Recipe",
+        "usedFor": ["Urinary Tract Infection (UTI)", "Indigestion / Acid Reflux", "Dehydration", "Hypertension"]
+    },
+    {
+        "id": "tender-coconut-water",
+        "name": "Fresh Tender Coconut Water Hydration",
+        "icon": "🥥",
+        "category": "Electrolyte Solutions",
+        "make": "Drink 1 glass of fresh, natural tender coconut water twice daily. Best consumed fresh without added sugar or ice.",
+        "why": "Provides bio-available potassium, magnesium, and natural electrolytes to combat cellular dehydration, support liver detox, and accelerate platelet stabilization.",
+        "video": yt_search("coconut water hydration electrolytes health benefits"),
+        "videoLabel": "Coconut Water Electrolyte Hydration",
+        "usedFor": ["Dengue", "Malaria", "Typhoid Fever", "Jaundice", "Hepatitis A", "Diarrhea"]
+    },
+    {
+        "id": "neem-turmeric-paste",
+        "name": "Neem & Turmeric Antiseptic Topical Paste",
+        "icon": "🌿",
+        "category": "Topical Applications",
+        "make": "Crush 10-12 fresh neem leaves into a fine paste with 1/2 tsp pure turmeric powder and a few drops of rose water. Apply over affected clean skin for 15-20 minutes, then rinse gently.",
+        "why": "Nimbin and azadirachtin in neem exert potent antifungal and antibacterial effects, while curcumin reduces epidermal hyperproliferation and pruritus.",
+        "video": yt_search("neem turmeric paste for fungal infection skin rash"),
+        "videoLabel": "Neem & Turmeric Skin Treatment",
+        "usedFor": ["Fungal Infection", "Psoriasis", "Impetigo", "Chickenpox", "Skin Breakouts"]
+    },
+    {
+        "id": "mustard-garlic-rub",
+        "name": "Warm Mustard-Garlic Chest & Sole Rub",
+        "icon": "🧄",
+        "category": "Topical Warming Oils",
+        "make": "Gently warm 2 tbsp of pure mustard oil with 2-3 crushed garlic cloves and 1/4 tsp ajwain for 3 minutes until aromatic. Let cool to comfortably warm, then massage over chest, back, and soles of feet before bedtime.",
+        "why": "Allyl isothiocyanate in mustard oil and allicin in garlic create mild cutaneous hyperthermia, improving microcirculation, dilating airways, and loosening chest phlegm.",
+        "video": yt_search("mustard oil garlic massage for cold cough congestion"),
+        "videoLabel": "Warm Mustard Oil Chest Rub Protocol",
+        "usedFor": ["Common Cold", "Bronchial Asthma", "Cough", "Chest Congestion", "Cervical Spondylosis"]
     }
 ]
 
